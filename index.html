@@ -1,0 +1,3829 @@
+import { useState, useRef, useEffect } from "react";
+
+// ─── CURRICULUM DATA — 13 MODUL LENGKAP ───────────────────────────────────────
+const MODULES = [
+  // ══════════════════════════════════════════════════════════════════════════════
+  // MODUL 1 — PENGENALAN KEUANGAN DAN PASAR MODAL
+  // ══════════════════════════════════════════════════════════════════════════════
+  {
+    id:"m1", num:1, level:"Pemula", icon:"🏦",
+    title:"Pengenalan Keuangan & Pasar Modal",
+    desc:"Fondasi literasi keuangan dan pengenalan ekosistem pasar modal Indonesia.",
+    color:"#06b6d4",
+    lessons:[
+      { id:"m1l1", title:"Apa Itu Keuangan Pribadi?", dur:"8 mnt",
+        content:`Keuangan pribadi adalah pengelolaan uang yang mencakup pendapatan, pengeluaran, tabungan, investasi, dan perencanaan masa depan.
+
+**Mengapa Literasi Keuangan Penting?**
+Banyak orang di Indonesia bekerja keras sepanjang hidup namun tidak sejahtera di hari tua — bukan karena penghasilan kurang, tapi karena tidak tahu cara mengelola uang dengan benar.
+
+**Pilar Keuangan Pribadi:**
+1. Arus Kas (Cash Flow) — Pemasukan harus lebih besar dari pengeluaran
+2. Aset vs Liabilitas — Kumpulkan aset yang menghasilkan uang, hindari liabilitas yang menguras uang
+3. Dana Darurat — 3–6 kali pengeluaran bulanan sebelum investasi
+4. Proteksi — Asuransi jiwa dan kesehatan
+5. Investasi — Pertumbuhan aset jangka panjang
+
+**Aturan 50-30-20:**
+- 50% untuk kebutuhan pokok (makan, transportasi, sewa)
+- 30% untuk keinginan (hiburan, liburan)
+- 20% untuk tabungan dan investasi
+
+**Contoh Nyata:**
+Jika Anda bergaji Rp5 juta/bulan: Rp2,5 juta kebutuhan, Rp1,5 juta gaya hidup, Rp1 juta investasi. Dengan disiplin 10 tahun, Rp1 juta/bulan di instrumen 12%/tahun = ±Rp230 juta. Bukan jumlah yang kecil!
+
+**Mindset yang Benar:**
+Bukan "berapa yang saya hasilkan" tapi "berapa yang saya simpan dan kembangkan." Orang kaya beli aset, orang miskin beli liabilitas.` },
+
+      { id:"m1l2", title:"Mengenal Pasar Modal Indonesia", dur:"10 mnt",
+        content:`Pasar modal adalah tempat bertemunya pihak yang membutuhkan dana (emiten/perusahaan) dengan pihak yang memiliki dana (investor).
+
+**Sejarah Pasar Modal Indonesia:**
+Pasar modal Indonesia dimulai sejak era kolonial Belanda (1912). Setelah kemerdekaan, BEJ (Bursa Efek Jakarta) dan BES (Bursa Efek Surabaya) bergabung menjadi BEI (Bursa Efek Indonesia) pada 2007.
+
+**Ekosistem Pasar Modal:**
+- BEI (Bursa Efek Indonesia) — penyelenggara bursa resmi
+- OJK (Otoritas Jasa Keuangan) — regulator dan pengawas
+- KSEI (Kustodian Sentral Efek Indonesia) — penyimpan efek
+- KPEI (Kliring Penjaminan Efek Indonesia) — kliring transaksi
+- Perusahaan Sekuritas — perantara investor
+
+**Instrumen di Pasar Modal:**
+1. Saham — kepemilikan perusahaan
+2. Obligasi — surat utang berbunga
+3. Reksa Dana — kumpulan investasi dikelola manajer investasi
+4. ETF (Exchange Traded Fund) — reksa dana yang diperdagangkan di bursa
+5. Derivatif — kontrak berjangka (futures, options)
+
+**Pasar Primer vs Sekunder:**
+Pasar Primer: perusahaan pertama kali menjual saham ke publik (IPO). Pasar Sekunder: investor bertransaksi saham sesama investor di bursa — ini yang kita lakukan sehari-hari.
+
+**Fakta BEI 2024:**
+- Lebih dari 900 emiten terdaftar
+- Kapitalisasi pasar >Rp10.000 triliun
+- Lebih dari 13 juta investor aktif (SID)` },
+
+      { id:"m1l3", title:"Jenis-Jenis Instrumen Investasi", dur:"9 mnt",
+        content:`Memahami berbagai pilihan investasi membantu Anda memilih yang paling sesuai dengan profil risiko dan tujuan keuangan.
+
+**Piramida Investasi (dari paling aman ke paling berisiko):**
+
+1. Tabungan Bank / Deposito
+- Return: 3–5% per tahun
+- Risiko: sangat rendah (dijamin LPS s/d Rp2 miliar)
+- Cocok untuk: dana darurat
+
+2. Obligasi Pemerintah (ORI, SBR, Sukuk)
+- Return: 6–7% per tahun
+- Risiko: rendah (dijamin negara)
+- Cocok untuk: tujuan 1–3 tahun
+
+3. Reksa Dana Pasar Uang & Pendapatan Tetap
+- Return: 5–8% per tahun
+- Risiko: rendah-menengah
+- Cocok untuk: pemula, modal kecil
+
+4. Reksa Dana Saham / ETF
+- Return: 10–15% per tahun (rata-rata jangka panjang)
+- Risiko: menengah-tinggi
+- Cocok untuk: investasi 5+ tahun
+
+5. Saham Individual
+- Return: tidak terbatas (bisa -100% hingga +1000%)
+- Risiko: tinggi, tergantung pemilihan saham
+- Cocok untuk: yang mau belajar analisis
+
+6. Aset Alternatif (Kripto, Emas, P2P Lending)
+- Return & Risiko: bervariasi sangat tinggi
+- Perlu pemahaman khusus
+
+**Prinsip Dasar:**
+High return = high risk. Tidak ada investasi yang memberikan return tinggi dengan risiko nol — itu modus penipuan (investasi bodong).` },
+
+      { id:"m1l4", title:"Konsep Waktu dan Nilai Uang", dur:"8 mnt",
+        content:`Time Value of Money (TVM) adalah prinsip bahwa Rp1.000 hari ini lebih bernilai dari Rp1.000 tahun depan — karena uang hari ini bisa diinvestasikan dan menghasilkan lebih banyak.
+
+**Future Value (Nilai Masa Depan):**
+FV = PV × (1 + r)^n
+- PV = nilai sekarang
+- r = tingkat bunga per periode
+- n = jumlah periode
+
+Contoh: Rp10 juta diinvestasikan 10 tahun dengan return 12%/tahun:
+FV = 10.000.000 × (1,12)^10 = Rp31.058.482
+
+**Present Value (Nilai Sekarang):**
+PV = FV ÷ (1 + r)^n
+
+Contoh: Anda butuh Rp1 miliar 20 tahun lagi. Jika return investasi 12%/tahun, berapa yang harus Anda investasikan sekarang?
+PV = 1.000.000.000 ÷ (1,12)^20 = Rp103.667.496
+
+**Kekuatan Compounding (Bunga Majemuk):**
+Einstein menyebut bunga majemuk sebagai "keajaiban dunia ke-8." Kuncinya adalah: mulai lebih awal.
+
+Perbandingan:
+- Ardi: investasi Rp1 juta/bulan mulai usia 25, berhenti usia 35 (10 tahun saja), return 12%/tahun — di usia 55 punya Rp6,2 miliar
+- Budi: investasi Rp1 juta/bulan mulai usia 35 sampai usia 55 (20 tahun), return 12%/tahun — di usia 55 punya Rp4,0 miliar
+
+Ardi menginvestasikan lebih sedikit (10 tahun) tapi akhirnya lebih kaya karena mulai lebih awal!
+
+**Rule of 72:**
+72 ÷ tingkat return = tahun yang dibutuhkan untuk menggandakan uang
+Return 12% → 72 ÷ 12 = 6 tahun untuk uang Anda berlipat ganda` },
+
+      { id:"m1l5", title:"Mengenal Risiko dan Return", dur:"7 mnt",
+        content:`Setiap investasi memiliki trade-off antara risiko (kemungkinan kehilangan uang) dan return (potensi keuntungan).
+
+**Jenis Risiko Investasi:**
+
+Risiko Sistematis (Market Risk)
+Tidak bisa dihilangkan dengan diversifikasi. Contoh: resesi ekonomi, kenaikan suku bunga Fed, pandemi — mempengaruhi seluruh pasar.
+
+Risiko Tidak Sistematis (Specific Risk)
+Bisa dikurangi dengan diversifikasi. Contoh: CEO perusahaan korupsi, produk ditarik dari pasaran, kebakaran pabrik.
+
+Risiko Likuiditas
+Kesulitan menjual aset dengan cepat tanpa kerugian signifikan. Saham LQ45 sangat likuid; saham gorengan sangat tidak likuid.
+
+Risiko Inflasi
+Return investasi di bawah inflasi → daya beli menurun riil. Deposito 4% saat inflasi 5% = rugi riil 1%.
+
+**Risk-Return Spectrum:**
+- Deposito: return 4%, risiko sangat rendah
+- Obligasi: return 6-7%, risiko rendah
+- Saham blue chip: return 10-15%, risiko menengah
+- Saham growth: return bisa >30%, risiko tinggi
+- Saham spekulatif: return bisa sangat besar, risiko bisa kehilangan semua
+
+**Profil Risiko Investor:**
+1. Konservatif — tidak bisa tidur saat portofolio merah → deposito/obligasi
+2. Moderat — tahan koreksi 10-20% → campuran saham & obligasi
+3. Agresif — tahan koreksi >30% → mayoritas saham` },
+
+      { id:"m1l6", title:"Regulasi dan Perlindungan Investor", dur:"8 mnt",
+        content:`Investor di Indonesia dilindungi oleh berbagai regulasi dan lembaga yang memastikan pasar modal berjalan dengan adil dan transparan.
+
+**Otoritas Jasa Keuangan (OJK):**
+Lembaga independen yang mengawasi seluruh sektor jasa keuangan Indonesia — perbankan, pasar modal, dan non-bank. Dibentuk 2011, menggantikan Bapepam-LK.
+
+Fungsi OJK:
+- Mengatur dan mengawasi emiten, sekuritas, reksa dana
+- Melindungi konsumen/investor dari penipuan
+- Menegakkan hukum pasar modal
+- Mewajibkan transparansi (keterbukaan informasi)
+
+**KSEI & Perlindungan Aset:**
+Saham Anda disimpan di KSEI (Kustodian Sentral Efek Indonesia) — bukan di sekuritas. Jika sekuritas bangkrut, saham Anda tetap aman!
+
+**Dana Perlindungan Pemodal (DPP):**
+Mengganti kerugian investor jika efek hilang karena kejahatan sekuritas. Maksimal Rp25 juta per investor.
+
+**Hak Investor:**
+- Mendapat informasi material secara tepat waktu
+- Menghadiri dan memilih dalam RUPS
+- Mendapat dividen yang diumumkan
+- Mengajukan gugatan jika perusahaan melanggar
+
+**Waspadai Investasi Bodong:**
+Ciri-ciri: janji return pasti dan sangat tinggi (>30%/bulan), tidak terdaftar OJK, skema Ponzi (bayar investor lama dari investor baru).
+
+Cek di: sikapiuangmu.ojk.go.id atau hubungi Kontak OJK 157` },
+
+      { id:"m1l7", title:"Cara Kerja Bursa Efek Indonesia", dur:"10 mnt",
+        content:`Memahami mekanisme perdagangan BEI adalah kunci bertransaksi secara efektif.
+
+**Jam Perdagangan BEI:**
+Senin–Kamis:
+- Sesi I: 09:00 – 12:00 WIB
+- Jeda istirahat: 12:00 – 13:30
+- Sesi II: 13:30 – 15:49:59 WIB
+- Post-market closing: 15:50 – 16:00
+
+Jumat:
+- Sesi I: 09:00 – 11:30 WIB
+- Jeda: 11:30 – 14:00
+- Sesi II: 14:00 – 15:49:59 WIB
+
+**Papan Perdagangan:**
+1. Papan Utama — perusahaan besar (aset bersih >Rp100 miliar, profitabilitas)
+2. Papan Pengembangan — perusahaan menengah atau prospektif
+3. Papan Akselerasi — startup dan perusahaan kecil (sejak 2019)
+
+**Lot dan Satuan:**
+1 lot = 100 lembar saham
+Anda tidak bisa beli 50 lembar — minimal 1 lot (100 lembar)
+
+**Fraksi Harga (tick size):**
+- Harga <Rp200: fraksi Rp1
+- Rp200–Rp500: fraksi Rp2
+- Rp500–Rp2.000: fraksi Rp5
+- Rp2.000–Rp5.000: fraksi Rp10
+- >Rp5.000: fraksi Rp25
+
+**Auto Rejection:**
+Batas naik/turun harga otomatis dalam satu hari:
+- Harga <Rp200: ±35%
+- Rp200–Rp5.000: ±25%
+- >Rp5.000: ±20%
+
+**Market Cap Classification:**
+Large cap (IHSG top): BBCA, BBRI, TLKM, ASII, UNVR
+Mid cap: emiten menengah
+Small cap: emiten kecil, potensi besar tapi risiko lebih tinggi` },
+
+      { id:"m1l8", title:"Indeks Saham dan Cara Membacanya", dur:"9 mnt",
+        content:`Indeks saham adalah tolak ukur kinerja pasar — seperti "rapor" kesehatan bursa secara keseluruhan.
+
+**IHSG (Indeks Harga Saham Gabungan):**
+Mengukur kinerja seluruh saham yang terdaftar di BEI. Jika IHSG naik 1%, rata-rata seluruh saham naik 1% (terbobot kapitalisasi pasar).
+
+Cara Membaca: IHSG 7.200 → jika awal tahun 6.500, berarti return YTD = (7.200-6.500)/6.500 × 100% = +10,8%
+
+**Indeks Sektoral BEI:**
+IDX Finance, IDX Consumer, IDX Energy, IDX Infra, IDX Health, IDX Property, IDX Technology — masing-masing mengukur kinerja per sektor.
+
+**Indeks Utama Lainnya:**
+- LQ45: 45 saham paling likuid, direvisi tiap 6 bulan
+- IDX30: 30 saham terpilih dari LQ45
+- IDX80: 80 saham liquid terpilih
+- KOMPAS100: 100 saham terbaik seleksi Kompas
+- IDX ESG Leaders: saham dengan skor ESG terbaik
+- BISNIS-27: 27 saham pilihan Bisnis Indonesia
+
+**Cara Menggunakan Indeks:**
+- Benchmark portofolio: jika IHSG naik 15% tapi portofolio Anda +10%, berarti underperform
+- Market timing: jika IHSG sudah turun 20%+ dari puncak, sejarah menunjukkan saatnya akumulasi
+- Rotasi sektoral: cermati sektor mana yang outperform
+
+**Indeks Global yang Mempengaruhi BEI:**
+S&P 500 (AS), Dow Jones, Nasdaq, Nikkei (Jepang), Hang Seng (HK), SSE Composite (China) — penurunan tajam global biasanya diikuti BEI.` },
+
+      { id:"m1l9", title:"Cara Membuka Rekening Efek", dur:"7 mnt",
+        content:`Untuk mulai berinvestasi saham, Anda perlu membuka rekening efek di perusahaan sekuritas yang terdaftar dan diawasi OJK.
+
+**Dokumen yang Dibutuhkan:**
+- KTP (Kartu Tanda Penduduk)
+- NPWP (jika punya) — wajib untuk transaksi tertentu
+- Buku rekening bank aktif atas nama sendiri
+- Foto selfie dengan KTP (untuk verifikasi digital)
+
+**Langkah-Langkah Pembukaan:**
+1. Pilih sekuritas terpercaya (bandingkan biaya dan fitur)
+2. Download aplikasi atau kunjungi website sekuritas
+3. Isi formulir data pribadi secara online
+4. Upload dokumen yang diminta
+5. Lakukan video call atau e-KYC untuk verifikasi
+6. Tunggu SID (Single Investor Identification) dari KSEI — 1-3 hari kerja
+7. RDN (Rekening Dana Nasabah) akan dibuka — rekening bank khusus untuk transaksi saham
+
+**Pilihan Sekuritas Populer:**
+- BCA Sekuritas (MyTrade) — terintegrasi BCA
+- Mandiri Sekuritas (MOST) — terintegrasi Mandiri
+- Mirae Asset — biaya transaksi kompetitif
+- Ajaib — user-friendly untuk pemula
+- Stockbit — ada fitur komunitas
+- IPOT (Indo Premier) — tools analisis lengkap
+
+**Biaya Transaksi:**
+- Biaya beli: 0,10–0,19% dari nilai transaksi
+- Biaya jual: 0,20–0,29% (termasuk pajak PPh final 0,1%)
+
+**Modal Awal:**
+Minimum: Rp100.000 (1 lot saham murah)
+Ideal untuk mulai belajar: Rp1–5 juta
+Ideal untuk portofolio terdiversifikasi: Rp10 juta+` },
+
+      { id:"m1l10", title:"Psikologi Dasar Investor", dur:"9 mnt",
+        content:`Aspek psikologi sering menjadi faktor terbesar yang membedakan investor sukses dan gagal — melebihi kemampuan analisis teknis.
+
+**Bias Kognitif Umum Investor:**
+
+Confirmation Bias
+Cenderung mencari informasi yang mendukung keputusan yang sudah dibuat, mengabaikan yang bertentangan. Solusi: aktif cari argumen kontra sebelum investasi.
+
+Loss Aversion (Aversif Kerugian)
+Rasa sakit kehilangan Rp1 juta dirasakan 2x lebih kuat dari kesenangan mendapat Rp1 juta. Akibatnya: investor terlalu cepat take profit dan terlalu lama hold rugi.
+
+Anchoring
+Terpaku pada harga pertama yang dilihat. "Dulu BBCA harga Rp8.000, sekarang Rp9.500 sudah mahal." Padahal valuasi yang menentukan, bukan harga nominal.
+
+Herding (Ikut Kawanan)
+Beli karena semua orang beli, jual karena semua orang jual. Buffett: "Takut saat orang lain rakus, rakus saat orang lain takut."
+
+Overconfidence
+Merasa lebih pintar dari pasar setelah beberapa kali profit. Puncak overconfidence sering terjadi sebelum kerugian besar.
+
+**Siklus Emosi Investor:**
+Optimisme → Excitement → Thrill → Euphoria (puncak harga, banyak beli) → Anxiety → Denial → Panic → Capitulation (dasar harga, banyak jual) → Despondency → Depression → Hope → Relief → Optimisme (siklus berulang)
+
+**Solusi:**
+- Buat aturan investasi tertulis sebelum mulai
+- Hindari melihat portofolio terlalu sering (max 1x/minggu untuk investor jangka panjang)
+- Ikuti proses, bukan emosi
+- Jurnal keputusan investasi — review berkala` },
+    ]
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // MODUL 2 — ANALISIS LAPORAN KEUANGAN
+  // ══════════════════════════════════════════════════════════════════════════════
+  {
+    id:"m2", num:2, level:"Menengah", icon:"📊",
+    title:"Analisis Laporan Keuangan",
+    desc:"Membaca dan menginterpretasi laporan keuangan perusahaan secara mendalam.",
+    color:"#10b981",
+    lessons:[
+      { id:"m2l1", title:"Struktur Laporan Keuangan", dur:"12 mnt",
+        content:`Laporan keuangan adalah "bahasa bisnis" yang wajib dipahami setiap investor saham.
+
+**4 Komponen Utama Laporan Keuangan:**
+
+1. Laporan Laba Rugi (Income Statement / P&L)
+Menunjukkan kinerja perusahaan selama periode tertentu (kuartal/tahunan):
+Pendapatan (Revenue)
+→ dikurangi Harga Pokok Penjualan (COGS)
+= Laba Kotor (Gross Profit)
+→ dikurangi Beban Operasional (OpEx)
+= EBIT / Laba Operasi
+→ dikurangi Beban Bunga dan Pajak
+= Laba Bersih (Net Income / Net Profit)
+
+2. Neraca (Balance Sheet)
+Foto kondisi keuangan pada tanggal tertentu:
+ASET = LIABILITAS + EKUITAS (selalu seimbang!)
+- Aset Lancar: kas, piutang, persediaan
+- Aset Tidak Lancar: mesin, properti, investasi jangka panjang
+- Liabilitas Lancar: utang jangka pendek (<1 tahun)
+- Liabilitas Jangka Panjang: utang bank, obligasi
+- Ekuitas: modal + laba ditahan
+
+3. Laporan Arus Kas (Cash Flow Statement)
+- Operating CF: uang dari aktivitas bisnis inti — PALING PENTING
+- Investing CF: pembelian/penjualan aset tetap
+- Financing CF: utang, penerbitan saham, dividen
+
+4. Catatan Atas Laporan Keuangan (CALK)
+Detail penjelasan angka-angka di atas. Sering tersembunyi informasi penting di sini!
+
+**Prinsip Accrual vs Cash:**
+Akuntansi berbasis akrual: pendapatan diakui saat transaksi terjadi, bukan saat uang diterima. Itulah mengapa arus kas lebih sulit dimanipulasi dari laba bersih.` },
+
+      { id:"m2l2", title:"Analisis Laporan Laba Rugi", dur:"11 mnt",
+        content:`Laporan laba rugi menceritakan seberapa baik perusahaan menghasilkan keuntungan dari operasinya.
+
+**Yang Harus Dicermati:**
+
+1. Pertumbuhan Pendapatan (Revenue Growth)
+- Hitung YoY (Year on Year) dan QoQ (Quarter on Quarter)
+- Target: pertumbuhan konsisten >10% untuk growth stock
+- Waspadai: revenue naik tapi dari segmen yang tidak berkelanjutan
+
+2. Gross Margin = Laba Kotor ÷ Pendapatan × 100%
+- Mencerminkan efisiensi produksi dan pricing power
+- Gross margin stabil/naik = tanda moat yang kuat
+- Contoh: UNVR gross margin ~50%, menunjukkan brand power luar biasa
+
+3. EBITDA Margin = EBITDA ÷ Pendapatan × 100%
+- EBITDA = Laba sebelum bunga, pajak, depresiasi, amortisasi
+- Lebih akurat mengukur profitabilitas operasional
+- Berguna untuk perbandingan lintas perusahaan/sektor
+
+4. Net Profit Margin = Laba Bersih ÷ Pendapatan × 100%
+- Berapa sen laba bersih dari setiap Rp1 pendapatan
+- Angkanya bervariasi per industri: retail 3-5%, bank 15-25%, software 20-40%
+
+5. EPS (Earnings Per Share) = Laba Bersih ÷ Jumlah Saham Beredar
+- Ukuran keuntungan per lembar saham
+- EPS tumbuh konsisten → harga saham cenderung naik jangka panjang
+
+**Red Flags di Laporan Laba Rugi:**
+- Pendapatan naik tapi operating CF turun (mungkin ada manipulasi piutang)
+- Laba bersih naik dari "other income" bukan dari operasi inti
+- Gross margin turun terus menerus — daya saing melemah` },
+
+      { id:"m2l3", title:"Analisis Neraca Keuangan", dur:"13 mnt",
+        content:`Neraca adalah "foto" kekuatan finansial perusahaan — seberapa solid pondasinya.
+
+**Analisis Aset:**
+
+Aset Lancar
+- Current Ratio = Aset Lancar ÷ Liabilitas Lancar
+  >1,5: sehat, >2: sangat sehat, <1: bahaya
+- Quick Ratio = (Aset Lancar - Persediaan) ÷ Liabilitas Lancar
+  >1: aman membayar utang jangka pendek tanpa jual persediaan
+- Cash Ratio = Kas ÷ Liabilitas Lancar
+  Semakin tinggi semakin aman
+
+Kualitas Aset
+- Rasio Piutang/Pendapatan: naik terus → mungkin ada masalah penagihan
+- Hari Piutang (DSO) = Piutang ÷ Pendapatan × 365: makin rendah makin baik
+- Turnover Persediaan: makin cepat terjual makin baik
+
+**Analisis Liabilitas:**
+
+DER (Debt to Equity Ratio) = Total Utang ÷ Ekuitas
+- <0,5: perusahaan sangat konservatif
+- 0,5–1,5: normal untuk kebanyakan sektor
+- >2: sangat berutang, risiko tinggi
+- Exception: bank bisa DER >8 karena model bisnisnya
+
+Debt to EBITDA = Total Utang ÷ EBITDA
+<3x: aman, 3-5x: perlu perhatian, >5x: berisiko tinggi
+
+**Analisis Ekuitas:**
+
+Book Value per Share = Total Ekuitas ÷ Jumlah Saham
+Jika P/BV <1, harga saham di bawah nilai aset bersihnya
+
+ROE (Return on Equity) = Laba Bersih ÷ Ekuitas × 100%
+Target: >15% secara konsisten. ROE tinggi = perusahaan efisien gunakan modal pemegang saham
+
+**Kualitas Balance Sheet:**
+- Perusahaan dengan net cash (kas > utang) lebih aman dari krisis
+- Goodwill besar bisa jadi red flag (akuisisi overprice di masa lalu)
+- Aset tak berwujud besar perlu dianalisis lebih dalam` },
+
+      { id:"m2l4", title:"Analisis Arus Kas", dur:"11 mnt",
+        content:`Laporan arus kas adalah yang paling susah dimanipulasi — itulah mengapa profesional sangat fokus di sini.
+
+**Free Cash Flow (FCF) — Metrik Terpenting:**
+FCF = Operating Cash Flow − Capital Expenditure (CAPEX)
+
+FCF positif berarti perusahaan menghasilkan uang nyata setelah investasi untuk mempertahankan bisnisnya. Inilah yang bisa dibagikan sebagai dividen, buyback saham, atau untuk tumbuh.
+
+**Analisis Operating Cash Flow:**
+Operating CF vs Laba Bersih:
+- Idealnya OCF ≥ Laba Bersih
+- OCF jauh di bawah laba bersih: waspadai — mungkin ada manipulasi akuntansi
+- OCF negatif tapi laba positif: lampu merah!
+
+OCF Margin = Operating CF ÷ Pendapatan
+Semakin tinggi semakin baik. Bandingkan tren multi-tahun.
+
+**Analisis Investing Cash Flow:**
+- CAPEX negatif besar: perusahaan agresif berinvestasi (bisa positif atau negatif tergantung konteks)
+- CAPEX maintenance vs growth: maintenance CAPEX mempertahankan bisnis, growth CAPEX untuk ekspansi
+
+CAPEX Ratio = CAPEX ÷ Operating CF
+<0,5: kas tersisa banyak untuk keperluan lain. >1: CAPEX melebihi kas operasi — butuh utang
+
+**Analisis Financing Cash Flow:**
+- Positif: perusahaan sedang pinjam uang atau terbitkan saham
+- Negatif: membayar utang atau beli kembali saham/bayar dividen
+
+**Cash Conversion Cycle (CCC):**
+CCC = DSO + DIO - DPO
+(Days Sales Outstanding + Days Inventory Outstanding - Days Payable Outstanding)
+Makin negatif makin baik — perusahaan terima uang sebelum harus bayar ke supplier` },
+
+      { id:"m2l5", title:"Rasio Keuangan Komprehensif", dur:"14 mnt",
+        content:`Rasio keuangan memudahkan perbandingan antar perusahaan dan antar waktu.
+
+**RASIO VALUASI:**
+
+P/E Ratio (Price to Earnings)
+= Harga Saham ÷ EPS (atau Market Cap ÷ Laba Bersih)
+- P/E 10: investor bayar Rp10 untuk setiap Rp1 laba
+- Benchmark: IHSG rata-rata P/E ~14–18x
+- Konteks penting: P/E rendah bisa "value trap", P/E tinggi bisa justified jika tumbuh cepat
+
+P/BV (Price to Book Value)
+= Harga Saham ÷ Nilai Buku per Saham
+- P/BV <1: harga di bawah nilai aset bersih
+- Untuk bank: wajar 1–3x
+
+EV/EBITDA (Enterprise Value to EBITDA)
+= (Market Cap + Utang Bersih) ÷ EBITDA
+- Lebih komprehensif dari P/E karena memperhitungkan utang
+- <8x: murah untuk kebanyakan sektor, >15x: mahal
+
+P/S Ratio (Price to Sales) = Market Cap ÷ Pendapatan
+Berguna untuk perusahaan yang belum profit (startup listed)
+
+**RASIO PROFITABILITAS:**
+- ROE = Laba Bersih ÷ Ekuitas → target >15%
+- ROA = Laba Bersih ÷ Total Aset → target >8%
+- ROIC = EBIT(1-t) ÷ Invested Capital → target > WACC
+- Net Margin, Gross Margin, EBITDA Margin
+
+**RASIO EFISIENSI:**
+- Asset Turnover = Pendapatan ÷ Total Aset → seberapa efisien aset menghasilkan pendapatan
+- Inventory Turnover = COGS ÷ Persediaan
+- Receivable Turnover = Pendapatan ÷ Piutang
+
+**RASIO UTANG:**
+DER, Current Ratio, Interest Coverage Ratio = EBIT ÷ Beban Bunga (>3x: aman)
+
+**RASIO DIVIDEN:**
+- Dividend Yield = Dividen per Saham ÷ Harga Saham × 100%
+- Payout Ratio = Dividen ÷ Laba Bersih × 100% (50–70% sehat, >100% tidak berkelanjutan)` },
+
+      { id:"m2l6", title:"Membaca Laporan Tahunan (Annual Report)", dur:"10 mnt",
+        content:`Annual Report (Laporan Tahunan) adalah dokumen komprehensif yang wajib dibaca sebelum berinvestasi di suatu perusahaan.
+
+**Struktur Annual Report:**
+
+1. Surat dari Direktur Utama
+Bacalah dengan kritis — apakah nada optimis didasari fakta atau sekedar PR? Perhatikan apakah mereka jujur mengakui tantangan.
+
+2. Profil Perusahaan & Model Bisnis
+Pahami bagaimana perusahaan menghasilkan uang. Jika Anda tidak bisa jelaskan bisnis ini dalam 2 kalimat, jangan investasi.
+
+3. Analisis & Diskusi Manajemen (MD&A)
+Bagian paling informatif — manajemen menjelaskan kinerja, tantangan, dan strategi ke depan.
+
+4. Tata Kelola Perusahaan (Good Corporate Governance)
+- Komposisi Dewan Komisaris dan Direksi
+- Independensi komisaris
+- Komite audit yang efektif
+- Kepemilikan saham manajemen (insider ownership >5% — tanda alignment dengan pemegang saham)
+
+5. Laporan Keuangan Teraudit
+Oleh KAP (Kantor Akuntan Publik) bereputasi. Big 4: Deloitte, PwC, EY, KPMG — lebih terpercaya.
+
+6. Catatan Atas Laporan Keuangan
+Detail aset, liabilitas, komitmen, dan kontijensi. Cari: utang jatuh tempo, perkara hukum, transaksi afiliasi.
+
+**Di Mana Mendapatkannya?**
+- idx.co.id → Perusahaan Tercatat → Laporan Keuangan
+- stockbit.com (lebih mudah diakses)
+- Website resmi perusahaan (Investor Relations)
+
+**Tips Membaca Efisien:**
+Fokus pada: MD&A + laporan arus kas + CALK → total 1–2 jam sudah cukup untuk keputusan awal.` },
+
+      { id:"m2l7", title:"Analisis Tren Multi-Tahun", dur:"11 mnt",
+        content:`Satu tahun data tidak bercerita banyak. Tren 5–10 tahun mengungkapkan karakter sesungguhnya sebuah perusahaan.
+
+**Mengapa Analisis Multi-Tahun Penting:**
+Perusahaan bisa punya 1 tahun buruk karena faktor luar biasa (pandemi, bencana). Atau punya 1 tahun luar biasa karena penjualan aset. Tren panjang menunjukkan fundamental bisnis yang sesungguhnya.
+
+**Cara Melakukan Analisis Tren:**
+
+1. Buat tabel 5–10 tahun untuk:
+- Revenue (pendapatan)
+- Gross Margin dan Net Margin
+- EPS (laba per saham)
+- ROE dan ROA
+- DER dan Current Ratio
+- Operating Cash Flow
+- FCF (Free Cash Flow)
+- Dividen per saham
+
+2. Cari pola:
+- Pertumbuhan revenue konsisten atau bergelombang?
+- Margin stabil atau tergerus setiap tahun?
+- ROE konsisten >15% atau fluktuatif?
+- Utang tumbuh lebih cepat dari ekuitas?
+
+**Contoh Analisis BBCA (5 tahun):
+- Revenue: tumbuh CAGR 8%/tahun — stabil
+- Net Margin: 30–35% — luar biasa konsisten
+- ROE: 17–19% — excellent
+- DER: ~5x (bank, normal)
+- EPS: tumbuh 10–12%/tahun — fundamental kuat
+
+**Red Flags Tren:**
+- Revenue turun 2 tahun berturut-turut
+- ROE trend menurun selama 3 tahun
+- Utang tumbuh jauh lebih cepat dari laba
+- FCF negatif secara konsisten
+- Margin tergerus tapi manajemen diam saja
+
+**Tools untuk Analisis Tren:**
+Stockbit, Macroaxis, IDX Annual Report, KSEI` },
+
+      { id:"m2l8", title:"Perbedaan Laba Akuntansi vs Laba Ekonomi", dur:"9 mnt",
+        content:`Tidak semua laba diciptakan setara. Memahami perbedaan ini menyelamatkan Anda dari "jebakan" laporan keuangan yang bagus di permukaan.
+
+**Laba Akuntansi (GAAP/PSAK Profit):**
+Dihitung sesuai standar akuntansi yang berlaku. Bisa terpengaruh:
+- Kebijakan depresiasi (metode garis lurus vs saldo menurun)
+- Pengakuan pendapatan (kapan revenue diakui)
+- Perlakuan goodwill dan aset tak berwujud
+- Biaya restrukturisasi yang di-exclude
+- One-time gain/loss dari penjualan aset
+
+**Laba Ekonomi (Economic Profit):**
+= Laba setelah dikurangi biaya modal (WACC × Invested Capital)
+Positif: perusahaan menciptakan nilai bagi pemegang saham
+Negatif: perusahaan menghancurkan nilai meski "untung" secara akuntansi!
+
+EVA (Economic Value Added) = EBIT(1-t) - (WACC × Invested Capital)
+Perusahaan dengan EVA positif konsisten → kandidat saham terbaik
+
+**Normalisasi Laba:**
+Sebelum membandingkan, hilangkan:
+- One-time income/expense
+- Perubahan kebijakan akuntansi
+- Efek kurs jika bukan bisnis inti
+
+**Laba Berkualitas Tinggi:**
+- OCF > Laba Bersih
+- Laba dari operasi inti, bukan penjualan aset
+- Tidak ada restatement laporan keuangan di masa lalu
+- Auditor tidak memberikan opini modifikasi (qualified opinion)
+
+**Contoh Red Flag:**
+ACME Corp laba bersih Rp100 miliar, tapi OCF hanya Rp20 miliar dan ada one-time gain penjualan gedung Rp80 miliar. Laba "sesungguhnya" dari operasi hanya Rp20 miliar!` },
+
+      { id:"m2l9", title:"Analisis Laporan Keuangan Bank", dur:"12 mnt",
+        content:`Bank memiliki struktur laporan keuangan yang sangat berbeda dari perusahaan biasa — perlu pendekatan analisis khusus.
+
+**Mengapa Bank Berbeda:**
+Bisnis bank adalah "meminjamkan uang" — utang (dana pihak ketiga/DPK) adalah bahan baku, bukan beban. DER bank bisa 8–10x dan itu normal.
+
+**Metrik Kunci Bank:**
+
+NIM (Net Interest Margin)
+= (Pendapatan Bunga Bersih ÷ Aset Produktif) × 100%
+Selisih antara bunga yang diterima dari kredit dan yang dibayar ke deposan.
+Target: >5% = sangat baik, 3–5% = rata-rata
+
+NPL (Non-Performing Loan)
+= Kredit Bermasalah ÷ Total Kredit × 100%
+Kredit yang macet/bermasalah. Target: <3% = sehat, >5% = bahaya
+
+LAR (Loan at Risk) lebih komprehensif dari NPL — termasuk kredit restrukturisasi
+
+BOPO (Beban Operasional/Pendapatan Operasional)
+= Beban Operasional ÷ Pendapatan Operasional × 100%
+Makin rendah makin efisien. Target: <75% = sangat efisien, >90% = tidak efisien
+
+LDR (Loan to Deposit Ratio) / LFR
+= Total Kredit ÷ Dana Pihak Ketiga × 100%
+Target OJK: 78–92%. Terlalu rendah = tidak produktif, terlalu tinggi = risiko likuiditas
+
+CAR (Capital Adequacy Ratio) / KPMM
+= Modal ÷ ATMR (Aset Tertimbang Menurut Risiko) × 100%
+Minimum OJK: 8%. Bank besar biasanya CAR 20–25% → buffer sangat kuat
+
+ROA Bank: target >1,5%, BBCA sering 3%+ (sangat baik)
+
+**Analisis Big 4 Bank IDX:**
+BBCA: ROE 18%, BOPO 55%, NIM 5,5%, NPL <2% → kualitas terbaik
+BBRI: ROE 17%, penetrasi UMKM terbesar
+BMRI: ROE 15%, transformasi digital
+BBNI: ROE 12%, fokus korporasi` },
+
+      { id:"m2l10", title:"Studi Kasus: Membedah Laporan Keuangan Nyata", dur:"15 mnt",
+        content:`Mari terapkan semua konsep di atas pada analisis nyata menggunakan data historis perusahaan di BEI.
+
+**Studi Kasus 1: Perusahaan Konsumer (UNVR - Unilever Indonesia)**
+
+Pendapatan: ~Rp40 triliun/tahun, relatif stabil
+Gross Margin: ~50% → brand power sangat kuat
+Net Margin: ~12–15% → solid
+ROE: 80–100% → luar biasa tinggi TAPI...
+DER: >2 karena payout ratio sangat tinggi (hampir 100% laba dibagi dividen)
+FCF: positif konsisten
+Kesimpulan: bisnis sangat solid, tapi premium valuasi dan payout tinggi berarti pertumbuhan lambat
+
+**Studi Kasus 2: Perusahaan Perbankan (BBCA)**
+
+NIM: 5,5%, BOPO: 55%, NPL: <1,5%, ROE: 18%
+P/BV: 4–5x → premium dibanding bank lain
+Justified karena: efisiensi operasional terbaik, loyalitas nasabah (switching cost tinggi), transformasi digital terdepan
+Kesimpulan: perusahaan terbaik di sektornya, wajar premium
+
+**Studi Kasus 3: Red Flag (Perusahaan Fiktif "XYZ Tbk")**
+- Revenue naik 30% tapi OCF turun 20%
+- Laba bersih naik dari keuntungan penjualan aset Rp500 miliar
+- DER melonjak dari 0,8 ke 2,5 dalam 2 tahun
+- Piutang dagang tumbuh 3x lebih cepat dari revenue
+- Auditor memberikan qualified opinion
+Kesimpulan: HINDARI — banyak tanda kualitas laporan keuangan buruk
+
+**Framework Keputusan Cepat (5 Menit per Saham):**
+1. ROE >15% minimal 3 tahun? ✓
+2. Revenue tumbuh? ✓
+3. DER wajar untuk sektornya? ✓
+4. OCF positif dan > laba bersih? ✓
+5. Tidak ada red flag di CALK? ✓
+Jika semua ya → lanjut ke analisis lebih dalam` },
+    ]
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // MODUL 3 — ANALISIS PASAR MODAL
+  // ══════════════════════════════════════════════════════════════════════════════
+  {
+    id:"m3", num:3, level:"Menengah", icon:"📈",
+    title:"Analisis Pasar Modal",
+    desc:"Memahami dinamika, siklus, dan mekanisme pasar modal secara komprehensif.",
+    color:"#8b5cf6",
+    lessons:[
+      { id:"m3l1", title:"Siklus Pasar Modal (Market Cycle)", dur:"11 mnt",
+        content:`Pasar modal bergerak dalam siklus yang berulang, didorong oleh ekonomi dan psikologi manusia.
+
+**4 Fase Siklus Pasar:**
+
+1. Akumulasi (Bottom)
+Pasar sudah jatuh jauh, berita negatif dominan, volume rendah. Smart money mulai beli diam-diam. Valuasi sangat murah (P/E di bawah rata-rata historis). Ini saat terbaik untuk beli, tapi secara psikologis paling sulit.
+
+2. Mark-Up (Bull Market)
+Harga mulai naik secara konsisten. Berita mulai positif. Investor ritel mulai masuk. Volume meningkat. Tren uptrend terbentuk jelas.
+
+3. Distribusi (Top)
+Pasar di puncak. Berita sangat positif, semua orang antusias. Smart money mulai jual ke investor ritel yang baru masuk. Volume tinggi tapi harga mulai stagnan. Valuasi mahal (P/E di atas rata-rata historis).
+
+4. Mark-Down (Bear Market)
+Harga turun, berita negatif. Volume turun tapi harga terus melemah. Panic selling di fase terakhir. IHSG pernah turun 50%+ dalam bear market besar.
+
+**Siklus Ekonomi dan Pasar:**
+Pasar modal biasanya bergerak 6–12 bulan lebih awal dari ekonomi riil. Pasar mulai naik saat ekonomi masih resesi; pasar mulai turun saat ekonomi masih tumbuh.
+
+**Bear Market vs Koreksi:**
+Koreksi: penurunan 10–20% (normal, terjadi 1–2x per tahun)
+Bear Market: penurunan >20% dari puncak (terjadi tiap 3–5 tahun rata-rata)
+
+**Historical IHSG Bear Markets:**
+1998: -65% (krisis Asia)
+2008: -55% (krisis global)
+2013: -25% (taper tantrum)
+2020: -38% (COVID-19) → recovery 12 bulan` },
+
+      { id:"m3l2", title:"Faktor Penggerak Pasar", dur:"10 mnt",
+        content:`Memahami apa yang menggerakkan pasar membantu investor membuat keputusan lebih rasional.
+
+**Makroekonomi:**
+
+Suku Bunga (BI Rate / Fed Rate)
+Suku bunga naik → obligasi lebih menarik → dana keluar dari saham → IHSG cenderung turun
+Suku bunga turun → saham lebih atraktif → dana masuk → IHSG cenderung naik
+
+Inflasi
+Inflasi tinggi → BI naikkan suku bunga → tekanan ke saham
+Inflasi terkontrol (2-3%) → kondisi ideal untuk pasar saham
+
+Pertumbuhan Ekonomi (GDP)
+GDP tumbuh kuat → laba perusahaan meningkat → pasar bullish
+Resesi → laba turun → pasar bearish
+
+Nilai Tukar Rupiah
+Rupiah melemah → saham eksportir naik (INCO, ADRO, TLKM)
+Rupiah melemah → saham yang bergantung impor bahan baku tertekan
+Asing cenderung keluar jika rupiah terus melemah
+
+**Faktor Global:**
+- Kebijakan The Fed (bank sentral AS) — paling berpengaruh ke seluruh dunia
+- Harga komoditas: minyak, batubara, CPO (minyak sawit), nikel — penting bagi Indonesia
+- Geopolitik: konflik Rusia-Ukraina, ketegangan AS-China
+- Resesi global / krisis keuangan AS/Eropa
+
+**Faktor Domestik:**
+- Kebijakan OJK dan pemerintah
+- Pemilu / pergantian pemerintahan
+- Bencana alam skala besar
+- Korupsi korporasi high-profile
+
+**Sentimen Pasar:**
+Fear & Greed Index mengukur sentimen — Fear ekstrim = saatnya mulai akumulasi; Greed ekstrim = hati-hati berlebihan` },
+
+      { id:"m3l3", title:"Aliran Dana Asing (Foreign Flow)", dur:"9 mnt",
+        content:`Investor asing memiliki pengaruh besar terhadap IHSG karena mereka menguasai porsi signifikan dari perdagangan di BEI.
+
+**Fakta Foreign Ownership di BEI:**
+Investor asing menguasai ~40–50% dari total nilai kapitalisasi pasar BEI. Karena itu, keluar-masuknya dana asing sangat berpengaruh pada IHSG.
+
+**Net Foreign Flow:**
+Net Buy Asing: nilai beli > nilai jual → aliran dana masuk → mendukung kenaikan IHSG
+Net Sell Asing: nilai jual > nilai beli → aliran dana keluar → menekan IHSG
+
+**Faktor yang Mempengaruhi Aliran Dana Asing:**
+1. Diferensial suku bunga: jika yield obligasi Indonesia lebih tinggi dari AS, asing mau masuk
+2. Nilai tukar: rupiah stabil/menguat = asing nyaman masuk
+3. Risiko negara (country risk): kredit rating, stabilitas politik
+4. Risk-on vs Risk-off: saat global risk-off, asing keluar dari emerging market seperti Indonesia
+5. Indeks global (MSCI, FTSE): saham masuk/keluar indeks global mempengaruhi aliran dana pasif
+
+**MSCI dan Dampaknya:**
+MSCI Emerging Market Index: jika bobot Indonesia ditingkatkan, dana tracker global otomatis beli saham IDX.
+
+**Cara Monitor Foreign Flow:**
+- RTI Business App
+- Stockbit
+- Bloomberg (untuk profesional)
+- Data harian tersedia di idx.co.id
+
+**Strategi Menggunakan Data Foreign Flow:**
+- Asing net buy konsisten di saham tertentu selama beberapa minggu → menarik untuk diperhatikan
+- Asing net sell besar-besaran saat IHSG masih ok → waspada
+- Jangan ikuti asing membabi buta — mereka juga bisa salah` },
+
+      { id:"m3l4", title:"Rotasi Sektor dan Investasi Tematik", dur:"10 mnt",
+        content:`Tidak semua sektor berkinerja sama di waktu yang sama — rotasi sektor adalah kenyataan pasar yang perlu dipahami.
+
+**11 Sektor di BEI:**
+1. Energi (ADRO, PTBA, ITMG)
+2. Material Dasar (ANTM, INCO, TINS)
+3. Industri (ASII, SMGR, INTP)
+4. Non-Siklikal / Consumer Staples (UNVR, ICBP, INDF)
+5. Healthcare (KLBF, SIDO, MERK)
+6. Finansial (BBCA, BBRI, BMRI, BJBR)
+7. Properti & Real Estate (BSDE, CTRA, SMRA)
+8. Teknologi (EMTK, DMMX)
+9. Infrastruktur (TLKM, TOWR, JSMR)
+10. Transportasi & Logistik (EXCL, ISAT)
+11. Consumer Siklikal (MAPI, RALS, ACES)
+
+**Rotasi Sektor dalam Siklus Ekonomi:**
+- Ekspansi awal: keuangan, konsumer diskresioner, teknologi
+- Ekspansi lanjut: energi, material, industri
+- Puncak/perlambatan: utilities, healthcare, consumer staples
+- Resesi: konsumer staples, healthcare (defensif)
+- Recovery: keuangan, konsumer diskresioner
+
+**Investasi Tematik:**
+Tema besar yang bisa dieksploitasi:
+- Hilirisasi nikel (Indonesia → baterai EV): INCO, ANTM
+- Digitalisasi perbankan: BBCA, ARTO, BBYB
+- Infrastruktur: JSMR, WIKA (jika proyek jelas)
+- Konsumsi kelas menengah: MAPI, ACES, SIDO
+- Energi terbarukan: CUAN, KEEN
+
+**Timing Rotasi:**
+Gunakan Relative Strength analysis — sektor mana yang outperform IHSG dalam 1–3 bulan terakhir? Rotasi biasanya berlanjut beberapa bulan.` },
+
+      { id:"m3l5", title:"Efisiensi Pasar dan Implikasinya", dur:"9 mnt",
+        content:`Hipotesis Pasar Efisien (Efficient Market Hypothesis / EMH) — teori kontroversial yang perlu dipahami setiap investor.
+
+**3 Bentuk EMH:**
+
+Weak Form (Lemah)
+Harga saat ini sudah mencerminkan semua informasi historis (harga dan volume masa lalu).
+Implikasi: analisis teknikal tidak bisa secara konsisten menghasilkan alpha (kelebihan return).
+
+Semi-Strong Form
+Harga mencerminkan semua informasi publik (laporan keuangan, berita, dll).
+Implikasi: analisis fundamental pun tidak bisa secara konsisten mengalahkan pasar.
+
+Strong Form
+Harga mencerminkan SEMUA informasi, termasuk insider information.
+Implikasi: bahkan insider pun tidak bisa konsisten beat the market.
+
+**Realita: Pasar Indonesia (Tidak Sepenuhnya Efisien):**
+- Banyak saham yang ditransaksikan tipis (illiquid) → informasi lambat terserap
+- Retail investor dominan di banyak saham → lebih emosional
+- Analis coverage terbatas untuk saham kecil
+- Peluang alpha masih ada, terutama di small-mid cap yang less covered
+
+**Implikasi Praktis:**
+Jika percaya pasar efisien → investasi di ETF indeks (biaya rendah, return pasar)
+Jika percaya pasar tidak sepenuhnya efisien → cari mispricing melalui analisis mendalam
+
+**Anomali Pasar yang Sering Ditemukan:**
+- Small firm effect: saham kecil historically outperform saham besar
+- January effect: pasar cenderung naik di Januari
+- Post-earnings announcement drift: saham terus bergerak searah setelah earnings surprise
+- Momentum effect: saham yang naik 6 bulan terakhir cenderung terus naik` },
+
+      { id:"m3l6", title:"IPO dan Corporate Action", dur:"10 mnt",
+        content:`IPO dan corporate action sering menciptakan peluang dan risiko khusus bagi investor yang perlu dipahami.
+
+**IPO (Initial Public Offering):**
+Proses perusahaan pertama kali menjual saham ke publik melalui pasar modal.
+
+Tahapan IPO:
+1. Perusahaan tunjuk underwriter (penjamin emisi)
+2. Due diligence dan persiapan prospektus
+3. Pengajuan ke OJK
+4. Roadshow (presentasi ke investor institusi)
+5. Bookbuilding (tentukan harga) / Penawaran Awal
+6. Penawaran Umum (investor ritel bisa mendaftar)
+7. Pencatatan perdana di bursa (listing day)
+
+Strategi IPO:
+- Day trading IPO bisa menguntungkan jika saham "hot" dan permintaan berlebih
+- Tapi banyak IPO di Indonesia berakhir di bawah harga IPO setelah beberapa bulan
+- Analisis kualitas bisnis, underwriter, tujuan penggunaan dana, valuasi IPO
+
+**Corporate Action Penting:**
+
+Rights Issue (Penawaran Umum Terbatas)
+Perusahaan menerbitkan saham baru → dilusi kepemilikan pemegang saham lama
+Jika untuk ekspansi productive → positif. Jika untuk bayar utang → waspadai.
+
+Stock Split
+Pemecahan saham. Misal 1 saham harga Rp5.000 jadi 5 saham harga Rp1.000.
+Total nilai sama. Tujuan: likuiditas lebih baik, terjangkau investor kecil.
+
+Stock Dividend / Bonus Shares
+Dividen dalam bentuk saham baru, bukan uang tunai. Kepemilikan tidak terdilusi.
+
+Buyback
+Perusahaan beli kembali sahamnya sendiri → EPS naik → positif untuk investor
+
+Merger & Akuisisi
+Bisa positif atau negatif tergantung harga dan sinergi yang dihasilkan.
+
+Delisting
+Saham dihapus dari bursa → likuiditas hilang → HINDARI saham dengan risiko delisting` },
+
+      { id:"m3l7", title:"Likuiditas Pasar dan Bid-Ask Spread", dur:"8 mnt",
+        content:`Likuiditas adalah kemampuan menjual aset dengan cepat tanpa mempengaruhi harganya secara signifikan.
+
+**Mengapa Likuiditas Penting:**
+Bayangkan Anda punya saham senilai Rp100 juta di perusahaan kecil yang volume hariannya hanya Rp10 juta. Untuk keluar dari posisi ini Anda butuh 10 hari+ dan mungkin harus jual dengan harga besar discount.
+
+**Bid-Ask Spread:**
+Bid: harga tertinggi pembeli bersedia bayar
+Ask (Offer): harga terendah penjual bersedia terima
+Spread: selisih Ask − Bid
+
+Spread Rp100 pada saham Rp1.000 = 10% spread → sangat mahal!
+Spread Rp25 pada saham Rp10.000 = 0,25% → sangat efisien
+
+**Market Depth (Order Book):**
+Volume di sisi beli dan jual pada berbagai level harga. Depth tebal = pasar likuid, susah dimanipulasi. Depth tipis = satu order besar bisa menggerakkan harga signifikan.
+
+**Metrik Likuiditas:**
+1. Volume harian rata-rata (3 bulan)
+2. Nilai transaksi harian (Rp)
+3. Free float (persentase saham yang bebas diperdagangkan)
+4. Bid-ask spread
+
+**Standar Minimum yang Direkomendasikan:**
+- Volume harian minimal >500.000 lot (untuk investor pemula)
+- Nilai transaksi harian >Rp5 miliar
+- Free float >20%
+
+**Saham yang Sangat Likuid di BEI:**
+BBCA, BBRI, BMRI, TLKM, ASII, UNVR — bisa masuk keluar kapan saja tanpa khawatir likuiditas.
+
+**Saham Low Liquidity — Waspadai:**
+Bisa terperangkap saat pasar jatuh. Harga bisa sangat mudah dimanipulasi (pump and dump).` },
+
+      { id:"m3l8", title:"Market Sentiment dan Fear & Greed", dur:"9 mnt",
+        content:`Sentimen pasar adalah "suhu emosional" pelaku pasar secara kolektif — faktor non-fundamental yang sering menggerakkan harga dalam jangka pendek.
+
+**Mengukur Sentimen:**
+
+VIX (Volatility Index / "Fear Index")
+Mengukur ekspektasi volatilitas pasar AS untuk 30 hari ke depan.
+VIX >30: pasar sangat takut → historis waktu yang baik untuk beli
+VIX <15: pasar sangat tenang/euphoria → waspadai koreksi
+
+CNN Fear & Greed Index
+Gabungan 7 indikator: momentum pasar, kekuatan harga, demand junk bond, put/call ratio, dll.
+0–25: Extreme Fear (peluang beli)
+75–100: Extreme Greed (waspada)
+
+Put/Call Ratio
+Rasio volume put options vs call options.
+>1: lebih banyak yang beli "asuransi turun" → sentimen bearish
+<0,7: banyak yang spekulasi naik → potensi overbought
+
+**Indikator Sentimen Pasar Indonesia:**
+- IHSG vs MA200: IHSG di bawah MA200 → bearish
+- Advance/Decline Ratio: berapa saham naik vs turun
+- Net foreign buy/sell
+- Volume perdagangan total
+
+**Menggunakan Sentimen sebagai Contrarian Signal:**
+Ketika 90% orang takut → ini bisa jadi sinyal dasar pasar
+Ketika media ramai memberi judul "Saham Terus Naik, Semua Untung" → hati-hati puncak
+
+**Batasan:**
+Sentimen bisa sangat irasional dalam waktu lama. "Market bisa irasional lebih lama dari Anda bisa solvent." — Keynes. Sentimen adalah panduan, bukan sinyal pasti.` },
+
+      { id:"m3l9", title:"Instrumen Lindung Nilai (Hedging)", dur:"10 mnt",
+        content:`Hedging adalah strategi untuk mengurangi risiko kerugian, seperti "asuransi" untuk portofolio Anda.
+
+**Kenapa Hedging Penting:**
+Seorang investor dengan portofolio Rp500 juta ingin tetap hold saham jangka panjang, tapi khawatir dengan risiko penurunan jangka pendek. Hedging memberi ketenangan tanpa harus jual posisi inti.
+
+**Instrumen Hedging di Indonesia:**
+
+1. Kontrak Berjangka Saham (Single Stock Futures / SSF)
+Kontrak untuk membeli/menjual saham di masa depan dengan harga yang disepakati hari ini.
+Hedge portofolio: jual futures senilai portofolio → jika pasar turun, futures profit mengkompensasi.
+
+2. LQ45 Index Futures
+Hedging terhadap risiko sistematis (seluruh pasar), bukan saham individual.
+
+3. Obligasi dan Aset Defensif
+Alihkan sebagian portofolio ke obligasi/deposito saat pasar diekspektasi turun.
+
+4. Emas (ANTM, ETF Emas, Antam)
+Korelasi negatif dengan saham dalam banyak skenario krisis.
+
+5. Cash Position
+Metode hedging paling sederhana: increase cash, reduce equity exposure.
+
+**Teknik Hedging Sederhana:**
+- Portfolio rebalancing berkala: jual saham yang sudah sangat tinggi, beli yang masih murah
+- Sector rotation: rotasi ke sektor defensif saat tanda-tanda perlambatan ekonomi
+- Core-Satellite: core (70–80%) di saham blue chip stabil, satellite (20–30%) untuk taktis
+
+**Biaya Hedging:**
+Hedging selalu ada biayanya (premi, spread, opportunity cost). Investor jangka panjang sering lebih baik stay invested daripada over-hedging.` },
+
+      { id:"m3l10", title:"Membaca Data Ekonomi Makro", dur:"10 mnt",
+        content:`Investor cerdas memantau data ekonomi makro untuk memahami lingkungan investasi secara lebih luas.
+
+**Kalender Ekonomi Penting:**
+
+Data Amerika Serikat (paling berpengaruh global):
+- Non-Farm Payroll (NFP): data tenaga kerja, rilis tiap Jumat pertama bulan
+- CPI (Consumer Price Index): inflasi, tiap bulan
+- FOMC Meeting: keputusan suku bunga Fed, 8x per tahun
+- GDP Growth: kuartalan
+- PMI Manufaktur & Jasa: bulanan
+
+Data Indonesia:
+- BI Rate Decision: rapat dewan gubernur BI, tiap bulan
+- Inflasi CPI: tiap tanggal 1-5 setiap bulan
+- GDP Indonesia: kuartalan
+- Neraca Perdagangan: tiap bulan (surplus = positif untuk rupiah)
+- Data Kredit Perbankan: bulanan
+
+**Cara Membaca Rilis Data:**
+Yang penting bukan angka absolutnya tapi vs ekspektasi pasar:
+- Data lebih baik dari ekspektasi (positive surprise) → pasar naik
+- Data lebih buruk dari ekspektasi (negative surprise) → pasar turun
+- Data sesuai ekspektasi → tidak banyak bergerak
+
+**Tools untuk Monitor Data Makro:**
+- investing.com/economic-calendar
+- tradingeconomics.com
+- Bank Indonesia (bi.go.id) — data domestik
+- BPS (bps.go.id) — statistik nasional
+
+**Yield Curve dan Resesi:**
+Yield curve inverted (bunga jangka pendek > jangka panjang) → sinyal historis resesi dalam 12–18 bulan. Terjadi sebelum setiap resesi AS sejak 1970-an.` },
+    ]
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // MODUL 4 — DASAR-DASAR INVESTASI SAHAM
+  // ══════════════════════════════════════════════════════════════════════════════
+  {
+    id:"m4", num:4, level:"Pemula", icon:"🌱",
+    title:"Dasar-Dasar Investasi Saham",
+    desc:"Panduan praktis memulai investasi saham dari nol dengan benar.",
+    color:"#f59e0b",
+    lessons:[
+      { id:"m4l1", title:"Apa Itu Saham dan Cara Kerjanya", dur:"8 mnt",
+        content:`Saham adalah bukti kepemilikan atas suatu perusahaan. Ketika Anda membeli saham, Anda menjadi bagian pemilik perusahaan tersebut.
+
+**Hak-Hak Pemegang Saham:**
+- Dividen: bagi hasil keuntungan perusahaan
+- Hak Suara: di Rapat Umum Pemegang Saham (RUPS)
+- Capital Gain: keuntungan dari kenaikan harga saham
+- Sisa Aset: jika perusahaan dilikuidasi (prioritas terakhir)
+
+**Jenis Saham:**
+
+Saham Biasa (Common Stock)
+- Hak suara dalam RUPS
+- Dividen tidak tetap (tergantung keputusan RUPS)
+- Harga paling fluktuatif
+- Jenis yang paling umum diperdagangkan
+
+Saham Preferen (Preferred Stock)
+- Dividen tetap (seperti bunga)
+- Prioritas lebih tinggi dari saham biasa saat likuidasi
+- Biasanya tidak punya hak suara
+- Kurang likuid, lebih mirip obligasi
+
+**Contoh Nyata:**
+BBCA memiliki ~12,4 miliar lembar saham beredar. Jika Anda beli 1 lot (100 lembar) saat harga Rp9.500:
+- Modal: Rp950.000
+- Kepemilikan: 100/12.400.000.000 = 0,0000008% dari BCA
+- Anda adalah pemilik sah BCA, sekecil apapun porsinya!
+
+**Mengapa Harga Saham Bergerak:**
+Hukum permintaan dan penawaran. Lebih banyak yang mau beli → harga naik. Lebih banyak yang mau jual → harga turun.
+
+Faktor penggerak: laba perusahaan, prospek bisnis, kondisi ekonomi, suku bunga, sentimen investor, berita, kebijakan pemerintah.` },
+
+      { id:"m4l2", title:"Keuntungan dan Risiko Investasi Saham", dur:"9 mnt",
+        content:`Memahami dengan jujur keuntungan DAN risiko saham adalah langkah pertama menjadi investor yang bijak.
+
+**Keuntungan Investasi Saham:**
+
+1. Return Tertinggi Jangka Panjang
+Data historis: saham menghasilkan return rata-rata 10–15% per tahun dalam jangka panjang (10–20 tahun), jauh di atas inflasi dan deposito.
+IHSG dari 2009 (550) ke 2024 (7.200) = kenaikan ~1.200% dalam 15 tahun!
+
+2. Dividen
+Pendapatan pasif dari keuntungan perusahaan. Banyak saham BEI memberikan dividend yield 3–6% per tahun.
+
+3. Likuiditas Tinggi
+Bisa dijual kapan saja selama jam bursa. Tidak seperti properti yang bisa berbulan-bulan baru terjual.
+
+4. Modal Kecil
+Bisa mulai dengan Rp100.000 (1 lot saham murah). Tidak perlu modal ratusan juta seperti properti.
+
+5. Transparansi
+Perusahaan publik wajib rilis laporan keuangan — Anda bisa analisis sebelum beli.
+
+**Risiko Investasi Saham:**
+
+1. Capital Loss
+Harga bisa turun, bahkan kehilangan 100% jika perusahaan bangkrut.
+
+2. Volatilitas Tinggi
+Saham bisa turun 30–50% saat krisis, bahkan kualitas terbaik sekalipun.
+
+3. Risiko Psikologis
+Panic selling di harga rendah adalah kerugian nyata terbesar bagi investor pemula.
+
+4. Risiko Likuiditas (untuk saham tertentu)
+Saham gorengan sulit dijual — terperangkap.
+
+5. Risiko Informasi
+Perusahaan bisa menyembunyikan masalah. Analisis mendalam mengurangi tapi tidak menghilangkan risiko ini.
+
+**Kesimpulan:**
+Saham cocok untuk tujuan jangka panjang (5–10+ tahun) dengan pemahaman bahwa fluktuasi jangka pendek adalah hal normal.` },
+
+      { id:"m4l3", title:"Memilih Saham Pertama Anda", dur:"11 mnt",
+        content:`Memilih saham pertama dengan tepat sangat penting untuk membangun kepercayaan diri dan kebiasaan investasi yang benar.
+
+**Kriteria Saham untuk Pemula:**
+
+1. Perusahaan yang Anda Kenal dan Pahami
+Gunakan produknya? Mengerti bisnisnya? BCA (perbankan sehari-hari), Unilever (produk rumah tangga), Telkom (telekomunikasi) — mudah dipahami.
+Hindari: perusahaan dengan bisnis kompleks yang tidak Anda mengerti sama sekali.
+
+2. Blue Chip (LQ45 / IDX30)
+Saham perusahaan besar, market cap >Rp5 triliun, likuiditas tinggi, fundamental terbukti.
+Lebih aman untuk pemula. Return mungkin tidak spektakuler tapi lebih predictable.
+
+3. Fundamental Solid
+Minimal cek: ROE >10%, tidak berutang berlebihan, laba konsisten, arus kas positif.
+
+4. Valuasi Wajar
+Jangan beli saat P/E jauh di atas rata-rata historis. Sabar tunggu momen yang tepat.
+
+5. Likuid
+Volume harian >Rp5 miliar agar mudah masuk dan keluar.
+
+**Daftar Saham Populer untuk Pemula (Studi):**
+- BBCA: perbankan terbaik Indonesia, ROE konsisten, manajemen top
+- BBRI: bank terbesar, penetrasi UMKM luas, dividen menarik
+- TLKM: monopoli infrastruktur telekomunikasi
+- ASII: konglomerat diversifikasi, eksposur ekonomi Indonesia
+- UNVR: consumer goods, dividen konsisten
+
+**Prinsip "Invest in What You Know" (Peter Lynch):**
+Seorang ibu rumah tangga yang tahu produk terlaris di supermarket mungkin lebih dulu tahu tentang perusahaan yang akan tumbuh daripada analis Wall Street yang jauh dari konsumen.
+
+**Jangan Lakukan:**
+- Jangan beli saham dari grup WhatsApp atau rekomendasi anonim
+- Jangan invest semua di satu saham saja
+- Jangan beli hanya karena "sudah naik banyak, pasti terus naik"` },
+
+      { id:"m4l4", title:"Strategi Buy and Hold", dur:"8 mnt",
+        content:`Buy and Hold adalah strategi paling sederhana dan terbukti paling efektif untuk sebagian besar investor individu.
+
+**Konsep Dasar:**
+Beli saham perusahaan berkualitas tinggi, tahan selama 5–10+ tahun, dan biarkan compounding bekerja.
+
+**Mengapa Buy and Hold Efektif:**
+
+1. Menghindari Biaya Transaksi Berlebih
+Trading aktif: 0,4–0,5% biaya per transaksi bolak-balik. Buy and Hold: biaya sangat minimal.
+
+2. Menghindari Kesalahan Timing
+Bahkan investor terbaik dunia tidak bisa konsisten timing pasar. Data membuktikan: melewatkan 10 hari terbaik pasar dalam 20 tahun bisa memangkas return 50%!
+
+3. Efisiensi Pajak
+PPh capital gain saham (0,1%) hanya dikenakan saat jual. Hold = defer pajak = modal tetap bekerja.
+
+4. Compounding Bekerja
+Dividen yang diinvestasikan kembali, plus pertumbuhan harga saham selama bertahun-tahun.
+
+**Contoh Nyata:**
+Investor yang beli BBCA 10 tahun lalu:
+- Harga 2014: ~Rp3.500
+- Harga 2024: ~Rp9.500
+- Capital gain: +171%
+- Plus dividen ~2–3% per tahun selama 10 tahun
+- Total return: ~220-230%
+- Atau annualized: ~12-13% per tahun
+
+**Tantangan Buy and Hold:**
+Secara psikologis SANGAT sulit. Saat IHSG turun 40% (2020), banyak investor jual di bawah. Yang tetap hold dan even buy more di puncak krisis, hasilnya luar biasa setahun kemudian.
+
+**Kapan HARUS Jual:**
+1. Fundamental perusahaan berubah buruk secara permanen
+2. Ada alternatif investasi yang jauh lebih baik
+3. Target price tercapai dan valuasi sudah sangat mahal
+4. Kebutuhan dana yang mendesak` },
+
+      { id:"m4l5", title:"Dollar Cost Averaging (DCA)", dur:"9 mnt",
+        content:`DCA adalah strategi investasi rutin dengan jumlah tetap secara berkala, tanpa peduli kondisi pasar saat itu.
+
+**Cara Kerja DCA:**
+Misal investasi Rp1 juta/bulan ke BBCA:
+
+Bulan 1 (harga Rp9.000): beli 111 lembar
+Bulan 2 (harga Rp8.000): beli 125 lembar (lebih banyak saat murah!)
+Bulan 3 (harga Rp9.500): beli 105 lembar
+Bulan 4 (harga Rp10.000): beli 100 lembar
+
+Total: 4 juta investasi, total 441 lembar
+Harga rata-rata beli: 4.000.000 ÷ 441 = Rp9.070
+
+Harga rata-rata pasarnya: (9000+8000+9500+10000)÷4 = Rp9.125
+DCA berhasil membeli lebih murah dari rata-rata harga pasar!
+
+**Keunggulan DCA:**
+- Menghilangkan tekanan timing the market
+- Disiplin membeli lebih banyak saat harga murah (secara otomatis)
+- Cocok untuk semua orang, terutama yang baru mulai
+- Bisa dieksekusi bersamaan dengan gajian
+
+**Kelemahan DCA:**
+- Jika pasar terus naik tanpa koreksi, DCA kurang optimal vs lump sum
+- Butuh komitmen dan konsistensi jangka panjang
+
+**DCA yang Optimal:**
+- Pilih instrumen fundamental kuat (IHSG ETF, saham LQ45)
+- Tetapkan tanggal tetap (misalnya tanggal 25 tiap bulan = setelah gajian)
+- JANGAN berhenti saat pasar turun — justru saat terbaik untuk akumulasi
+- Minimal komitmen 3–5 tahun untuk hasil optimal
+
+**Simulasi Power DCA:**
+Rp500.000/bulan ke instrumen dengan return 12%/tahun selama 20 tahun:
+Total investasi: Rp120 juta
+Total aset: ±Rp494 juta
+Keuntungan: +312%!` },
+
+      { id:"m4l6", title:"Diversifikasi Portofolio", dur:"10 mnt",
+        content:`"Don't put all your eggs in one basket" — prinsip diversifikasi yang terbukti melindungi investor dari kerugian catastrophic.
+
+**Apa Itu Diversifikasi:**
+Menyebar investasi ke berbagai aset yang tidak berkorelasi sempurna satu sama lain, sehingga ketika satu aset turun, yang lain tidak ikut turun (atau turun lebih sedikit).
+
+**Diversifikasi Saham:**
+
+Per Saham
+Jangan lebih dari 20–25% di satu saham. Idealnya 8–15 saham berbeda.
+
+Per Sektor
+Hindari terlalu terkonsentrasi di satu sektor. Jika TLKM, Indosat, dan XL semua dalam satu portofolio → over-concentrated di telekomunikasi.
+
+Per Ukuran (Market Cap)
+Campuran large cap (aman, stabil) dan mid/small cap (lebih volatile tapi potensi growth lebih besar).
+
+**Diversifikasi Antar Kelas Aset:**
+- 60–70% saham + 20–30% obligasi/reksa dana + 10% kas = konservatif
+- 80–90% saham + 10–20% obligasi = moderat
+- 90–100% saham = agresif (untuk horizon panjang, risk appetite tinggi)
+
+**Emas sebagai Diversifier:**
+Emas sering bergerak berlawanan dengan saham dalam kondisi krisis → perlindungan portfolio yang efektif. Alokasi 5–10% ke emas sudah cukup.
+
+**Bahaya Over-Diversifikasi:**
+Terlalu banyak saham (50+) membuat:
+- Sulit monitor semua perusahaan
+- Return mendekati indeks tapi dengan biaya lebih tinggi
+- Lebih baik beli ETF indeks saja
+
+**Korrelasi Antar Aset:**
+Saham vs Obligasi: negatif saat suku bunga naik
+Saham vs Emas: sering negatif saat krisis pasar
+Saham Indonesia vs Saham Global: korelasi moderat (0,5–0,7)` },
+
+      { id:"m4l7", title:"Manajemen Risiko Dasar", dur:"9 mnt",
+        content:`Investor sukses bukan yang tidak pernah rugi, tapi yang bisa membatasi kerugian dan tetap eksis untuk bertarung kembali.
+
+**Prinsip 1: Hanya Investasikan Uang yang Tidak Dibutuhkan dalam 5 Tahun**
+Jangan investasikan dana darurat, dana pendidikan anak tahun depan, atau biaya pernikahan bulan depan. Jika terpaksa jual saat pasar sedang turun → kerugian nyata.
+
+**Prinsip 2: Buat Dana Darurat Terlebih Dulu**
+Minimal 3–6 bulan pengeluaran di rekening tabungan atau reksa dana pasar uang yang liquid.
+
+**Prinsip 3: Posisi Sizing**
+Tentukan % maksimal untuk satu saham:
+- Pemula: max 10% per saham → minimal 10 saham berbeda
+- Menengah: max 15–20% per saham
+
+Contoh: Portofolio Rp10 juta
+- Max per saham: Rp1 juta (10%)
+- Idealnya: 5–10 saham berbeda
+
+**Prinsip 4: Stop Loss**
+Tentukan batas rugi yang bisa Anda toleransi sebelum keluar posisi.
+Contoh: jika saham turun 15% dari harga beli → jual otomatis.
+Disiplin stop loss mencegah "averaging down" pada saham yang fundamentalnya memburuk.
+
+**Prinsip 5: Jangan Gunakan Hutang / Margin**
+Leverage memperbesar keuntungan DAN kerugian. Untuk pemula, SELALU gunakan modal sendiri.
+
+**Prinsip 6: Review dan Rebalancing**
+Cek portofolio minimal per kuartal:
+- Ada saham yang fundamentalnya berubah?
+- Ada saham yang sudah terlalu mendominasi portofolio (>25%)?
+- Apakah asset allocation masih sesuai tujuan?
+
+**Prinsip 7: Belajar dari Kesalahan**
+Catat jurnal setiap keputusan: alasan beli, target, realisasi. Review berkala agar tidak ulangi kesalahan yang sama.` },
+
+      { id:"m4l8", title:"Dividen — Penghasilan Pasif dari Saham", dur:"9 mnt",
+        content:`Dividen adalah bagian laba perusahaan yang dibagikan kepada pemegang saham — penghasilan pasif yang nyata tanpa harus jual saham.
+
+**Cara Kerja Dividen:**
+1. Perusahaan menghasilkan laba bersih
+2. RUPS memutuskan berapa % laba yang dibagi sebagai dividen (payout ratio)
+3. Dividen diumumkan (Cum Date — batas terakhir kepemilikan)
+4. Ex-Date: hari berikutnya, saham sudah tidak berhak dividen
+5. Recording Date: pencatatan pemegang saham berhak dividen
+6. Payment Date: dividen masuk ke RDN Anda
+
+**Tanggal Kunci:**
+Anda HARUS membeli saham SEBELUM ex-date untuk mendapatkan dividen.
+Setelah ex-date, harga saham biasanya turun ~sebesar dividen yang dibagikan.
+
+**Dividend Yield = Dividen per Saham ÷ Harga Saham × 100%**
+Contoh: BBRI harga Rp5.000, dividen Rp250 per saham
+Dividend yield = 250/5.000 × 100% = 5%
+
+**Saham Dividen Konsisten di BEI:**
+- BBCA: dividend yield 1–2% (payout ratio rendah tapi pertumbuhan kuat)
+- BBRI: dividend yield 4–6%
+- UNVR: dividend yield 4–8% (payout ratio hampir 100%)
+- TLKM: dividend yield 4–6%
+- SMGR: dividend yield bervariasi
+
+**Pajak Dividen:**
+Dividen dikenakan PPh Final 10% (untuk investor lokal). Dipotong langsung sebelum masuk ke rekening Anda.
+
+**Strategi Dividend Investing:**
+Kumpulkan saham-saham dengan yield 4–7% dan pertumbuhan dividen konsisten. Reinvest dividen untuk compounding. Jangka panjang 20+ tahun, strategi ini bisa menghasilkan passive income yang signifikan.` },
+
+      { id:"m4l9", title:"Membaca Chart Saham Dasar", dur:"10 mnt",
+        content:`Membaca grafik harga saham adalah skill dasar yang perlu dimiliki setiap investor untuk melihat konteks pergerakan harga.
+
+**Jenis Chart:**
+
+Line Chart
+Hanya menghubungkan harga penutupan. Paling sederhana, cocok untuk melihat tren jangka panjang.
+
+Bar Chart (OHLC)
+Open, High, Low, Close dalam satu bar. Lebih informatif dari line chart.
+
+Candlestick Chart
+Paling populer di Indonesia. Setiap "lilin" menunjukkan:
+- Body: range antara harga buka dan tutup
+- Upper Shadow (ekor atas): harga tertinggi dalam periode
+- Lower Shadow (ekor bawah): harga terendah dalam periode
+- Hijau/Putih: harga tutup > buka (bullish)
+- Merah/Hitam: harga tutup < buka (bearish)
+
+**Timeframe:**
+- Intraday (1 menit, 5 menit, 1 jam): untuk trader aktif
+- Harian: paling populer untuk swing trader dan investor
+- Mingguan/Bulanan: untuk investor jangka panjang — filter noise harian
+
+**Pola Candlestick Dasar:**
+- Doji: open = close, ketidakpastian pasar
+- Hammer: ekor panjang di bawah, body kecil di atas → potensi reversal bullish
+- Shooting Star: kebalikan hammer → potensi reversal bearish
+- Bullish Engulfing: candle hijau besar "menelan" candle merah sebelumnya → bullish
+- Bearish Engulfing: kebalikannya → bearish
+
+**Volume:**
+SELALU konfirmasi dengan volume. Breakout naik dengan volume besar = lebih valid. Breakout naik tapi volume sepi = kurang meyakinkan, bisa false breakout.
+
+**Cara Membaca Tren Sederhana:**
+Uptrend: serangkaian higher high dan higher low
+Downtrend: serangkaian lower high dan lower low
+Sideways: harga bergerak dalam range horizontal` },
+
+      { id:"m4l10", title:"Membangun Kebiasaan Investasi", dur:"8 mnt",
+        content:`Investasi bukan tentang satu keputusan besar — tapi tentang kebiasaan kecil yang konsisten selama bertahun-tahun.
+
+**Kebiasaan #1: Pay Yourself First**
+Setiap gajian, langsung transfer jumlah yang sudah ditentukan ke RDN atau rekening investasi — SEBELUM belanja apapun. Otomatis, konsisten, tidak tergoda.
+
+**Kebiasaan #2: Belajar Rutin (30 Menit/Hari)**
+Baca laporan keuangan, ikuti berita bisnis relevan, pelajari konsep baru. Dalam 5 tahun Anda akan memiliki keunggulan besar dibanding investor yang tidak belajar.
+
+**Kebiasaan #3: Monitor Tanpa Obsesi**
+Cek portofolio 1x per minggu (investor), bukan 10x per hari. Sering cek justru mendorong keputusan emosional.
+
+**Kebiasaan #4: Review Berkala**
+Kuartal: cek laporan keuangan terbaru perusahaan yang dimiliki
+Tahunan: evaluasi total portofolio, rebalancing jika perlu
+
+**Kebiasaan #5: Jurnal Investasi**
+Catat: saham apa, berapa, harga berapa, alasan beli, target harga, cut loss level.
+Review: apakah thesis investasi masih valid? Apa yang berhasil? Apa yang gagal?
+
+**Kebiasaan #6: Network dengan Investor Lain**
+Bergabung dengan komunitas investasi yang sehat (bukan grup pump and dump).
+Diskusi, berbagi perspektif, belajar dari pengalaman orang lain.
+
+**Mengatasi Hambatan:**
+"Tidak punya uang untuk investasi": mulai dari Rp100.000/bulan
+"Tidak punya waktu": DCA otomatis + review kuartalan = 2 jam/bulan
+"Tidak mengerti": mulai dari buku/course, community, perlahan akan paham
+"Takut rugi": mulai dengan jumlah kecil yang tidak mengganggu emosi
+
+**Kalimat Pengingat:**
+"Waktu terbaik untuk mulai investasi adalah 20 tahun lalu. Waktu terbaik kedua adalah hari ini."` },
+    ]
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // MODUL 5 — ANALISIS RUMUS WARREN BUFFETT
+  // ══════════════════════════════════════════════════════════════════════════════
+  {
+    id:"m5", num:5, level:"Lanjutan", icon:"🔮",
+    title:"Analisis Rumus Warren Buffett",
+    desc:"Prinsip dan metode investasi Warren Buffett yang telah terbukti selama 60+ tahun.",
+    color:"#ef4444",
+    lessons:[
+      { id:"m5l1", title:"Filosofi Investasi Buffett", dur:"10 mnt",
+        content:`Warren Buffett, dengan kekayaan >$100 miliar, membangunnya hampir seluruhnya melalui investasi saham selama 60+ tahun. Memahami filosofinya adalah landasan penting.
+
+**Filosofi Inti:**
+"Jadilah rakus saat orang lain takut, dan takut saat orang lain rakus."
+"Harga adalah apa yang Anda bayar. Nilai adalah apa yang Anda dapatkan."
+"Rule #1: Never lose money. Rule #2: Never forget Rule #1."
+"Waktu terbaik untuk menjual saham bagus adalah... tidak pernah."
+
+**Pengaruh Benjamin Graham:**
+Guru Buffett, penulis "The Intelligent Investor." Mengajarkan:
+- Mr. Market: pasar seperti orang dengan gangguan mood — kadang terlalu optimis (menawarkan harga terlalu tinggi), kadang terlalu pesimis (menawarkan harga terlalu murah). Tugas investor: manfaatkan, jangan ikuti emosi Mr. Market.
+- Margin of Safety: selalu beli jauh di bawah nilai intrinsik sebagai bantalan keamanan.
+
+**Evolusi Buffett:**
+Fase 1 (Graham era): beli saham sangat murah secara kuantitatif (net-net stocks — harga di bawah nilai aset bersih)
+Fase 2 (Charlie Munger influence): beli perusahaan LUAR BIASA dengan harga WAJAR, daripada beli perusahaan biasa dengan harga sangat murah
+
+**4 Kriteria Utama Buffett:**
+1. Bisnis yang bisa dipahami (Circle of Competence)
+2. Prospek jangka panjang yang menguntungkan (Economic Moat)
+3. Manajemen yang jujur dan kompeten
+4. Harga yang menarik (Margin of Safety)` },
+
+      { id:"m5l2", title:"Economic Moat — Keunggulan Kompetitif", dur:"12 mnt",
+        content:`Economic Moat adalah keunggulan kompetitif berkelanjutan yang melindungi perusahaan dari serangan pesaing — seperti parit yang melindungi kastil.
+
+**5 Jenis Economic Moat:**
+
+1. Intangible Assets (Aset Tak Berwujud)
+Brand yang sangat kuat, paten, lisensi regulasi.
+Contoh IDX: UNVR (brand Rinso, Pepsodent — konsumen loyal meski produk lebih mahal), perusahaan farmasi berlisensi BPOM
+Tanda kuat: gross margin stabil tinggi meski ada pesaing baru
+
+2. Cost Advantage (Keunggulan Biaya)
+Bisa produksi lebih murah dari pesaing secara struktural.
+Contoh IDX: ADRO (lokasi tambang dekat pelabuhan → biaya logistik lebih rendah), INDF (skala produksi terbesar)
+Tanda kuat: margins tetap tinggi meski harga jual turun
+
+3. Network Effect (Efek Jaringan)
+Semakin banyak pengguna → produk semakin bernilai → pesaing semakin susah masuk.
+Contoh IDX: GoTo (ekosistem Gojek + Tokopedia), BBCA (semakin banyak merchant terima BCA → semakin banyak nasabah BCA → semakin banyak merchant)
+Tanda kuat: user growth memperkuat unit economics
+
+4. Switching Costs (Biaya Beralih)
+Pelanggan enggan berpindah karena mahal atau repot.
+Contoh IDX: software perbankan (nasabah tidak mudah pindah bank karena semua rekening terhubung), ERP system korporasi
+Tanda kuat: churn rate rendah, customer lifetime value tinggi
+
+5. Efficient Scale (Skala Efisien)
+Pasar terbatas yang tidak ekonomis dimasuki pesaing baru.
+Contoh IDX: JSMR (tol tertentu — tidak ekonomis bangun jalan alternatif), PGAS (infrastruktur gas pipa)
+
+**Mengidentifikasi Moat dengan Angka:**
+- ROE konsisten >15% selama 10 tahun → ada moat
+- ROIC > WACC secara konsisten → value creation
+- Gross margin stabil atau meningkat meski ada tekanan persaingan
+- Pricing power: bisa naikkan harga tanpa kehilangan signifikan pelanggan` },
+
+      { id:"m5l3", title:"Menghitung Nilai Intrinsik (Buffett Style)", dur:"14 mnt",
+        content:`Buffett menggunakan konsep "owner's earnings" dan diskonto aliran kas untuk menentukan nilai bisnis.
+
+**Owner's Earnings (Buffett Formula):**
+Owner's Earnings = Net Income + Depreciation + Amortization − CAPEX − Working Capital needs
+
+Konsep: berapa uang nyata yang bisa "diambil" pemilik dari bisnis setiap tahun tanpa merusak kemampuan bisnis menghasilkan uang di masa depan.
+
+**Metode Sederhana Buffett (Intrinsic Value):**
+1. Hitung EPS (Earnings Per Share) saat ini
+2. Proyeksikan pertumbuhan EPS 10 tahun ke depan
+3. Proyeksikan P/E terminal (di tahun ke-10)
+4. Hitung present value dengan discount rate 10–12%
+
+Contoh (Perusahaan Fiktif "BAGUS Tbk"):
+- EPS saat ini: Rp500
+- Proyeksi pertumbuhan EPS: 12%/tahun selama 10 tahun
+- EPS tahun ke-10: 500 × (1,12)^10 = Rp1.552
+- P/E terminal yang wajar: 15x
+- Harga saham proyeksi tahun ke-10: 1.552 × 15 = Rp23.280
+- Present value (diskon 10%): 23.280 ÷ (1,10)^10 = Rp8.978
+- Tambah present value dividen yang diterima: misal Rp1.200
+- Total Nilai Intrinsik: ≈ Rp10.178
+
+Jika harga pasar saat ini Rp7.000 → margin of safety = (10.178−7.000)/10.178 = 31% → menarik!
+
+**Faktor Penentu Keakuratan Valuasi:**
+Asumsi growth rate paling sensitif. Naik/turun 2% bisa mengubah valuasi drastis.
+Selalu gunakan skenario konservatif, normal, dan optimis.
+Margin of safety >30% adalah minimum aman.` },
+
+      { id:"m5l4", title:"Margin of Safety", dur:"10 mnt",
+        content:`Margin of Safety adalah konsep paling penting dari Benjamin Graham yang diadopsi Buffett — membeli saham jauh di bawah nilai intrinsiknya sebagai bantalan keamanan.
+
+**Mengapa Margin of Safety Kritis:**
+Valuasi bukan ilmu pasti. Asumsi bisa salah. Kejadian tak terduga bisa terjadi. Margin of Safety memberi ruang untuk kesalahan analisis, ketidakpastian masa depan, dan faktor tak terduga.
+
+**Formula Margin of Safety:**
+MoS = (Nilai Intrinsik − Harga Pasar) ÷ Nilai Intrinsik × 100%
+
+Contoh:
+Nilai intrinsik BAGUS Tbk: Rp10.000
+Harga pasar: Rp7.000
+MoS = (10.000 − 7.000) ÷ 10.000 = 30% → AMAN untuk beli
+
+Buffett biasanya menginginkan MoS minimal 30–40% untuk saham yang kurang familiar, dan 20–25% untuk bisnis yang sangat dipahami dan berkualitas tinggi.
+
+**Mengapa Bisnis Bagus Bisa Jual Murah:**
+- Market crash / bear market (seluruh pasar turun)
+- Temporary bad news (skandal yang tidak mempengaruhi fundamental jangka panjang)
+- Saham di-cover sedikit analis (underfollowed stock)
+- Sentimen negatif terhadap sektornya (bukan perusahaannya)
+- Spin-off atau corporate restructuring yang membingungkan investor
+
+**Trap: Value Trap**
+Saham murah bisa tetap murah untuk selamanya jika:
+- Bisnis memang sedang dalam penurunan struktural
+- Manajemen tidak kompeten atau tidak honest
+- Industry yang sedang disrupted tanpa respons
+
+Bedakan: murah karena sentimen (peluang) vs murah karena fundamental memburuk (jebakan).
+
+**Aplikasi Praktis:**
+Buat target beli (buy price) untuk setiap saham yang diincar dengan margin of safety 25–35% dari nilai intrinsik. Pasang alert harga. Tunggu dengan sabar. Buffett menunggu bertahun-tahun untuk harga yang tepat.` },
+
+      { id:"m5l5", title:"Circle of Competence", dur:"9 mnt",
+        content:`"Investasi dalam Circle of Competence Anda — dan perluas lingkarannya secara perlahan."
+
+**Apa Itu Circle of Competence:**
+Area bisnis dan industri yang benar-benar Anda mengerti secara mendalam — bagaimana mereka menghasilkan uang, apa yang membuat mereka berhasil atau gagal, faktor kompetisi, dan prospek masa depan.
+
+**Mengapa Penting:**
+Buffett menolak teknologi selama puluhan tahun bukan karena bodoh, tapi karena jujur bahwa dia tidak bisa memprediksi siapa pemenang kompetisi teknologi 10 tahun ke depan. Dia sangat paham bisnis asuransi, perbankan, dan consumer goods — di sanalah dia berinvestasi besar.
+
+**Identifikasi Circle of Competence Anda:**
+- Industri tempat Anda bekerja
+- Produk dan jasa yang Anda gunakan sehari-hari dan pahami
+- Bisnis yang sudah Anda pelajari selama beberapa tahun
+- Sektor yang Anda ikuti perkembangannya secara rutin
+
+**Contoh Konkret:**
+Seorang dokter mungkin lebih paham industri farmasi dan healthcare daripada rata-rata investor. Leverage pengetahuan ini!
+Seorang banker mungkin lebih paham perbankan dan keuangan.
+Seorang engineer mungkin lebih paham teknologi dan manufaktur.
+
+**"Know What You Know":**
+Ujian sederhana: bisakah Anda menjelaskan bagaimana bisnis ini menghasilkan uang, mengapa pelanggan memilih mereka dibanding pesaing, dan apa 3 risiko terbesar yang bisa menghancurkan bisnis ini — dalam 5 menit?
+
+Jika tidak bisa → di luar Circle of Competence Anda saat ini.
+
+**Memperluas Circle:**
+Belajar satu industri baru per tahun secara mendalam. Baca annual report, ikuti konferensi industri, bicara dengan orang yang bekerja di sana.` },
+
+      { id:"m5l6", title:"Kriteria Manajemen Berkualitas Buffett", dur:"10 mnt",
+        content:`"Invest in a business so good that an idiot could run it, because eventually one will." — Tapi lebih baik lagi jika manajemennya juga luar biasa.
+
+**Mengapa Manajemen Sangat Penting:**
+Bisnis terbaik pun bisa dihancurkan oleh manajemen buruk. Manajemen yang baik dengan bisnis mediocre bisa menciptakan nilai luar biasa.
+
+**4 Ciri Manajemen Berkualitas (Buffett Standard):**
+
+1. Rasional dalam Alokasi Modal
+Apakah keputusan CAPEX, akuisisi, dan dividen dilakukan dengan rasional?
+Red flag: akuisisi overpriced hanya untuk kejar revenue, CAPEX berlebihan tanpa return jelas.
+Green flag: share buyback saat saham murah, dividen yang berkelanjutan, akuisisi dengan harga masuk akal.
+
+2. Jujur dan Transparan
+Apakah manajemen mengakui kesalahan dengan jujur dalam laporan tahunan?
+Apakah mereka memberi panduan yang realistis (bukan selalu optimis)?
+Green flag: shareholder letter yang jujur mengakui tantangan.
+Red flag: selalu salahkan faktor eksternal, tidak pernah mengakui kesalahan.
+
+3. Orientasi Pemegang Saham (Shareholder-Oriented)
+Insider ownership tinggi (>5%): manajemen punya skin in the game
+Tidak sembarangan terbitkan saham baru yang dilutif
+Tidak bayar gaji/bonus berlebihan untuk diri sendiri
+
+4. Melawan Keinginan Institusional (Institutional Imperative)
+Banyak CEO ikut-ikutan kompetitor tanpa pikir panjang (diversifikasi tanpa logika, ikut tren sesaat).
+Manajemen berkualitas: punya keyakinan sendiri, tidak ikut-ikutan, fokus pada kekuatan inti.
+
+**Cara Riset Manajemen:**
+Baca 5 tahun Annual Report terutama bagian Direktur → perhatikan konsistensi antara yang dikatakan dan hasil aktual.
+Cek insider ownership di laporan ke OJK.
+Ikuti konferensi call (earnings call) dan perhatikan kualitas jawaban.` },
+
+      { id:"m5l7", title:"Saham vs Obligasi — Pendekatan Buffett", dur:"9 mnt",
+        content:`Buffett memiliki cara unik dalam membandingkan saham dengan obligasi untuk menentukan apakah saham menarik secara relatif.
+
+**Equity Bond Concept:**
+Buffett memperlakukan saham berkualitas tinggi seperti obligasi dengan "kupon" yang tumbuh.
+Obligasi: kupon tetap, harga berfluktuasi sesuai suku bunga
+"Equity Bond": "kupon" = EPS, tumbuh setiap tahun jika bisnis berkembang
+
+**Earnings Yield:**
+Earnings Yield = EPS ÷ Harga Saham = 1 ÷ P/E
+
+Jika P/E = 15x → Earnings Yield = 1/15 = 6,67%
+Bandingkan dengan yield obligasi pemerintah 10 tahun.
+Jika yield obligasi 5% dan earnings yield 6,67% → saham lebih menarik
+Jika yield obligasi 8% dan earnings yield 5% → obligasi lebih menarik
+
+**Buffett Indicator:**
+Total Market Cap / GDP → jika >1 (atau >100%), pasar dianggap overvalued.
+Indikator ini Buffett sebut sebagai "the best single measure of where valuations stand at any given moment."
+
+**Kapan Buffett Pilih Cash vs Saham:**
+Berkshire Hathaway kadang memilih menumpuk cash (pernah >$140 miliar) ketika:
+- Tidak ada saham yang menarik dengan margin of safety cukup
+- Suku bunga tinggi (yield T-bills 5%+ = kompetitif dengan saham)
+- Pasar sedang euphoria (valuasi sangat tinggi)
+
+**Implikasi untuk Investor Indonesia:**
+Bandingkan IHSG earnings yield vs yield SBN 10 tahun.
+Jika earnings yield IHSG < yield SBN → saham kurang menarik relatif.
+Ini framework kasar tapi berguna untuk keputusan alokasi aset.` },
+
+      { id:"m5l8", title:"Strategi Konsentrasi vs Diversifikasi ala Buffett", dur:"9 mnt",
+        content:`Buffett dan Munger terkenal dengan pandangan yang berlawanan dari teori modern portfolio — mereka lebih suka konsentrasi daripada diversifikasi berlebihan.
+
+**Pandangan Buffett tentang Diversifikasi:**
+"Diversification is protection against ignorance. It makes little sense if you know what you are doing."
+— Jika Anda tahu apa yang Anda lakukan, konsentrasi di ide terbaik Anda menghasilkan hasil lebih baik.
+
+**Praktik Nyata di Berkshire Hathaway:**
+Top 5 holdings Berkshire sering mewakili 60–70% portofolio saham.
+AAPL pada puncaknya >40% portofolio saham Berkshire.
+
+**Mengapa Konsentrasi Bisa Lebih Baik:**
+- Ide bagus langka → ketika menemukan yang bagus, investasikan besar
+- Diversifikasi berlebihan "mengencerkan" keunggulan kompetitif analisis Anda
+- Monitoring 10 saham jauh lebih baik dari monitoring 50 saham
+
+**Kapan Konsentrasi Tepat:**
+- Anda sangat yakin dengan analisis Anda
+- Bisnis yang sangat dipahami dan dipercaya
+- Valuasi sangat menarik (margin of safety besar)
+- Horizon investasi panjang (5–10+ tahun)
+
+**Kapan Diversifikasi Lebih Tepat:**
+- Investor pemula (belum cukup pengalaman)
+- Kurang waktu untuk riset mendalam per saham
+- Risk tolerance rendah
+- Tidak yakin dengan kemampuan analisis
+
+**Rekomendasi Praktis:**
+Pemula: diversifikasi luas dulu (10–15 saham atau ETF indeks).
+Menengah: 8–12 saham, max 25% per saham.
+Mahir: 5–8 saham, konsentrasi di posisi paling meyakinkan.
+
+Buffett: "Put all your eggs in one basket, but watch that basket very carefully."` },
+
+      { id:"m5l9", title:"Membaca Surat Tahunan Buffett", dur:"10 mnt",
+        content:`Surat tahunan Berkshire Hathaway kepada pemegang saham adalah salah satu dokumen investasi paling berharga — tersedia gratis dan penuh wisdom.
+
+**Mengapa Berkshire Annual Letter Unik:**
+- Ditulis langsung oleh Buffett dengan bahasa sederhana tapi dalam
+- Jujur mengakui kesalahan (bukan hanya merayakan keberhasilan)
+- Mengajarkan konsep bisnis dan investasi dengan contoh nyata
+- Konsisten sejak 1965 — 60+ tahun perspektif
+
+**Konsep-Konsep Kunci dari Annual Letters:**
+
+1. Float Asuransi (Insurance Float)
+Bisnis asuransi Berkshire menghasilkan "free money" — premi yang diterima sebelum klaim dibayar. Uang ini bisa diinvestasikan. Buffett menyebut ini sebagai salah satu kunci keberhasilan Berkshire.
+
+2. Look-Through Earnings
+Laba "sesungguhnya" Berkshire lebih besar dari yang tercatat, karena perusahaan-perusahaan yang dimiliki menahan sebagian laba untuk tumbuh (tidak semua dibagikan dividen). Look-through earnings memasukkan porsi proporsional laba yang ditahan ini.
+
+3. Return on Retained Earnings
+"Setiap dolar yang ditahan manajemen harus menghasilkan minimal satu dolar nilai bagi pemegang saham." Jika tidak, lebih baik dibagikan sebagai dividen.
+
+4. Accounting Goodwill vs Economic Goodwill
+Accounting goodwill tergerus oleh amortisasi. Economic goodwill (kekuatan brand, loyalitas pelanggan) justru bisa tumbuh.
+
+**Cara Membaca:**
+Baca dari yang terlama dulu (1977) untuk memahami evolusi pemikiran. Fokus pada penjelasan konsep, bukan angka spesifik yang sudah dated. Catat quote yang paling bermakna untuk Anda.
+
+Sumber: berkshirehathaway.com/letters/letters.html` },
+
+      { id:"m5l10", title:"Menerapkan Prinsip Buffett di BEI", dur:"12 mnt",
+        content:`Prinsip Buffett bisa diterapkan di pasar saham Indonesia — dengan penyesuaian untuk konteks lokal.
+
+**Screening Saham ala Buffett di BEI:**
+
+Langkah 1: Filter Kuantitatif
+- ROE >15% selama minimal 5 tahun
+- DER <2 (kecuali bank)
+- Revenue tumbuh >8% per tahun
+- Net margin stabil atau meningkat
+- FCF positif selama minimal 3 tahun berturut-turut
+
+Langkah 2: Cek Moat
+- Brand kuat: apakah produknya dikenal luas dan dipercaya?
+- Market share: apakah dominan di segmennya?
+- Switching cost: seberapa mudah pelanggan pindah ke kompetitor?
+- Pricing power: apakah bisa naikkan harga tanpa kehilangan pelanggan?
+
+Langkah 3: Analisis Manajemen
+- Baca 5 tahun annual report: apakah manajemen deliver apa yang dijanjikan?
+- Insider ownership: berapa persen saham dipegang manajemen/founder?
+- Kebijakan dividen dan capital allocation
+
+Langkah 4: Valuasi
+- Hitung nilai intrinsik (DCF sederhana atau earnings-based)
+- Cari margin of safety minimal 25–30%
+- Bandingkan EV/EBITDA dengan rata-rata historis dan peers
+
+**Contoh Kandidat Buffett di BEI (Riset Sendiri Dulu):**
+BBCA: moat kuat (network effect, brand), ROE 18%, manajemen excellent
+UNVR: brand moat, FCF konsisten (meski pertumbuhan lambat)
+SIDO: produk herbal dengan brand kuat (Tolak Angin, dll), ROE >30%, net cash
+
+**Perbedaan Indonesia vs AS:**
+- Governance lebih perlu diwaspadai (transparansi lebih rendah)
+- Keluarga pendiri sering control → waspadai konflik kepentingan
+- Market lebih efisien di large cap, tapi less efficient di mid-small cap
+- Keuntungan: banyak saham bagus dengan P/E lebih rendah dari AS` },
+    ]
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // MODUL 6 — KEJATUHAN PASAR (MARKET CRASH)
+  // ══════════════════════════════════════════════════════════════════════════════
+  {
+    id:"m6", num:6, level:"Menengah", icon:"🌊",
+    title:"Kejatuhan Pasar (Market Crash)",
+    desc:"Memahami, mengantisipasi, dan memanfaatkan crash pasar sebagai investor cerdas.",
+    color:"#dc2626",
+    lessons:[
+      { id:"m6l1", title:"Anatomi Market Crash", dur:"11 mnt",
+        content:`Market crash adalah penurunan harga saham yang tajam, cepat, dan luas — umumnya >20% dari puncak dalam waktu singkat.
+
+**Definisi dan Skala:**
+Koreksi: turun 10–20% dari puncak — normal, terjadi 1–2x per tahun
+Bear Market: turun >20% dari puncak — lebih serius, terjadi tiap beberapa tahun
+Crash: turun >20% dalam waktu sangat singkat (minggu/hari) — kurang umum tapi paling dramatis
+
+**Penyebab Umum Market Crash:**
+
+1. Fundamental Ekonomi
+Resesi, krisis perbankan, ledakan gelembung aset (tulip mania 1637, dot-com 2000, subprime mortgage 2008)
+
+2. Kejadian Tak Terduga (Black Swan)
+Pandemi COVID-19 (2020), serangan teroris 9/11 (2001), Fukushima nuclear disaster (2011)
+
+3. Krisis Kepercayaan
+Kebangkrutan institusi besar (Lehman Brothers 2008), fraud massal (Enron), default negara
+
+4. Contagion (Efek Penularan)
+Krisis di satu negara menyebar ke pasar global. Krisis Asia 1997/1998 bermula dari Thailand.
+
+5. Leverage Berlebihan
+Investor/lembaga berutang besar untuk beli aset → ketika harga turun, terpaksa jual paksa (margin call) → harga turun lebih jauh → spiral negatif
+
+**Karakteristik Crash:**
+- Volatilitas ekstrem (VIX melonjak >50)
+- Volume transaksi sangat tinggi
+- Korelasi antar aset mendekati 1 (semua turun bersama)
+- Panic selling yang masif dan irasional
+- Rumor dan fake news menyebar cepat` },
+
+      { id:"m6l2", title:"Sejarah Crash Pasar Dunia dan Indonesia", dur:"12 mnt",
+        content:`Mempelajari sejarah crash membantu investor tidak panik dan melihat pola yang berulang.
+
+**Crash Besar Dunia:**
+
+1. The Great Depression (1929–1932)
+Dow Jones turun 89% dari puncak. Pemicu: leverage berlebihan, kebijakan moneter ketat, proteksionisme perdagangan.
+Pelajaran: leverage ekstrem + bubble aset = resep bencana
+
+2. Crash Dot-Com (2000–2002)
+Nasdaq turun 78% dari puncak. Pemicu: valuasi internet company irasional (P/E ratusan kali, banyak tidak pernah profit).
+Pelajaran: harga tidak bisa jauh terpisah dari nilai fundamental selamanya
+
+3. Global Financial Crisis (2008–2009)
+S&P 500 turun 56% dalam 17 bulan. Pemicu: subprime mortgage bubble, leverage perbankan ekstrem, produk derivatif kompleks.
+Pelajaran: risiko sistemik tersembunyi di "produk aman" yang tidak dipahami siapapun
+
+4. COVID-19 Crash (Februari–Maret 2020)
+S&P 500 turun 34% dalam 33 hari — salah satu crash tercepat dalam sejarah. Recovery juga sangat cepat (5 bulan kembali ke puncak).
+Pelajaran: stimulus fiskal dan moneter masif bisa membalikkan pasar dengan cepat
+
+**Crash IHSG:**
+
+1997–1998: IHSG turun >65%, krisis moneter, rupiah melemah drastis
+2008: IHSG turun ~55%, contagion dari krisis global
+2013: turun ~25%, taper tantrum (Fed mulai kurangi stimulus)
+2015: turun ~20%, perlambatan ekonomi China + krisis commodity
+2020: turun ~38% dalam sebulan, COVID-19
+
+**Pattern yang Sama:**
+Setiap crash → kepanikan massal → recovery → IHSG kembali ke all-time high.
+Investor yang sabar dan tidak jual di bawah selalu menang dalam jangka panjang.` },
+
+      { id:"m6l3", title:"Tanda-Tanda Awal Market Crash", dur:"10 mnt",
+        content:`Tidak ada yang bisa memprediksi crash dengan pasti, tapi ada sinyal awal yang perlu diwaspadai.
+
+**Sinyal Valuasi:**
+
+Shiller CAPE Ratio (Cyclically Adjusted P/E)
+P/E berdasarkan rata-rata laba 10 tahun yang disesuaikan inflasi.
+CAPE >25: historical warning zone
+CAPE >35: sangat mahal, crash risk tinggi (jarang tapi perlu waspada)
+
+Buffett Indicator (Market Cap/GDP)
+>150%: sangat overvalued secara historis
+100–150%: fairly valued to moderately overvalued
+
+P/BV IHSG di atas +1 standar deviasi dari rata-rata historis: sinyal cautious
+
+**Sinyal Likuiditas:**
+Yield curve inversion: yield 10 tahun turun di bawah yield 2 tahun → sinyal resesi
+Credit spread melebar: obligasi korporasi yield naik cepat vs obligasi pemerintah
+Repo rate naik cepat → likuiditas mengering
+
+**Sinyal Sentiment/Behavior:**
+IPO volume sangat tinggi (perusahaan ramai-ramai masuk bursa saat pasar euforia)
+Retail investor masuk beramai-ramai (barber dan supir ojek bicarakan saham)
+Cover majalah bisnis ramai-ramai bullish
+Leverage/margin debt di level historis tertinggi
+
+**Sinyal Teknikal:**
+IHSG membentuk divergence bearish (harga new high tapi RSI tidak)
+Volume semakin turun saat pasar semakin naik (distribusi tersembunyi)
+Banyak saham mulai underperform saat indeks masih tinggi (breadth deterioration)
+
+**Penting:**
+Sinyal-sinyal ini TIDAK bisa digunakan untuk timing yang presisi. Pasar bisa tetap overvalued selama bertahun-tahun. Gunakan sebagai panduan mengurangi risiko, bukan untuk full exit dari pasar.` },
+
+      { id:"m6l4", title:"Strategi Saat Crash Terjadi", dur:"11 mnt",
+        content:`Saat crash terjadi, keputusan yang dibuat dalam hitungan hari bisa mempengaruhi kinerja investasi bertahun-tahun ke depan.
+
+**Yang TIDAK Boleh Dilakukan Saat Crash:**
+
+1. Panic Selling
+Menjual semua posisi saat pasar turun 30–40% adalah cara paling pasti untuk kehilangan uang. Anda "mengunci" kerugian yang seharusnya hanya sementara.
+
+2. Menunggu Pasar Kembali Normal Sebelum Beli
+"Saya akan beli lagi kalau pasar sudah stabil." Masalahnya: ketika pasar sudah "stabil" dan "aman," harga sudah naik signifikan.
+
+3. Menggunakan Margin
+Jika sudah menggunakan margin, margin call bisa memaksa jual di harga terburuk.
+
+4. Melihat Portofolio Terlalu Sering
+Cek portofolio tiap jam saat crash → keputusan emosional. Tetapkan aturan: max 1x per hari cek saat crash.
+
+**Yang HARUS Dilakukan Saat Crash:**
+
+1. Tetap Tenang — Ingat Sejarah
+IHSG selalu recovery. Pertanyaannya bukan "apakah akan naik lagi" tapi "kapan."
+
+2. Evaluasi Fundamental (Bukan Harga)
+Apakah bisnis perusahaan yang Anda hold berubah fundamental? Jika tidak, harga turun bukan alasan jual — malah kesempatan beli.
+
+3. Akumulasi Bertahap
+Jangan taruh semua peluru sekaligus. Beli 25% saat turun 20%, 25% lagi saat turun 30%, dst. Tidak ada yang tahu kapan bottom.
+
+4. Fokus pada Kualitas
+Saat crash, beli yang paling berkualitas dengan harga terdiskon. Mereka yang recovery pertama dan paling kuat.
+
+5. Jaga Cash untuk Peluang
+Jangan sudah full invested sebelum crash. Cash selalu bernilai saat semua aset "on sale."` },
+
+      { id:"m6l5", title:"Membangun Portofolio Tahan Crash", dur:"10 mnt",
+        content:`Portofolio yang baik dirancang untuk tahan banting saat crash, bukan hanya untuk performa saat bull market.
+
+**Karakteristik Portofolio Anti-Rapuh:**
+
+1. Diversifikasi Sektoral yang Tepat
+Saat crash, semua saham biasanya turun — tapi yang defensif turun lebih sedikit.
+Sektor defensif: consumer staples, healthcare, utilities, telekomunikasi
+Sektor siklikal: properti, otomotif, consumer discretionary — turun lebih dalam saat crash
+
+2. Kualitas Saham Tinggi
+Perusahaan dengan:
+- Net cash atau utang sangat rendah — tidak bangkrut saat krisis
+- FCF positif — terus hasilkan uang bahkan saat ekonomi sulit
+- Dividen konsisten — reward investor bahkan saat harga turun
+- Moat kuat — laba tidak anjlok sebesar perusahaan tanpa moat
+
+3. Alokasi Aset Berimbang
+Saham 70% + Obligasi 20% + Kas 10%
+Saat saham turun 40%, portofolio total mungkin turun hanya 25–28% karena buffer obligasi dan kas.
+
+4. Menghindari Leverage
+Leverage adalah "pembunuh terbesar" investor saat crash.
+
+5. Cash Reserve
+Selalu pertahankan 10–20% kas untuk "dry powder" — siap digunakan saat crash menciptakan peluang luar biasa.
+
+6. Dollar Cost Averaging
+Investasi rutin otomatis → otomatis beli lebih banyak saat harga murah (crash) tanpa perlu keputusan emosional.
+
+**Mental Framework:**
+Anggap crash sebagai "sale besar" di toko favorit Anda. Barang bagus yang kemarin Rp100.000 sekarang dijual Rp60.000 — Anda beli lebih banyak atau panik dan tidak beli?` },
+
+      { id:"m6l6", title:"Psikologi Investor Saat Krisis", dur:"10 mnt",
+        content:`Krisis menguji mental investor lebih keras dari kondisi pasar normal manapun. Mempersiapkan diri secara psikologis adalah kunci.
+
+**Siklus Emosi Saat Crash:**
+Denial → "pasti ini cuma koreksi sementara"
+Fear → "saya harus jual sebelum turun lebih jauh"
+Desperation → "saya harus recover kerugian ini dengan cepat"
+Panic → "jual semuanya, saya tidak mau lihat angka merah lagi"
+Capitulation → jual di harga terendah
+Depression → "investasi saham memang tidak untuk saya"
+Hope → "mungkin sudah mulai recovery?"
+Relief → "portofolio sudah hampir pulih"
+Optimism → kembali beli (di harga lebih tinggi dari saat panic sell)
+
+Investor yang selamat melewati semua tahap tanpa panic sell = investor sejati.
+
+**Mengapa Otak Kita Tidak Cocok untuk Investasi:**
+Evolusi membuat otak kita sangat sensitif terhadap ancaman dan kerugian (loss aversion).
+Melihat portofolio turun 30% memicu respons "fight or flight" yang sama dengan ancaman predator.
+Keputusan finansial yang diambil dalam kondisi stres cenderung sangat buruk.
+
+**Strategi Psikologis:**
+
+1. Pre-Commitment
+Tulis aturan investasi saat kondisi pasar normal. "Jika IHSG turun >20%, saya akan tambah investasi, bukan jual."
+
+2. Reframe Perspektif
+Jangan lihat angka rupiah merah. Lihat "jumlah lot yang dimiliki" — tidak berubah karena crash. Bahkan bertambah jika Anda DCA.
+
+3. Batasi Input Negatif
+Kurangi frekuensi cek portofolio. Unfollow berita pasar yang terus update angka penurunan.
+
+4. Komunitas Investor Sehat
+Lingkungan yang tepat membantu perspektif rasional saat panik kolektif.
+
+5. Jurnal Investasi
+Tulis alasan beli asli Anda. Saat crash, baca kembali — apakah alasannya masih valid?` },
+
+      { id:"m6l7", title:"Peluang Investasi Pasca-Crash", dur:"11 mnt",
+        content:`Crash menciptakan peluang terbaik untuk berinvestasi — bagi mereka yang mempersiapkan diri dan memiliki keberanian.
+
+**Mengapa Pasca-Crash adalah Waktu Terbaik:**
+Valuasi sangat murah — P/E, P/BV, dan EV/EBITDA di level historis terendah
+Dividen yield tinggi — harga turun tapi dividen per saham relatif tetap
+Sentimen sangat pesimis — contrarian opportunity terbaik
+Recovery dari crash historis selalu terjadi — cuma masalah waktu
+
+**Strategi Akumulasi Pasca-Crash:**
+
+1. Tunggu Stabilisasi (bukan bottom)
+Tidak perlu menangkap tepat di bottom. Mulai beli saat pasar mulai menunjukkan tanda-tanda stabilisasi (volume tidak terus melambung, beberapa hari tidak buat new low).
+
+2. Cicil Pembelian (Scaling In)
+Crash sering berlangsung bertahap. Cicil pembelian dalam beberapa tahap:
+- Tahap 1 (turun 20–25%): deploy 25% cash
+- Tahap 2 (turun 30–35%): deploy 25% lagi
+- Tahap 3 (turun 40%+): deploy sisa cash
+
+3. Fokus pada Kualitas Terbaik
+Saat crash, beli yang paling Anda yakini — perusahaan terbaik di sektornya.
+
+4. Sektor yang Recovery Cepat:
+Post-COVID: teknologi, healthcare, consumer, perbankan
+Post-2008: perbankan (setelah restrukturisasi), consumer
+Post-1998: properti, saham consumer (dengan pemulihan ekonomi)
+
+**Contoh Peluang Nyata:**
+Investor yang beli BBCA di harga Rp3.500–4.000 (saat crash COVID, Maret 2020) mendapat return >100% dalam 12 bulan kemudian.
+
+**Yang Paling Penting:**
+Modal harus tersedia. Tidak bisa memanfaatkan peluang crash jika sudah full invested atau pakai leverage. Cash adalah senjata.` },
+
+      { id:"m6l8", title:"Circuit Breaker dan Mekanisme Perlindungan BEI", dur:"8 mnt",
+        content:`BEI dan OJK memiliki mekanisme untuk mencegah crash yang berlebihan dan melindungi investor.
+
+**Circuit Breaker BEI:**
+Ketika IHSG turun secara signifikan dalam satu hari, BEI akan menghentikan sementara perdagangan (trading halt).
+
+Threshold Circuit Breaker:
+- Turun 5%: trading halt 30 menit
+- Turun 10%: trading halt 30 menit lagi
+- Turun 15%: OJK bisa memutuskan tutup perdagangan sisa hari
+
+Tujuan: memberi waktu investor untuk tenang dan evaluasi ulang, mencegah spiral panic selling.
+
+**Auto Rejection Individual Saham:**
+Saham tidak bisa naik atau turun melebihi batas tertentu dalam satu hari:
+- Harga <Rp200: batas ±35%
+- Rp200–Rp5.000: batas ±25%
+- >Rp5.000: batas ±20%
+
+**Kebijakan Pelonggaran OJK Saat Krisis:**
+- Saat COVID-2020: larangan short selling, pembelian kembali saham dipermudah
+- Perpanjangan jam pembayaran
+- Pelonggaran aturan margin trading sementara
+- Program buyback saham dipercepat (pemerintah bisa instruksikan BUMN)
+
+**Short Selling:**
+Menjual saham yang dipinjam dengan harapan harga turun, kemudian beli kembali lebih murah.
+Dilarang saat krisis karena bisa memperburuk penurunan.
+
+**Dana Perlindungan Pemodal (DPP):**
+Melindungi investor jika sekuritas bangkrut dan efek hilang. Bukan proteksi dari kerugian investasi.
+
+**Apa yang Bisa Anda Lakukan:**
+Pahami bahwa mekanisme ini ada. Jika terjadi trading halt, jangan panik — itu tanda pasar dilindungi.` },
+
+      { id:"m6l9", title:"Studi Kasus: Crash COVID-19 dan Recovery", dur:"12 mnt",
+        content:`COVID-19 crash adalah salah satu crash paling cepat dan recovery paling dramatis dalam sejarah pasar modal.
+
+**Timeline Crash:**
+- Januari 2020: COVID-19 mulai menyebar dari China
+- Februari 2020: IHSG mulai turun
+- 2 Maret 2020: kasus pertama Indonesia diumumkan
+- Maret 2020: IHSG crash ke ~3.900 (dari puncak ~6.400 = turun -38% dalam sebulan)
+- Beberapa hari terjadi circuit breaker
+
+**Sentimen Saat Bottom (Maret 2020):**
+"Ekonomi akan kolaps"
+"Tidak ada kepastian kapan berakhir"
+"Saham akan terus turun"
+Banyak investor ritel panik menjual — tepat di titik terendah
+
+**Recovery:**
+- April 2020: stimulus fiskal dan moneter masif dari berbagai pemerintah
+- Pertengahan 2020: IHSG mulai recovery
+- November 2020: vaksin diumumkan → rally besar
+- Februari 2021: IHSG hampir kembali ke level pre-COVID
+- 2021–2022: IHSG cetak all-time high baru di ~7.300
+
+**Pemenang dari Crash COVID:**
+Investor yang beli saat crash Maret 2020:
+BBCA 3.600 → 9.000+ (return +150% dalam 18 bulan)
+TLKM 3.100 → 4.200 (return +35%)
+GOTO (IPO 2022 setelah ekosistem tumbuh pesat selama COVID)
+
+**Pelajaran:**
+1. Crash berlangsung singkat jika ada fundamental kuat dan respons kebijakan tepat
+2. Investor yang akumulasi saat semua panik = pemenang terbesar
+3. Likuiditas dan cash position krusial untuk manfaatkan peluang
+4. Analisis fundamental memastikan Anda tidak jual perusahaan baik di harga murah
+5. Sejarah selalu berulang — crash berikutnya akan datang, persiapkan diri dari sekarang` },
+
+      { id:"m6l10", title:"Membangun Rencana Investasi Anti-Krisis", dur:"10 mnt",
+        content:`Investasi terbaik dilakukan saat pasar crash — tapi hanya jika sudah mempersiapkan diri dari jauh hari sebelumnya.
+
+**Investment Policy Statement (IPS) Pribadi:**
+Dokumen tertulis yang Anda buat saat kondisi tenang, berisi:
+1. Tujuan investasi (kapan butuh uang, untuk apa)
+2. Risk tolerance (berapa % kerugian yang bisa Anda toleransi)
+3. Asset allocation target (% saham, obligasi, kas)
+4. Rules saat crash: "Jika IHSG turun >20%, saya akan..."
+5. Rules saat bull market: "Jika saham X naik >50%, saya akan..."
+
+**Emergency Fund — Prioritas Pertama:**
+Sebelum sepeser pun diinvestasikan di saham, pastikan:
+- Dana darurat: 6 bulan pengeluaran di tabungan/reksa dana pasar uang
+- Asuransi kesehatan aktif
+- Tidak ada utang berbunga tinggi (KTA, kartu kredit)
+
+**Staging Capital Deployment:**
+Jangan investasikan sekaligus. Contoh:
+- 60% invest sekarang (market normal)
+- 20% simpan untuk deploy saat koreksi 15–20%
+- 20% untuk saat crash >30%
+
+**Rebalancing Plan:**
+Tetapkan trigger rebalancing:
+- Saham <50% dari target → beli lebih
+- Saham >80% dari target → kurangi ke obligasi/kas
+
+**Monitoring Schedule:**
+- Harian: TIDAK perlu (hanya jika trader)
+- Mingguan: cek berita material dari perusahaan yang dipegang
+- Bulanan: cek portfolio performance dan ada berita penting?
+- Kuartalan: baca laporan keuangan, rebalancing jika perlu
+- Tahunan: evaluasi besar, revisi IPS jika goal/situasi berubah` },
+    ]
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // MODUL 7 — ANALISIS FUNDAMENTAL
+  // ══════════════════════════════════════════════════════════════════════════════
+  {
+    id:"m7", num:7, level:"Menengah", icon:"🔬",
+    title:"Analisis Fundamental",
+    desc:"Menilai nilai intrinsik saham melalui analisis bisnis dan keuangan mendalam.",
+    color:"#059669",
+    lessons:[
+      { id:"m7l1", title:"Framework Analisis Fundamental", dur:"10 mnt",
+        content:`Analisis fundamental mencari jawaban atas satu pertanyaan: berapa nilai SESUNGGUHNYA bisnis ini, dan apakah harga pasar saat ini di atas atau di bawahnya?
+
+**Top-Down vs Bottom-Up:**
+
+Top-Down (Makro ke Mikro)
+1. Analisis ekonomi global
+2. Analisis ekonomi Indonesia
+3. Pilih sektor yang akan outperform
+4. Pilih saham terbaik di sektor tersebut
+
+Cocok untuk: investor yang percaya siklus ekonomi penting
+Kelemahannya: bisa salah analisis makro → salah pilih saham juga
+
+Bottom-Up (Mikro ke Makro)
+1. Cari perusahaan dengan fundamental luar biasa
+2. Analisis mendalam perusahaan tersebut
+3. Tidak terlalu peduli kondisi makro jangka pendek
+4. Beli jika valuasi menarik
+
+Cocok untuk: investor stock-picker seperti Buffett
+Kelebihannya: fokus pada kontrol yang lebih pasti (fundamental perusahaan)
+
+**Framework Analisis 5 Level:**
+Level 1: Analisis Industri — pasar tumbuh atau menyusut?
+Level 2: Posisi Kompetitif — bagaimana perusahaan vs pesaing?
+Level 3: Kualitas Bisnis — model bisnis, moat, manajemen
+Level 4: Keuangan — laporan keuangan, rasio, tren
+Level 5: Valuasi — apakah harga saat ini menarik?
+
+**Sumber Informasi:**
+- Laporan keuangan & annual report: idx.co.id
+- Prospektus dan keterbukaan informasi: stockbit, idx
+- Analisis manajemen: earnings call, analyst presentation
+- Riset sekuritas: Mirae, BRI Danareksa, Samuel Sekuritas
+- Media: Bisnis Indonesia, Kontan, Bloomberg` },
+
+      { id:"m7l2", title:"Analisis Industri dan Porter's Five Forces", dur:"11 mnt",
+        content:`Sebelum analisis perusahaan, pahami dulu industri tempatnya beroperasi — karena struktur industri menentukan profitabilitas jangka panjang.
+
+**Porter's Five Forces:**
+
+1. Ancaman Pendatang Baru (Threat of New Entrants)
+Seberapa mudah pesaing baru masuk ke industri?
+Tinggi: industri mudah dimasuki, margin tertekan → tidak baik
+Rendah: barrier to entry tinggi → proteksi margin → lebih baik untuk existing players
+
+Contoh barrier: regulasi ketat (perbankan, telekomunikasi), skala ekonomi (manufaktur), brand loyalty kuat.
+
+2. Kekuatan Tawar Pemasok (Bargaining Power of Suppliers)
+Jika pemasok kuat, mereka bisa naikkan harga → margin perusahaan tertekan.
+Contoh: perusahaan yang bergantung pada satu pemasok bahan baku langka.
+
+3. Kekuatan Tawar Pembeli (Bargaining Power of Buyers)
+Jika pembeli kuat (sedikit pembeli besar), mereka bisa tekan harga.
+Contoh: pemasok komponen untuk 2–3 produsen mobil besar.
+
+4. Ancaman Produk Substitusi (Threat of Substitutes)
+Jika ada alternatif yang mudah beralih, margin tertekan.
+Contoh: taksi vs ojek online vs KRL — saling substitusi.
+
+5. Rivalitas Kompetitor (Competitive Rivalry)
+Semakin intense persaingan → semakin tertekan margin.
+Industri dengan banyak pemain sejenis bersaing di harga → profitabilitas rendah.
+
+**Industri Terbaik untuk Investor:**
+Industri dengan: barrier to entry tinggi + bargaining power pemasok rendah + kekuatan tawar pembeli rendah + substitusi sulit + persaingan tidak terlalu intense = profitabilitas industri tinggi → lebih mudah temukan saham bagus.
+
+Contoh IDX: perbankan (barrier ketat), telekomunikasi (oligopoli 3 pemain), consumer staples brand kuat.` },
+
+      { id:"m7l3", title:"Analisis Model Bisnis", dur:"10 mnt",
+        content:`Model bisnis yang kuat adalah fondasi saham yang layak dibeli untuk jangka panjang.
+
+**Komponen Model Bisnis (Business Model Canvas):**
+
+1. Value Proposition — Apa yang ditawarkan dan mengapa pelanggan mau bayar?
+2. Customer Segments — Siapa target pelanggannya?
+3. Revenue Streams — Darimana uang masuk? (produk, langganan, komisi, iklan)
+4. Cost Structure — Apa biaya utamanya?
+5. Key Resources — Aset apa yang kritis? (brand, teknologi, manusia)
+6. Key Activities — Aktivitas apa yang tidak boleh gagal?
+7. Key Partners — Siapa mitra strategis penting?
+8. Channels — Bagaimana produk sampai ke pelanggan?
+9. Customer Relationships — Bagaimana hubungan dengan pelanggan dijaga?
+
+**Model Bisnis Terkuat untuk Investor:**
+
+Recurring Revenue / Subscription
+Pelanggan bayar berulang → arus kas predictable
+Contoh IDX: TLKM (pelanggan bayar bulanan), SaaS companies
+
+Capital-Light Business
+Tidak butuh banyak investasi aset tetap untuk tumbuh → FCF tinggi
+Contoh: marketplace, asuransi, konsultan
+
+Negative Working Capital
+Pelanggan bayar dulu sebelum produk/jasa diberikan → tidak butuh modal kerja
+Contoh: e-commerce (konsumen bayar sebelum barang dikirim), asuransi (premi dibayar sebelum klaim)
+
+Network Effect Business
+Nilai meningkat seiring jumlah pengguna
+Contoh: platform digital, marketplace, payment systems
+
+**Red Flags Model Bisnis:**
+- Revenue dari satu pelanggan >30%: ketergantungan berbahaya
+- Bisnis yang mudah di-copy tanpa diferensiasi
+- Margin terus turun meski revenue naik → pricing pressure
+- Ketergantungan pada satu pemasok bahan baku langka` },
+
+      { id:"m7l4", title:"Analisis Kompetitif dan Market Share", dur:"10 mnt",
+        content:`Posisi kompetitif suatu perusahaan menentukan seberapa sustainable profitabilitasnya.
+
+**Menganalisis Posisi Kompetitif:**
+
+1. Market Share Trend
+Apakah market share tumbuh, stabil, atau menyusut?
+Tumbuh: perusahaan memenangkan persaingan → bullish
+Menyusut: kehilangan pelanggan ke kompetitor → waspadai
+
+Cara mengukur: Revenue perusahaan / Total revenue industri × 100%
+
+2. Pricing Power
+Apakah perusahaan bisa menaikkan harga tanpa kehilangan pelanggan?
+Test: bandingkan pertumbuhan harga vs pertumbuhan volume
+Pricing power → gross margin stabil atau naik meski inflasi biaya input naik
+
+3. Customer Retention
+Churn rate (tingkat pelanggan pergi): makin rendah makin baik
+Net Promoter Score (NPS): apakah pelanggan merekomendasikan ke orang lain?
+Customer Lifetime Value (CLV) vs Customer Acquisition Cost (CAC): CLV/CAC > 3 = bisnis sehat
+
+4. R&D dan Innovation Track Record
+Apakah perusahaan terus berinovasi untuk pertahankan posisi?
+Tanpa inovasi, keunggulan kompetitif bisa terkikis (disruption risk)
+
+**Benchmarking vs Kompetitor:**
+Buat tabel perbandingan 3–5 kompetitor untuk:
+- Gross margin, Net margin
+- ROE, ROA
+- Revenue growth
+- P/E, P/BV, EV/EBITDA
+
+Perusahaan dengan margin jauh lebih tinggi dari rata-rata industri = ada moat yang nyata.
+
+**Contoh IDX: Perbankan:**
+BBCA: NIM 5,5%, BOPO 55%, NPL <1,5% → jauh outperform rata-rata industri
+BBRI: Volume terbesar, penetrasi UMKM, NIM 6%+
+Rata-rata industri: BOPO 75%+, NIM 4–4,5%
+→ BBCA dan BBRI secara jelas memiliki keunggulan kompetitif vs rata-rata bank` },
+
+      { id:"m7l5", title:"Valuasi Saham: DCF Method", dur:"14 mnt",
+        content:`Discounted Cash Flow (DCF) adalah metode valuasi paling komprehensif — menilai bisnis berdasarkan berapa uang yang akan dihasilkannya di masa depan.
+
+**Prinsip Dasar DCF:**
+Nilai bisnis = present value dari semua free cash flow masa depan.
+
+**Langkah-Langkah DCF:**
+
+1. Hitung Free Cash Flow (FCF) Historis
+FCF = Operating Cash Flow − CAPEX
+
+2. Proyeksikan FCF 5–10 Tahun ke Depan
+Asumsi pertumbuhan berdasarkan:
+- Pertumbuhan historis (CAGR)
+- Kondisi industri
+- Competitive position
+- Guidance manajemen
+
+3. Tentukan Terminal Value
+Nilai bisnis setelah periode proyeksi (anggap tumbuh selamanya pada rate konservatif)
+Terminal Value = FCF terakhir × (1 + g) ÷ (r − g)
+g = pertumbuhan terminal (biasanya 3–4%, = pertumbuhan ekonomi jangka panjang)
+r = discount rate
+
+4. Tentukan Discount Rate (WACC)
+WACC = biaya modal rata-rata tertimbang
+Umumnya 10–15% untuk perusahaan Indonesia
+
+5. Hitung Present Value semua FCF + Terminal Value
+
+6. Kurangi Net Debt (atau tambah Net Cash)
+
+7. Bagi dengan Jumlah Saham Beredar = Intrinsic Value per share
+
+**Contoh Sederhana:**
+FCF saat ini: Rp100 miliar
+Growth 5 tahun: 15% per tahun
+Terminal growth: 4%
+Discount rate: 12%
+
+FCF Tahun 1: 115, Tahun 2: 132, Tahun 3: 152, Tahun 4: 175, Tahun 5: 201
+Terminal Value = 201 × 1,04 ÷ (0,12 − 0,04) = Rp2.613 miliar
+PV Terminal = 2613 ÷ (1,12)^5 = Rp1.483 miliar
+PV FCF 1-5: ~Rp582 miliar
+Total Enterprise Value: ~Rp2.065 miliar
+
+**Sensitivitas Analisis:**
+Buat skenario: konservatif (growth 10%), base (growth 15%), optimis (growth 20%)
+Nilai intrinsik dari ketiga skenario → berikan range valuasi.` },
+
+      { id:"m7l6", title:"Relative Valuation dan Peer Comparison", dur:"11 mnt",
+        content:`Relative valuation membandingkan valuasi perusahaan dengan peers (kompetitor sejenis) dan rata-rata historisnya sendiri.
+
+**Mengapa Relative Valuation?**
+DCF sangat sensitif terhadap asumsi. Relative valuation lebih sederhana dan langsung menggunakan benchmark nyata dari pasar.
+
+**Multiples yang Paling Sering Digunakan:**
+
+P/E (Price to Earnings)
+= Harga ÷ EPS
+Benchmark: rata-rata industri, rata-rata historis perusahaan, IHSG P/E
+
+EV/EBITDA
+= Enterprise Value ÷ EBITDA
+EV = Market Cap + Utang Bersih − Kas
+Lebih berguna dari P/E karena tidak dipengaruhi struktur modal dan kebijakan akuntansi depresiasi.
+Benchmark EV/EBITDA per sektor IDX:
+- Perbankan: N/A (gunakan P/BV)
+- Consumer: 10–15x
+- Properti: 8–12x
+- Energi: 5–8x
+- Telekomunikasi: 6–10x
+
+P/BV (Price to Book Value)
+= Harga ÷ Nilai Buku per Saham
+Sangat relevan untuk bank dan perusahaan keuangan.
+BBCA: P/BV 4–5x (justified oleh ROE 18%+)
+ROE–P/BV Relationship: semakin tinggi ROE, wajar P/BV lebih tinggi
+
+P/S (Price to Sales)
+= Market Cap ÷ Revenue
+Berguna untuk perusahaan pre-profit atau margin sangat rendah.
+
+**Proses Relative Valuation:**
+1. Kumpulkan peers yang benar-benar comparable (sektor sama, ukuran mirip)
+2. Hitung masing-masing multiple
+3. Posisikan perusahaan vs rata-rata peers
+4. Analisis mengapa premium atau discount wajar atau tidak
+
+**Gordon Growth Model (untuk Dividend Stocks):**
+Nilai = Dividen per Saham ÷ (Discount Rate − Growth Rate Dividen)
+Berguna untuk perusahaan mature dengan dividen stabil (UNVR, TLKM)` },
+
+      { id:"m7l7", title:"Analisis Kualitatif dan Soft Factors", dur:"10 mnt",
+        content:`Angka-angka hanya sebagian cerita. Faktor kualitatif sering menjadi pembeda antara saham biasa dan saham luar biasa.
+
+**Brand dan Reputasi:**
+Brand bukan hanya nama — ini adalah kepercayaan yang dibangun bertahun-tahun.
+Cara ukur: brand survey, market share, pricing premium dibandingkan no-name produk.
+Contoh: UNVR bisa jual pasta gigi Pepsodent 2–3x lebih mahal dari merek lokal karena brand trust.
+
+**Budaya dan Talent:**
+Perusahaan dengan budaya kuat cenderung attract dan retain talent terbaik → eksekusi lebih baik.
+Cara riset: Glassdoor review, berita tentang manajemen, talk ke karyawan/ex-karyawan.
+
+**ESG (Environmental, Social, Governance):**
+Perusahaan dengan governance buruk → risiko lebih tinggi (fraud, konflik kepentingan).
+Environmental compliance buruk → risiko regulasi.
+Social license to operate: perusahaan tambang yang berkonflik dengan masyarakat lokal → risiko operasional.
+
+**Teknologi dan Digital Transformation:**
+Apakah perusahaan traditional sedang transform, atau sedang disrupted?
+Resistor vs Adapter: bank yang agresif digital (BBCA, ARTO) vs bank yang lambat → implikasi valuasi jangka panjang.
+
+**Regulasi dan Lisensi:**
+Izin usaha yang sulit didapat = moat. BPOM, OJK, izin frekuensi telekomunikasi.
+Perubahan regulasi = risiko dan peluang sekaligus.
+
+**Scuttlebutt Method (Philip Fisher):**
+Kunjungi toko, berbicara dengan pelanggan, supplier, distributor, mantan karyawan.
+"Riset lapangan" sebelum beli saham — praktik Fisher yang sangat efektif.
+Versi modern: review aplikasi, Google Maps, media sosial perusahaan.` },
+
+      { id:"m7l8", title:"Red Flags dalam Analisis Fundamental", dur:"10 mnt",
+        content:`Mengenali red flags lebih penting dari mengenali peluang — karena satu investasi buruk bisa menghapus keuntungan banyak investasi baik.
+
+**Red Flags Laporan Keuangan:**
+
+Revenue Quality Issues
+- Piutang tumbuh jauh lebih cepat dari revenue: mungkin ada manipulasi pengakuan pendapatan
+- Channel stuffing: mendorong distributor beli lebih banyak dari yang bisa mereka jual (revenue naik palsu, akan reversal)
+- Related party transactions besar tanpa penjelasan jelas
+
+Cash Flow Issues
+- Laba bersih positif tapi OCF negatif terus-menerus
+- CAPEX sangat tinggi tapi revenue tidak tumbuh (return on investment rendah)
+- Kas turun terus meski laporan keuangan menunjukkan profit
+
+Balance Sheet Issues
+- Goodwill sangat besar relatif terhadap total aset (akuisisi overprice)
+- Off-balance sheet obligations (kewajiban yang tidak tercatat di neraca)
+- Perubahan kebijakan akuntansi yang "kebetulan" menguntungkan
+
+**Red Flags Manajemen:**
+
+Auditor Sering Berganti
+Berganti KAP tiap 2–3 tahun → manajemen mungkin mencari auditor yang "lebih akomodatif"
+
+Transaksi Benturan Kepentingan
+Pemegang saham pengendali menjual aset ke perusahaan dengan harga terlalu tinggi
+
+Kompensasi Manajemen Berlebihan
+CEO gaji lebih besar dari total laba perusahaan → extracting value dari pemegang saham
+
+**Red Flags Operasional:**
+- Ketergantungan pada satu pelanggan/pemasok besar tanpa diversifikasi
+- Gagal deliver guidance berkali-kali → manajemen tidak jujur atau tidak kompeten
+- Ekspansi ke bisnis yang tidak ada hubungannya (diversifikasi irasional)
+- Legal disputes besar yang tidak diungkapkan secara transparan
+
+**Checklist Red Flag:**
+Sebelum investasi, buat checklist: ada red flag? Jika >3 red flag → pertimbangkan ulang. Satu red flag saja terkadang sudah cukup untuk avoid.` },
+
+      { id:"m7l9", title:"Analisis Kompetitor (Comparative Analysis)", dur:"10 mnt",
+        content:`Tidak ada saham yang bisa dinilai secara absolut — selalu dalam konteks alternatif yang tersedia.
+
+**Mengapa Comparative Analysis Penting:**
+ASII dengan P/E 12x mungkin terlihat murah secara absolut. Tapi jika rata-rata peers-nya P/E 8x, ASII sebenarnya mahal relatif.
+
+**Framework Comparative Analysis:**
+
+Langkah 1: Identifikasi Peers yang Benar-Benar Comparable
+Sama sektor, ukuran mirip, model bisnis serupa. BBCA tidak bisa dibandingkan dengan bank kecil regional.
+
+Langkah 2: Buat Tabel Perbandingan
+| Metrik | Perusahaan A | Perusahaan B | Perusahaan C | Rata-rata |
+Revenue Growth (YoY), Gross Margin, Net Margin, ROE, DER, P/E, P/BV, EV/EBITDA
+
+Langkah 3: Scoring
+Beri skor 1–5 untuk setiap metrik. Perusahaan dengan total skor tertinggi adalah kandidat terbaik.
+
+Langkah 4: Justifikasi Premium/Discount
+Apakah premium valuasi perusahaan justified? Alasannya: ROE lebih tinggi? Pertumbuhan lebih cepat? Manajemen lebih baik?
+
+**Contoh: Analisis Sektor Consumer Staples BEI**
+UNVR, ICBP, INDF, SIDO, MYOR — bandingkan:
+- UNVR: gross margin tertinggi (~50%), tapi pertumbuhan terlamban
+- SIDO: ROE tertinggi (30%+), net cash, dividen konsisten
+- ICBP: diversifikasi produk terluas, global expansion
+→ Bergantung pada tujuan investasi (dividen vs growth vs stability)
+
+**International Comparison:**
+Terkadang berguna membandingkan dengan peers Asia Tenggara atau global untuk menilai apakah valuasi BEI wajar.
+BBCA vs DBS Bank (Singapura) — bagaimana ROE dan P/BV-nya?` },
+
+      { id:"m7l10", title:"Membangun Model Analisis Fundamental Sendiri", dur:"13 mnt",
+        content:`Framework lengkap untuk melakukan analisis fundamental secara mandiri dari nol.
+
+**Template Analisis Fundamental (1–2 jam per saham):**
+
+BAGIAN 1: Business Understanding (15 menit)
+□ Jelaskan bisnis dalam 2 kalimat
+□ Sumber revenue utama
+□ Pelanggan dan pasar target
+□ Pesaing utama
+
+BAGIAN 2: Competitive Position (15 menit)
+□ Apakah ada economic moat? Jenisnya?
+□ Market share: tumbuh/stabil/menyusut?
+□ Pricing power: bisa naikkan harga?
+□ Ancaman disruption?
+
+BAGIAN 3: Manajemen (10 menit)
+□ Insider ownership %
+□ Track record deliver guidance
+□ Capital allocation history
+□ Red flags manajemen?
+
+BAGIAN 4: Analisis Keuangan (30 menit)
+□ Revenue CAGR 5 tahun
+□ Net margin trend 5 tahun
+□ ROE trend 5 tahun
+□ DER — aman?
+□ OCF vs Net Income (kualitas laba)
+□ FCF positif? CAGR FCF?
+□ Red flags keuangan?
+
+BAGIAN 5: Valuasi (20 menit)
+□ P/E saat ini vs historis
+□ EV/EBITDA vs peers
+□ DCF konservatif: nilai intrinsik?
+□ Margin of Safety = ?
+□ Dividend yield = ?
+
+KEPUTUSAN AKHIR:
+□ Apakah bisnis bagus? (Ya/Tidak)
+□ Apakah harga menarik? (Ya/Tidak)
+□ Apakah manajemen bisa dipercaya? (Ya/Tidak)
+Jika ketiganya Ya → kandidat beli yang kuat
+
+**Target Harga dan Position Sizing:**
+- Target harga = nilai intrinsik (atau 80% dari nilai intrinsik untuk konservatif)
+- Stop loss = -15% sampai -20% dari harga beli (untuk saham yang fundamental mulai berubah)
+- Position size: max 10–15% portofolio per saham
+
+**Tools yang Digunakan:**
+Stockbit (screener + laporan keuangan), idx.co.id, Excel/Google Sheets untuk model, macroaxis.com, investing.com` },
+    ]
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // MODUL 8 — ANALISIS TEKNIKAL
+  // ══════════════════════════════════════════════════════════════════════════════
+  {
+    id:"m8", num:8, level:"Menengah", icon:"📉",
+    title:"Analisis Teknikal",
+    desc:"Membaca pergerakan harga, pola chart, dan indikator untuk timing entry & exit optimal.",
+    color:"#f59e0b",
+    lessons:[
+      { id:"m8l1", title:"Filosofi dan Dasar Analisis Teknikal", dur:"10 mnt",
+        content:`Analisis teknikal mempelajari pergerakan harga historis dan volume untuk memprediksi arah harga di masa depan.
+
+**3 Asumsi Dasar Analisis Teknikal:**
+
+1. "The Market Discounts Everything"
+Harga sudah mencerminkan semua informasi yang diketahui — fundamental, berita, sentimen. Tidak perlu analisis terpisah karena semuanya sudah ada di harga.
+
+2. "Price Moves in Trends"
+Harga cenderung bergerak dalam tren (naik, turun, atau sideways) dan tren tersebut cenderung berlanjut sampai ada sinyal pembalikan.
+
+3. "History Repeats Itself"
+Pola pergerakan harga berulang karena psikologi manusia konstan. Ketakutan dan keserakahan selalu ada.
+
+**Analisis Fundamental vs Teknikal:**
+Fundamental: saham APA yang harus dibeli
+Teknikal: KAPAN harus beli dan jual
+
+Kombinasi keduanya = powerful:
+- Fundamental identifikasi saham berkualitas
+- Teknikal timing entry yang optimal (beli di support, beli saat breakout)
+
+**Tipe Trader Berdasarkan Timeframe:**
+- Scalper: menit ke menit, ratusan transaksi per hari
+- Day Trader: masuk keluar dalam satu hari
+- Swing Trader: hold 3–10 hari berdasarkan pergerakan "swing"
+- Position Trader: hold minggu sampai bulan
+- Investor (Long-Term): bulan sampai tahun
+
+Untuk kebanyakan orang sibuk: swing trader atau position trader lebih realistis daripada day trading.
+
+**Apa yang BISA dan TIDAK BISA Dilakukan Analisis Teknikal:**
+Bisa: identifikasi tren, support/resistance, momen momentum
+Tidak bisa: memprediksi kejadian fundamental yang tidak terduga (pandemi, fraud besar)` },
+
+      { id:"m8l2", title:"Candlestick Patterns Lengkap", dur:"12 mnt",
+        content:`Candlestick dikembangkan oleh pedagang beras Jepang abad ke-18 dan masih sangat relevan hingga hari ini.
+
+**Anatomy of a Candlestick:**
+Body: range antara harga buka (Open) dan tutup (Close)
+Upper Shadow (ekor atas): range dari body ke harga tertinggi (High)
+Lower Shadow (ekor bawah): range dari body ke harga terendah (Low)
+Warna: Hijau/Putih = Close > Open (bullish), Merah/Hitam = Close < Open (bearish)
+
+**Single Candle Patterns:**
+
+Doji
+Open ≈ Close, body sangat kecil. Ketidakpastian — kekuatan beli dan jual setara.
+Signal: potensi pembalikan tren jika muncul setelah tren kuat.
+
+Hammer (Bullish)
+Body kecil di atas, lower shadow panjang (>2x body), setelah downtrend.
+Signal: seller mencoba turunkan harga, tapi buyer berhasil mendorong kembali → potensi reversal bullish.
+
+Shooting Star (Bearish)
+Kebalikan hammer — body kecil di bawah, upper shadow panjang, setelah uptrend.
+Signal: buyer mencoba naik, tapi seller berhasil dorong kembali → potensi reversal bearish.
+
+Marubozu
+Body sangat panjang tanpa shadow. Full bullish atau full bearish — momentum sangat kuat.
+
+**Two/Multiple Candle Patterns:**
+
+Bullish Engulfing
+Candle merah kecil diikuti candle hijau besar yang "menelan" seluruh candle sebelumnya.
+Signal bullish reversal yang kuat, terutama di area support.
+
+Bearish Engulfing
+Kebalikannya — candle hijau kecil diikuti candle merah besar.
+Signal bearish reversal, terutama di area resistance.
+
+Morning Star / Evening Star
+Tiga candle: tren kuat → doji/kecil → candle arah berlawanan besar.
+Lebih kuat dari engulfing karena tiga tahap konfirmasi.
+
+**Penting:**
+Setiap pola harus dikonfirmasi dengan volume dan konteks (di mana posisi harga, level support/resistance).
+Pattern sendirian tidak cukup — butuh konfirmasi.` },
+
+      { id:"m8l3", title:"Support, Resistance, dan Trendline", dur:"12 mnt",
+        content:`Support dan resistance adalah konsep paling fundamental dalam analisis teknikal — dasar semua strategi trading.
+
+**Support:**
+Level harga di mana tekanan beli cukup kuat untuk menghentikan atau membalikkan penurunan. Seperti "lantai" — harga sulit turun di bawah level ini.
+
+Cara Mengidentifikasi Support:
+- Level historis yang berulang kali menjadi titik balik
+- Round numbers: Rp5.000, Rp10.000 — psikologis kuat
+- Moving averages: MA50, MA100, MA200 sering bertindak sebagai support dinamis
+- Fibonacci retracement levels: 38,2%, 50%, 61,8% dari swing sebelumnya
+- Gap harga yang belum tertutup (unfilled gap)
+
+**Resistance:**
+"Langit-langit" harga — di mana tekanan jual cukup kuat untuk menghentikan kenaikan.
+Identifikasi: sama dengan support, tapi di sisi sebaliknya.
+
+**Hukum Polarity (Role Reversal):**
+Support yang ditembus ke bawah → berubah menjadi resistance
+Resistance yang ditembus ke atas → berubah menjadi support
+Ini adalah salah satu konsep paling berguna dalam teknikal!
+
+**Strength of Support/Resistance:**
+Faktor yang membuat level semakin kuat:
+1. Frekuensi: semakin sering dites, semakin kuat
+2. Durasi: level yang sudah ada lama lebih significant
+3. Volume: level yang terbentuk dengan volume tinggi lebih kuat
+4. Timeframe: support di chart mingguan > support di chart harian
+
+**Trendline:**
+Uptrend: hubungkan minimal 2–3 titik low yang semakin tinggi
+Downtrend: hubungkan minimal 2–3 titik high yang semakin rendah
+Semakin sering harga "bounce" dari trendline → semakin valid dan kuat
+Breakout dari trendline dengan volume besar → tren bisa berubah` },
+
+      { id:"m8l4", title:"Moving Averages dan Golden/Death Cross", dur:"11 mnt",
+        content:`Moving Average adalah indikator teknikal paling populer — membantu mengidentifikasi tren dan sinyal beli/jual.
+
+**Simple Moving Average (SMA):**
+Rata-rata harga penutupan dalam periode tertentu.
+SMA20 = (Close hari 1 + Close hari 2 + ... + Close hari 20) ÷ 20
+
+MA populer:
+- MA20: tren jangka pendek (~1 bulan)
+- MA50: tren jangka menengah (~2,5 bulan)
+- MA100: tren jangka menengah-panjang
+- MA200: tren jangka panjang (~10 bulan)
+
+**Exponential Moving Average (EMA):**
+Memberikan bobot lebih besar pada harga terbaru → lebih responsif terhadap perubahan harga.
+EMA lebih baik untuk trading aktif, SMA lebih baik untuk identifikasi tren besar.
+
+**Penggunaan Moving Average:**
+
+1. Tren Identification
+Harga di atas MA200 → uptrend jangka panjang
+Harga di bawah MA200 → downtrend jangka panjang
+MA200 sendiri naik → tren positif
+
+2. Support/Resistance Dinamis
+MA50 dan MA200 sering bertindak sebagai support/resistance yang bergerak
+Buy saat harga "bounce" dari MA50 saat uptrend
+
+3. Golden Cross (Sinyal Bullish Kuat)
+MA50 memotong MA200 dari bawah ke atas
+Salah satu sinyal bullish paling kuat dalam jangka menengah-panjang
+Sering mengikuti bottom pasar
+
+4. Death Cross (Sinyal Bearish)
+MA50 memotong MA200 dari atas ke bawah
+Sinyal penurunan jangka menengah-panjang
+
+**Kelemahan MA:**
+Lagging indicator — mengonfirmasi tren yang sudah terjadi, bukan memprediksi di depan. Dalam pasar sideways, MA memberikan banyak false signal.
+
+**MA Ribbon:**
+Pasang beberapa MA (20, 50, 100, 200) sekaligus. Jika semua MA berbaris rapi naik = tren sangat kuat. Jika MA saling memotong = pasar tidak jelas arahnya.` },
+
+      { id:"m8l5", title:"Indikator Momentum: RSI, MACD, Stochastic", dur:"13 mnt",
+        content:`Indikator momentum mengukur kecepatan dan kekuatan pergerakan harga — membantu identifikasi kondisi overbought/oversold dan momentum tren.
+
+**RSI (Relative Strength Index):**
+Mengukur kekuatan relatif pergerakan naik vs turun dalam periode (default: 14 hari).
+Skala 0–100.
+
+Interpretasi:
+- RSI >70: overbought (jenuh beli) → potensi koreksi atau konsolidasi
+- RSI <30: oversold (jenuh jual) → potensi rebound
+- RSI 40–60: zona netral
+
+RSI Divergence — Sinyal Paling Powerful:
+Bullish divergence: harga buat lower low, tapi RSI buat higher low → momentum turun melemah → potensi pembalikan naik
+Bearish divergence: harga buat higher high, tapi RSI buat lower high → momentum naik melemah → potensi pembalikan turun
+
+**MACD (Moving Average Convergence Divergence):**
+= EMA12 − EMA26
+Signal Line: EMA9 dari MACD
+Histogram: MACD − Signal Line
+
+Sinyal:
+- MACD cross signal line ke atas (dengan histogram jadi positif) → bullish
+- MACD cross signal line ke bawah → bearish
+- MACD di atas nol = uptrend, di bawah nol = downtrend
+- MACD divergence = sinyal pembalikan tren kuat
+
+**Stochastic Oscillator:**
+Membandingkan harga penutupan dengan range harga dalam periode tertentu.
+Skala 0–100, sama seperti RSI.
+%K (fast), %D (slow, MA dari %K)
+
+Sinyal:
+- >80: overbought
+- <20: oversold
+- %K cross %D ke atas di zona oversold → bullish signal
+- %K cross %D ke bawah di zona overbought → bearish signal
+
+**Mengkombinasikan Indikator:**
+Jangan gunakan semua indikator sekaligus — ada informasi yang overlap.
+Set 1 (untuk tren): MA50 + MA200 + MACD
+Set 2 (untuk overbought/oversold): RSI + Stochastic
+Konfirmasi: butuh setidaknya 2–3 sinyal searah sebelum entry.` },
+
+      { id:"m8l6", title:"Chart Patterns: Triangle, Head & Shoulders, dll", dur:"12 mnt",
+        content:`Chart patterns adalah formasi harga yang berulang dengan probabilitas tertentu untuk arah selanjutnya.
+
+**Continuation Patterns (Pola Kelanjutan):**
+
+Ascending Triangle
+Resistance horizontal + support naik. Pembeli semakin agresif.
+Breakout ke atas dengan volume → target = tinggi triangle ditambahkan ke breakout point.
+
+Descending Triangle
+Support horizontal + resistance turun. Penjual semakin agresif.
+Breakdown ke bawah → bearish continuation.
+
+Symmetrical Triangle
+Resistance turun + support naik. Konsolidasi sebelum breakout.
+Arah breakout = arah tren sebelumnya (biasanya).
+
+Flags dan Pennants
+Penurunan tajam → konsolidasi sideways kecil → breakdown lanjutan.
+Atau kenaikan tajam → konsolidasi kecil → breakout lanjutan.
+Biasanya terjadi di tengah-tengah tren kuat.
+
+**Reversal Patterns (Pola Pembalikan):**
+
+Head and Shoulders (H&S)
+Tiga puncak: puncak kiri (bahu kiri), puncak lebih tinggi (kepala), puncak kanan lebih rendah (bahu kanan).
+Neckline: support yang menghubungkan lembah antara ketiga puncak.
+Breakdown di bawah neckline dengan volume → bearish reversal yang sangat kuat!
+Target: tinggi kepala dari neckline, diproyeksikan ke bawah neckline.
+
+Inverse Head and Shoulders
+Kebalikan H&S → bullish reversal. Sangat powerful sebagai signal beli.
+
+Double Top
+Dua puncak pada level resistance yang sama. Gagal tembus dua kali.
+Breakdown di bawah lembah antara dua puncak → bearish.
+
+Double Bottom
+Dua bottom pada level support yang sama → bullish reversal.
+
+**Cara Trading Chart Patterns:**
+1. Identifikasi pattern yang terbentuk
+2. Tunggu konfirmasi: breakout/breakdown dengan volume
+3. Entry: setelah konfirmasi, tidak sebelum
+4. Target: menggunakan projected move dari ukuran pattern
+5. Stop Loss: di atas resistance (untuk short) atau di bawah support (untuk long)` },
+
+      { id:"m8l7", title:"Volume Analysis", dur:"10 mnt",
+        content:`Volume adalah jumlah saham yang diperdagangkan dalam suatu periode — "konfirmator" yang paling jujur dari pergerakan harga.
+
+**Prinsip Dasar Volume:**
+"Volume mendahului harga." Peningkatan volume sering merupakan tanda awal pergerakan harga signifikan.
+
+**Interpretasi Volume:**
+
+Harga Naik + Volume Naik = BULLISH kuat
+Pembeli antusias, tren kuat dan berkelanjutan.
+
+Harga Naik + Volume Turun = Peringatan
+Kenaikan tidak dikonfirmasi oleh volume. Mungkin pembalikan segera terjadi (distribution phase).
+
+Harga Turun + Volume Naik = BEARISH kuat
+Penjual agresif, tekanan jual besar dan sustainable.
+
+Harga Turun + Volume Turun = Peringatan
+Penurunan kehilangan momentum. Mungkin soon reversal atau konsolidasi.
+
+**Volume pada Breakout:**
+Breakout paling valid terjadi dengan volume 1,5–2x rata-rata 20 hari.
+Breakout dengan volume rendah: lebih besar kemungkinan false breakout.
+Ini adalah rule paling penting dalam menggunakan chart patterns!
+
+**Volume Spike:**
+Volume sangat tinggi melebihi normal (3–5x rata-rata) di area support atau resistance:
+- Di support: buying climax → potensi reversal bullish
+- Di resistance: selling climax → potensi reversal bearish
+
+**On Balance Volume (OBV):**
+Indikator yang mengakumulasi volume berdasarkan arah harga.
+Hari naik: tambah volume ke OBV
+Hari turun: kurangi volume dari OBV
+OBV tren naik meski harga flat → akumulasi oleh smart money (bullish)
+OBV tren turun meski harga flat → distribusi oleh smart money (bearish)
+
+**Volume per Saham vs Rata-rata:**
+Selalu bandingkan volume hari ini dengan rata-rata 20 hari terakhir untuk konteks.` },
+
+      { id:"m8l8", title:"Fibonacci Retracement dan Extension", dur:"11 mnt",
+        content:`Fibonacci adalah urutan angka matematika yang ditemukan di alam dan ternyata juga relevan di pasar keuangan.
+
+**Angka Fibonacci:**
+0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144...
+Setiap angka ≈ 1,618x angka sebelumnya (Golden Ratio / Phi)
+
+**Level Fibonacci Retracement:**
+38,2%, 50%, 61,8% (paling kuat), 78,6%
+Mengukur seberapa jauh harga akan "pullback" (koreksi) sebelum melanjutkan tren utama.
+
+**Cara Menggambar Fibonacci Retracement:**
+1. Identifikasi swing high dan swing low terbaru
+2. Tarik dari swing low ke swing high (uptrend) atau swing high ke swing low (downtrend)
+3. Level 61,8% dan 50% adalah yang paling sering menjadi support kuat dalam uptrend
+
+**Fibonacci Extension:**
+127,2%, 161,8%, 200%, 261,8%
+Digunakan untuk menentukan target harga setelah breakout.
+
+**Cara Menggunakan Fibonacci di Trading:**
+
+Strategi "Retracement Entry":
+1. Identifikasi tren kuat
+2. Harga mengalami koreksi (pullback)
+3. Tunggu harga mencapai level Fibonacci 50% atau 61,8%
+4. Entry beli (uptrend) atau jual (downtrend) saat ada konfirmasi candlestick di level tersebut
+5. Stop loss di bawah level Fibonacci berikutnya (78,6% atau di bawah swing low)
+
+**Fibonacci Clusters:**
+Ketika level Fibonacci dari beberapa swing berbeda jatuh di area yang sama → "cluster" yang sangat kuat sebagai support/resistance.
+
+**Kelemahan:**
+Fibonacci adalah "self-fulfilling prophecy" sebagian — karena banyak trader menggunakannya, level tersebut menjadi signifikan. Di pasar yang diikuti sedikit trader, kurang relevan.
+
+Konfirmasi dengan indikator lain (RSI oversold, volume, candlestick pattern) sangat disarankan.` },
+
+      { id:"m8l9", title:"Manajemen Risiko dalam Trading Teknikal", dur:"10 mnt",
+        content:`Analisis teknikal tanpa manajemen risiko yang baik adalah resep kehilangan uang.
+
+**Risk/Reward Ratio:**
+Sebelum setiap trade, hitung:
+- Risk: seberapa jauh stop loss dari entry?
+- Reward: seberapa jauh target dari entry?
+- R/R ratio = Reward ÷ Risk
+
+Minimum R/R yang disarankan: 2:1 (risk Rp100.000, potential reward Rp200.000)
+Dengan win rate 50% dan R/R 2:1: 5 win (Rp1 juta) + 5 loss (Rp500.000) = net Rp500.000 profit.
+
+**Posisi Sizing Berbasis Risiko:**
+Tentukan % portofolio yang mau di-risk per trade (umumnya 1–2%).
+Jika portofolio Rp50 juta, max risiko per trade = 2% × Rp50 juta = Rp1 juta.
+Jika stop loss Rp200 per saham, max posisi = Rp1 juta ÷ Rp200 = 5.000 lembar = 50 lot.
+Ini memastikan satu trade buruk tidak menghancurkan portofolio.
+
+**Stop Loss — Non-Negotiable:**
+Selalu pasang stop loss SEBELUM beli.
+Jenis stop loss:
+- Fixed stop: persentase tetap dari harga beli (-10%, -15%)
+- Technical stop: di bawah support penting atau trendline
+- Time stop: jual jika harga tidak bergerak sesuai ekspektasi dalam waktu tertentu
+
+**Trailing Stop:**
+Stop loss yang "ikut naik" ketika harga naik → mengunci profit sambil tetap memberi ruang bergerak.
+Contoh: beli di Rp1.000, trailing stop Rp100. Harga naik ke Rp1.300 → stop otomatis naik ke Rp1.200.
+
+**Jangan Pindahkan Stop Loss ke Bawah:**
+Ini adalah kesalahan paling umum dan paling mahal. Stop loss dipasang berdasarkan analisis, bukan emosi. Jika analisis berubah (level support ditembus valid), bukan stop loss yang dipindah — posisi yang harus ditutup.
+
+**Drawdown Management:**
+Jika portofolio trading turun >10% dari puncak → kurangi ukuran posisi 50%.
+Jika turun >20% → berhenti trading, evaluasi sistem.` },
+
+      { id:"m8l10", title:"Menggabungkan Analisis Teknikal dan Fundamental", dur:"11 mnt",
+        content:`Pendekatan terbaik menggabungkan kekuatan analisis fundamental dan teknikal untuk keputusan investasi yang lebih optimal.
+
+**Mengapa Kombinasi Lebih Kuat:**
+Fundamental tanpa teknikal: tahu saham bagus tapi beli di harga terlalu tinggi → return kurang optimal, bisa rugi jangka pendek
+Teknikal tanpa fundamental: timing bagus tapi di saham yang salah → bisa kena perangkap pump-and-dump atau saham bangkrut
+
+**Framework Kombinasi:**
+
+Langkah 1: Seleksi Fundamental (long-list 10–20 saham)
+- ROE >15%, DER aman, moat ada, manajemen bagus
+- Valuasi tidak terlalu mahal (P/E wajar)
+
+Langkah 2: Analisis Teknikal (timing entry)
+- Identifikasi tren keseluruhan (chart mingguan/bulanan)
+- Cari area support/resistance
+- Tunggu momentum: breakout resistance atau bounce dari support
+- Konfirmasi dengan volume dan indikator (RSI, MACD)
+
+Langkah 3: Entry
+- Beli saat harga di support yang kuat + konfirmasi teknikal bullish
+- Atau beli saat breakout resistance yang signifikan dengan volume
+
+Langkah 4: Position Management
+- Pasang stop loss di bawah support teknikal yang relevan
+- Trailing stop seiring harga naik
+- Target profit: resistance berikutnya (teknikal) atau nilai intrinsik (fundamental)
+
+**Multi-Timeframe Analysis:**
+- Bulanan/Mingguan: identifikasi tren besar dan level kritis jangka panjang
+- Harian: timing entry/exit lebih presisi
+- Selalu trade searah dengan tren timeframe lebih besar
+
+**Contoh Konkret:**
+BAGUS Tbk fundamental: ROE 18%, DER 0,5, tren laba positif, moat ada, P/E 12x (historis average 15x) → undervalued
+Teknikal: BAGUS Tbk sedang test support MA200 + level support historis 5.500 dengan RSI <40 (oversold) dan volume normal
+→ Setup ideal: beli bertahap di area 5.500–5.800, stop loss di 5.000, target 7.500 (sesuai nilai intrinsik)` },
+    ]
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // MODUL 9 — BEHAVIORAL FINANCE
+  // ══════════════════════════════════════════════════════════════════════════════
+  {
+    id:"m9", num:9, level:"Lanjutan", icon:"🧠",
+    title:"Behavioral Finance",
+    desc:"Memahami psikologi investasi dan bias kognitif yang mempengaruhi keputusan finansial.",
+    color:"#7c3aed",
+    lessons:[
+      { id:"m9l1", title:"Pengantar Behavioral Finance", dur:"9 mnt",
+        content:`Behavioral finance menantang asumsi ekonomi tradisional bahwa investor selalu rasional, menggabungkan psikologi dan ekonomi untuk menjelaskan perilaku pasar nyata.
+
+**Ekonomi Klasik vs Behavioral Finance:**
+
+Ekonomi Klasik Mengasumsikan:
+- Investor selalu rasional
+- Memproses semua informasi dengan benar
+- Selalu memaksimalkan utilitas
+- Pasar selalu efisien
+
+Realita (Behavioral Finance):
+- Investor sering bertindak irrasional
+- Memproses informasi dengan bias
+- Keputusan dipengaruhi emosi dan heuristik
+- Pasar sering tidak efisien dalam jangka pendek
+
+**Mengapa Behavioral Finance Penting untuk Investor:**
+Memahami bias diri sendiri → bisa membuat keputusan lebih baik
+Memahami bias orang lain → bisa mengidentifikasi mispricing yang diciptakan oleh irrasionalitas kolektif
+Penjelasan atas anomali pasar yang tidak bisa dijelaskan teori klasik
+
+**Pelopor Behavioral Finance:**
+Daniel Kahneman dan Amos Tversky: Prospect Theory (menang Nobel Ekonomi 2002)
+Richard Thaler: Mental Accounting, Nudge Theory (Nobel 2017)
+Robert Shiller: Irrational Exuberance, Narrative Economics (Nobel 2013)
+
+**Sistem 1 vs Sistem 2 (Kahneman):**
+Sistem 1: cepat, otomatis, emosional, sering membuat keputusan finansial
+Sistem 2: lambat, deliberatif, rasional, perlu diaktifkan secara sengaja
+
+Investasi yang baik membutuhkan lebih banyak Sistem 2, tapi Sistem 1 sering mengambil alih saat pasar bergejolak.` },
+
+      { id:"m9l2", title:"Loss Aversion dan Prospect Theory", dur:"10 mnt",
+        content:`Penemuan terpenting Kahneman dan Tversky: manusia tidak mengevaluasi outcome secara absolut, tapi relatif terhadap reference point, dan kehilangan terasa 2x lebih sakit dari keuntungan yang setara.
+
+**Prospect Theory:**
+Utilitas dirasakan berbeda berdasarkan:
+1. Reference point (biasanya harga beli)
+2. Diminishing sensitivity (Rp1 juta pertama lebih berasa dari Rp1 juta ke-10)
+3. Loss aversion: kehilangan dirasakan ~2–2,5x lebih berat dari gain yang sama
+
+**Implikasi Loss Aversion di Investasi:**
+
+Disposition Effect
+Investor cenderung:
+- Jual TERLALU CEPAT saat profit (realisasi keuntungan — menghindari risiko kehilangan profit)
+- Tahan TERLALU LAMA saat rugi (menghindari realisasi kerugian — "kalau belum dijual, belum rugi")
+Ini adalah pola yang menghancurkan return jangka panjang!
+
+Breakeven Effect
+Kecenderungan untuk ambil risiko lebih besar saat sedang rugi, berharap breakeven.
+"Saya akan averaging down sampai harga kembali ke harga beli."
+Bahaya jika perusahaan memang fundamental memburuk.
+
+Mental Accounting
+Uang dari dividen diperlakukan berbeda dari modal awal. "Uang gratisan dari dividen, boleh dipakai untuk saham spekulatif."
+Padahal secara ekonomi, uang adalah uang.
+
+**Cara Melawan Loss Aversion:**
+- Fokus pada total return portfolio, bukan per posisi
+- Evaluasi berdasarkan fundamental, bukan harga beli Anda
+- Pre-commit pada aturan stop loss sebelum beli
+- Reframe: "Apakah saya akan beli saham ini HARI INI di harga ini?" Jika tidak → pertimbangkan jual.` },
+
+      { id:"m9l3", title:"Overconfidence dan Illusion of Control", dur:"9 mnt",
+        content:`Overconfidence adalah bias di mana seseorang overestimate kemampuan, pengetahuan, dan akurasi prediksinya sendiri.
+
+**Jenis Overconfidence:**
+
+1. Overprecision
+Terlalu yakin pada prediksi yang sebenarnya sangat tidak pasti.
+"Saya yakin BBCA akan naik ke Rp12.000 akhir tahun ini."
+Realita: tidak ada yang bisa prediksi harga saham dengan presisi tinggi.
+
+2. Overplacement
+Menganggap diri di atas rata-rata dibanding orang lain.
+Dalam survei, 93% pengemudi AS menganggap diri "di atas rata-rata" — statistis tidak mungkin.
+Di investasi: mayoritas investor percaya bisa beat the market, padahal mayoritas tidak.
+
+3. Overestimation
+Overestimate kemampuan sendiri untuk mengontrol outcome.
+"Saya yang memilih saham ini, pasti saya bisa timing-nya dengan tepat."
+
+**Illusion of Control:**
+Percaya bisa mengontrol outcome yang sebenarnya acak atau tidak bisa dikontrol.
+Contoh: investor yang melakukan banyak analisis mendalam merasa lebih yakin, padahal ketidakpastian tetap sama.
+
+**Bukti Overconfidence di Pasar:**
+Trading berlebihan (overtrading) — investor overconfident trading lebih sering → biaya transaksi lebih besar → return lebih rendah.
+Penelitian: trader paling aktif mendapat return rata-rata 3,7% lebih rendah dari yang paling pasif (Barber & Odean, 2000).
+
+**Cara Melawan Overconfidence:**
+- Catat prediksi dan track record akurasi Anda
+- Selalu cari argumen kontra dari posisi Anda
+- Gunakan "premorten": bayangkan investasi gagal, apa penyebabnya?
+- Buat posisi yang lebih kecil untuk ide yang kurang yakin
+- Ingat: profesional sekalipun sering salah prediksi` },
+
+      { id:"m9l4", title:"Herding dan Social Proof", dur:"9 mnt",
+        content:`Herding adalah kecenderungan untuk mengikuti kelompok dalam membuat keputusan, bahkan ketika kelompok tersebut mungkin salah.
+
+**Mengapa Herding Terjadi:**
+
+Informational Cascade
+Ketika tindakan orang lain dianggap lebih informatif dari informasi pribadi sendiri.
+"Jika semua orang beli ABCD, pasti mereka tahu sesuatu yang saya tidak tahu."
+
+Social Pressure
+Kebutuhan untuk fit in dan menghindari penyesalan jika tidak ikut.
+"Semua teman saya beli kripto dan untung besar — saya takut ketinggalan."
+
+Reputation Risk (untuk profesional)
+Manajer investasi profesional lebih aman "salah bersama orang banyak" daripada "salah sendirian."
+
+**Herding di Pasar:**
+Bubble aset: semua orang beli → harga naik irasional → semakin banyak orang beli → akhirnya crash
+Contoh: dot-com bubble, Bitcoin 2017, SPAC bubble 2020–2021
+Di Indonesia: saham gorengan yang ramai di grup WA — classic herding play
+
+**Dampak Herding:**
+- Menciptakan dan memperkuat bubble
+- Volatilitas pasar berlebih
+- Crash yang lebih dalam dari yang seharusnya
+- Investor yang ikut di akhir siklus paling banyak rugi
+
+**Strategi Contrarian (Melawan Herding):**
+Saat semua takut → cari peluang beli
+Saat semua euforia → hati-hati dan pertimbangkan jual
+
+Tapi contrarian bukan berarti selalu melawan — kadang momentum ada alasannya.
+Gunakan fundamental untuk filter: jika valuasi masih oke → ikuti tren. Jika valuasi sudah ekstrem → contrarian.
+
+**Cara Personal:**
+Buat keputusan investasi secara independen berdasarkan analisis sendiri.
+Hindari membicarakan portofolio di forum/grup WA yang bisa mempengaruhi keputusan.
+"Process over prediction" — ikuti proses bukan prediksi orang lain.` },
+
+      { id:"m9l5", title:"Confirmation Bias dan Anchoring", dur:"9 mnt",
+        content:`Dua bias kognitif yang sangat merusak proses pengambilan keputusan investasi.
+
+**Confirmation Bias:**
+Kecenderungan mencari, menginterpretasi, dan mengingat informasi yang mengkonfirmasi keyakinan yang sudah ada, sambil mengabaikan yang bertentangan.
+
+Manifestasi di Investasi:
+- Sudah beli saham ABCD → hanya baca berita positif tentang ABCD
+- Yakin "saham teknologi pasti naik" → interpretasi semua berita sebagai konfirmasi keyakinan
+- Saat ada analisis negatif → langsung dicari alasan untuk membantah
+
+Dampak:
+- Tidak mau jual saham yang fundamentalnya sudah memburuk
+- Tidak mau mengakui kesalahan analisis
+- Portofolio terkonsentrasi di saham yang sudah punya opini besar (kurang objektif)
+
+Cara Melawan:
+- Aktif cari "bull case" dan "bear case" untuk setiap investasi
+- Jadikan kebiasaan: sebelum beli, tulis 3 alasan mengapa investasi ini BISA GAGAL
+- Minta orang lain yang tidak punya posisi untuk review analisis Anda
+- Pre-mortem exercise: bayangkan 2 tahun lagi investasi ini gagal total — kenapa?
+
+**Anchoring Bias:**
+Terlalu bergantung pada informasi pertama yang diterima (anchor) dalam membuat estimasi.
+
+Manifestasi di Investasi:
+- "Dulu BBCA Rp3.000, sekarang Rp9.000 sudah mahal." (padahal fundamental jauh berbeda)
+- Tidak mau jual saham sebelum "balik modal" dari harga beli (anchoring ke harga beli)
+- Analyst yang memberi target price pertama dalam laporan → investor lain di-anchor oleh angka itu
+
+Cara Melawan:
+- Jangan pernah gunakan harga beli sebagai referensi keputusan jual
+- Selalu evaluasi berdasarkan fundamental dan prospek ke depan: "Apakah saya akan beli saham ini hari ini di harga ini?"
+- Buat valuasi independen sebelum membaca target price analis` },
+
+      { id:"m9l6", title:"FOMO, Panic, dan Emosi Ekstrem", dur:"10 mnt",
+        content:`FOMO (Fear of Missing Out) dan panic adalah dua emosi paling merusak portofolio investor.
+
+**FOMO — Fear of Missing Out:**
+Ketakutan kehilangan kesempatan profit yang sedang dialami orang lain.
+
+Penyebab:
+- Media sosial yang menampilkan keberhasilan (tidak menampilkan kerugian)
+- Grup investasi yang ramai membahas saham yang naik pesat
+- Harga saham naik cepat tanpa ikut → merasa ketinggalan
+
+Manifestasi:
+- Beli saham yang sudah naik 100% karena "masih bisa terus naik"
+- Masuk di puncak bull market karena "takut ketinggalan"
+- Beralih ke kelas aset yang sedang hot (kripto, NFT) tanpa pemahaman
+
+Dampak: Beli di puncak → harga turun → hold rugi atau cut loss → return sangat buruk.
+
+**Panic Selling:**
+Menjual aset secara terburu-buru saat harga turun, didorong ketakutan yang berlebihan.
+
+Triggers: Berita buruk besar, circuit breaker, portfolio turun signifikan, tekanan dari lingkungan.
+
+Dampak: Jual di harga terendah, kehilangan kesempatan recovery. Mungkin kejadian paling merusak dalam investasi.
+
+**Siklus FOMO-Panic:**
+Harga naik → FOMO masuk di atas → harga turun → Panic → jual di bawah → harga naik lagi → FOMO lagi
+Investor yang ikuti siklus ini selalu beli di atas dan jual di bawah → return terburuk.
+
+**Solusi Sistematis:**
+1. Pre-determined Rules: buat aturan investasi tertulis sebelum emosi datang
+2. Automate (DCA): investasi otomatis tanpa keputusan manual saat pasar bergejolak
+3. Media Diet: kurangi konsumsi berita pasar dan sosmed finansial saat volatilitas tinggi
+4. Check-in Journal: saat merasa mau FOMO atau panic, tulis dulu sebelum eksekusi — apa alasan sesungguhnya?
+5. Accountability Partner: teman investor yang bisa diajak diskusi rasional sebelum keputusan besar` },
+
+      { id:"m9l7", title:"Mental Accounting dan Framing Effects", dur:"9 mnt",
+        content:`Mental accounting adalah kecenderungan menempatkan uang dalam "rekening mental" yang berbeda berdasarkan asal atau tujuannya, memperlakukannya secara berbeda meskipun secara ekonomi semua uang setara.
+
+**Contoh Mental Accounting di Investasi:**
+
+"Uang dari Dividen = Uang Gratis"
+Dividen Rp1 juta dipakai untuk beli saham spekulatif karena "bukan uang saya sendiri."
+Realita: Rp1 juta adalah Rp1 juta, apapun asalnya.
+
+"House Money Effect"
+Setelah profit besar, investor ambil risiko berlebihan karena merasa "bermain dengan uang rumah."
+Padahal uang itu sudah menjadi milik Anda.
+
+Rekening Terpisah untuk Trading vs Investasi
+Mungkin berguna secara praktis, tapi bahaya jika rekening trading diisi ulang terus dari tabungan.
+
+"Uang Hadiah vs Uang Kerja"
+Uang dari hadiah lebih mudah dihabiskan/diinvestasikan spekulatif. Uang hasil kerja keras diperlakukan lebih hati-hati.
+
+**Framing Effects:**
+Cara informasi disajikan mempengaruhi keputusan, meskipun substansinya sama.
+
+Contoh:
+"Saham ini berhasil 70% dari waktu" → lebih menarik dari "saham ini gagal 30% dari waktu" (identik!)
+"Return 15%" → lebih menarik dari "Rp150.000 per Rp1 juta" (identik!)
+
+Implikasi:
+- Marketing produk investasi sering mengeksploitasi framing
+- Selalu re-frame presentasi investasi: apa kerugian potensialnya, bukan hanya keuntungan
+- Dalam analisis: gunakan absolute numbers, bukan hanya persentase
+
+**Cara Melawan:**
+- Anggap semua uang setara, apapun sumbernya
+- Evaluasi investasi dari total portfolio perspective
+- Ingat opportunity cost: uang yang "nganggur" pun kehilangan return potensial` },
+
+      { id:"m9l8", title:"Regret Aversion dan Status Quo Bias", dur:"9 mnt",
+        content:`Dua bias yang membuat investor tidak mengambil tindakan yang seharusnya diambil.
+
+**Regret Aversion:**
+Menghindari keputusan yang mungkin menyebabkan penyesalan di kemudian hari.
+
+Manifestasi:
+1. Tidak jual saham rugi karena "kalau dijual dan naik besok, nyesal"
+2. Tidak beli saham bagus yang sudah naik karena "nanti turun setelah saya beli, pasti nyesal"
+3. Tetap hold saham biasa karena "kalau dijual dan ternyata salah, lebih malu"
+
+Paradoksnya: menghindari potensi penyesalan sering menyebabkan penyesalan yang lebih besar.
+
+Solusi: Fokus pada kualitas proses, bukan outcome. Buat keputusan berdasarkan analisis, bukan ketakutan menyesal. Pahami: ada yang "penyesalan karena bertindak" (commission regret) dan "penyesalan karena tidak bertindak" (omission regret) — keduanya sakit.
+
+**Status Quo Bias:**
+Preferensi yang kuat untuk mempertahankan kondisi saat ini, menghindari perubahan.
+
+Manifestasi:
+- Tidak merebalancing portofolio meski sudah tidak sesuai target allocation
+- Tetap di reksa dana underperform karena "malas pindah"
+- Hold saham yang sudah tidak fundamental bagus karena "sudah terbiasa"
+
+Akar psikologis: loss aversion (takut kehilangan apa yang dimiliki) + biaya kognitif perubahan (lazy thinking).
+
+Solusi:
+- Rebalancing terjadwal (kuartal atau tahunan) — force yourself to review
+- Default: "apa yang harus saya lakukan jika saya memulai dari nol hari ini?"
+- Pertanyaan: "Apakah saya akan membeli posisi ini sekarang di harga sekarang?" Jika tidak → evaluasi apakah perlu dijual.` },
+
+      { id:"m9l9", title:"Representativeness dan Availability Heuristic", dur:"9 mnt",
+        content:`Heuristik adalah mental shortcuts — jalan pintas berpikir yang berguna dalam kehidupan sehari-hari tapi berbahaya dalam keputusan investasi.
+
+**Representativeness Heuristic:**
+Menilai probabilitas berdasarkan seberapa mirip sesuatu dengan prototipe atau stereotip.
+
+Manifestasi di Investasi:
+
+"Hot Hand Fallacy"
+Percaya bahwa tren masa lalu akan terus berlanjut karena "terlihat seperti" tren yang berkelanjutan.
+"Saham ini naik 5 hari berturut-turut → pasti terus naik" (tidak ada dasar logis).
+
+Gambler's Fallacy (kebalikannya)
+Percaya bahwa setelah serangkaian outcome tertentu, outcome berbeda "sudah jatuh tempo."
+"Saham sudah turun 5 hari → pasti besok naik" (juga tidak ada dasar).
+
+"Good Company = Good Investment"
+Perusahaan bagus yang dikenal semua orang sering sudah fully priced. Beli saham bagus di harga mahal = return buruk.
+
+**Availability Heuristic:**
+Menilai probabilitas berdasarkan seberapa mudah contoh bisa diingat atau dibayangkan.
+
+Manifestasi:
+- Overestimate risiko crash karena berita crash lebih memorable dari kenaikan gradual
+- Underestimate risiko krisis karena belum pernah mengalami
+- Setelah pandemi: overestimate risiko pandemi berikutnya; setelah periode calm: underestimate
+
+Availability Cascade: berita negatif yang diulang-ulang membuat risiko terasa lebih besar dari statistis sebenarnya. Media mendapat keuntungan dari fear → berita buruk lebih sering ditampilkan.
+
+**Cara Melawan:**
+- Base rate thinking: berapa frekuensi historis event ini terjadi?
+- Diversifikasi: mengurangi dampak satu outcome yang tidak diinginkan
+- Systematic process: buat keputusan berdasarkan data, bukan kesan dan memori` },
+
+      { id:"m9l10", title:"Membangun Proses Investasi yang Melampaui Bias", dur:"11 mnt",
+        content:`Mengetahui bias saja tidak cukup — perlu sistem yang aktif mengurangi dampaknya.
+
+**Framework Pengambilan Keputusan Investasi yang Lebih Rasional:**
+
+1. Pre-Mortem Analysis
+Sebelum setiap investasi besar:
+- Bayangkan 2 tahun ke depan investasi ini GAGAL TOTAL
+- Tuliskan 5 alasan mengapa bisa gagal
+- Apakah alasan-alasan itu cukup membuat Anda tidak jadi beli?
+- Jika tetap beli, setidaknya risiko sudah dipahami
+
+2. Devil's Advocate
+Minta seseorang yang kredibel untuk berargumen melawan posisi Anda.
+Atau tulis sendiri "bear case" yang seserius mungkin.
+
+3. Decision Journal
+Tulis setiap keputusan investasi: tanggal, harga, alasan beli, target, stop loss, keyakinan (skala 1–10).
+6–12 bulan kemudian: review. Apa yang benar? Apa yang salah? Mengapa?
+Ini satu-satunya cara meningkatkan kualitas pengambilan keputusan secara terukur.
+
+4. Rules-Based Investing
+Kurangi ruang untuk keputusan diskresioner (yang rentan bias):
+- DCA otomatis tanpa perlu keputusan manual
+- Rebalancing terjadwal
+- Stop loss pre-set
+- Sederhanakan kriteria: saham harus memenuhi X, Y, Z untuk masuk watchlist
+
+5. Cooling-Off Period
+Untuk keputusan besar: tunggu 24–48 jam setelah membuat keputusan, sebelum eksekusi.
+Emosi sering mereda dan Sistem 2 bisa bekerja.
+
+6. Ukuran Posisi Berbasis Keyakinan
+Keyakinan tinggi (proses bagus, riset mendalam) → posisi lebih besar
+Keyakinan rendah (kurang riset, ikut rekomendasi orang lain) → posisi minimal atau tidak sama sekali
+
+**Mindset Kunci:**
+"You can be wrong on any single investment. But you must be right on the process."` },
+    ]
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // MODUL 10 — GEOPOLITIK INTERNASIONAL
+  // ══════════════════════════════════════════════════════════════════════════════
+  {
+    id:"m10", num:10, level:"Lanjutan", icon:"🌍",
+    title:"Geopolitik Internasional",
+    desc:"Memahami bagaimana dinamika geopolitik global mempengaruhi investasi saham.",
+    color:"#0891b2",
+    lessons:[
+      { id:"m10l1", title:"Geopolitik dan Pasar Keuangan", dur:"10 mnt",
+        content:`Geopolitik — interaksi kekuatan politik, ekonomi, militer, dan geografis antar negara — memiliki dampak yang sangat signifikan terhadap pasar keuangan global.
+
+**Mengapa Investor Harus Peduli Geopolitik:**
+Pasar keuangan adalah ekspresi kepercayaan kolektif akan masa depan ekonomi. Geopolitik mempengaruhi:
+- Keamanan rantai pasokan global
+- Harga komoditas strategis (minyak, gas, pangan, logam)
+- Kebijakan perdagangan dan tarif
+- Stabilitas mata uang
+- Aliran modal antar negara
+
+**Mekanisme Transmisi Geopolitik ke Pasar:**
+
+1. Risk-On / Risk-Off
+Ketegangan geopolitik meningkat → investor jual aset berisiko (saham emerging market) → beli "safe haven" (dolar AS, yen, emas, obligasi pemerintah AS)
+
+2. Commodity Price Shock
+Konflik di wilayah penghasil komoditas → harga melonjak
+Contoh: invasi Rusia ke Ukraina (2022) → harga gandum dan gas Eropa melonjak
+
+3. Supply Chain Disruption
+Perang dagang/sanksi → rantai pasokan terganggu → biaya produksi naik → inflasi
+Contoh: perang dagang AS-China → banyak perusahaan relokasi pabrik dari China
+
+4. Capital Flight
+Instabilitas politik → investor domestik dan asing tarik modal → mata uang dan pasar saham lokal tertekan
+
+**Dampak ke IHSG:**
+IHSG cukup sensitif terhadap geopolitik global karena:
+- Investor asing memegang ~40-50% pasar
+- Indonesia pengekspor komoditas (harga dipengaruhi geopolitik)
+- Rupiah rentan terhadap risk-off global` },
+
+      { id:"m10l2", title:"Dinamika AS-China dan Dampaknya ke Indonesia", dur:"11 mnt",
+        content:`Persaingan AS-China adalah geopolitik paling penting abad ke-21, dengan dampak yang sangat nyata bagi Indonesia.
+
+**Latar Belakang Persaingan:**
+China bangkit sebagai kekuatan ekonomi terbesar ke-2 dunia. AS sebagai hegemon global merasa terancam. Persaingan meliputi: ekonomi, teknologi, militer, dan pengaruh diplomatik global.
+
+**Perang Dagang AS-China:**
+2018–: Trump memulai tarif impor tinggi pada produk China.
+China membalas dengan tarif impor produk AS.
+Biden melanjutkan dan bahkan perkuat banyak tarif.
+
+Dampak ke Rantai Pasokan Global:
+- "China Plus One": banyak perusahaan diversifikasi pabrik dari China → Vietnam, Indonesia, India, Thailand profiteer
+- Indonesia untung: FDI masuk di sektor manufaktur (garmen, elektronik, baterai EV)
+
+**Semikonduktor Wars:**
+AS memblokir chip canggih ke China (NVIDIA, ASML) → China kejar kemandirian chip.
+Dampak global: harga chip bergejolak, supply chain semi-konduktor terkonsentrasi di Taiwan (TSMC) yang menjadi "geopolitical flashpoint."
+
+**Taiwan Strait Tension:**
+Jika konflik AS-China di Taiwan eskalasi → dampak sangat besar:
+- TSMC (pembuat chip terbesar) bisa terdampak → krisis chip global
+- Supply chain dunia terganggu
+- Risk-off besar → modal keluar dari emerging market termasuk Indonesia
+
+**Peluang Indonesia:**
+- ASEAN umumnya, Indonesia khususnya, menjadi alternatif dari China dalam supply chain
+- Hilirisasi nikel: Indonesia duduk di atas cadangan nikel terbesar dunia → relevan untuk baterai EV yang diperlukan AS dan China
+- Diplomasi "bebas aktif" Indonesia → bisa balance antara AS dan China` },
+
+      { id:"m10l3", title:"Krisis Rusia-Ukraina dan Dampak Komoditas", dur:"10 mnt",
+        content:`Invasi Rusia ke Ukraina (Februari 2022) adalah perang berskala terbesar di Eropa sejak WWII, dengan dampak komoditas global yang masih terasa.
+
+**Rusia dan Ukraina dalam Ekonomi Global:**
+Rusia: pengekspor minyak dan gas terbesar ke Eropa, pengekspor pupuk, nikel, palladium (katalitik konverter)
+Ukraina: "breadbasket of Europe" — penghasil gandum, jagung, bunga matahari terbesar Eropa
+
+**Dampak Langsung:**
+Harga minyak: melonjak ke $120+/barel (Maret 2022)
+Harga gas Eropa: melonjak 10x dari level pra-perang
+Harga gandum dan pangan: melonjak 50–80%
+Harga pupuk: melonjak → ancaman ketahanan pangan global
+
+**Dampak ke Indonesia:**
+Positif:
+- Harga batubara melonjak → emiten batu bara IDX (ADRO, ITMG, PTBA) windfall profit luar biasa
+- Harga CPO naik → emiten kelapa sawit (AALI, SIMP) untung
+- Permintaan nikel naik → INCO, ANTM, MDKA
+
+Negatif:
+- Harga pangan naik → inflasi naik → tekanan daya beli masyarakat
+- Subsidi BBM membengkak → beban fiskal pemerintah naik
+- Harga pupuk naik → biaya pertanian naik → inflasi pangan
+
+**Sanksi Barat vs Rusia:**
+SWIFT disconnection, pembekuan aset → preseden baru: cadangan devisa suatu negara bisa "dibekukan"
+→ Beberapa negara pertimbangkan diversifikasi cadangan dari dolar → emas dan mata uang lain
+→ Tren de-dollarisasi perlahan (dampak jangka panjang)
+
+**Pelajaran untuk Investor:**
+Geopolitik bisa sangat cepat menciptakan windfall dan disaster. Diversifikasi melindungi dari risiko konsentrasi.` },
+
+      { id:"m10l4", title:"Kebijakan Moneter Global dan Dampaknya", dur:"10 mnt",
+        content:`Federal Reserve dan bank sentral besar dunia memiliki pengaruh luar biasa terhadap seluruh pasar keuangan global, termasuk IHSG.
+
+**Federal Reserve (The Fed):**
+Bank sentral Amerika Serikat — institusi keuangan paling berpengaruh di dunia.
+Mandate: price stability (inflasi ~2%) dan maximum employment.
+Tools utama: federal funds rate (suku bunga acuan), quantitative easing/tightening.
+
+**Siklus Suku Bunga Fed dan Dampak ke Indonesia:**
+
+Suku Bunga Rendah (2009–2015, 2020–2022):
+- "Risk-on" environment → dana mengalir ke emerging markets
+- Obligasi Indonesia yield kompetitif → asing beli obligasi RI → rupiah menguat
+- IHSG cenderung bullish
+- Biaya pinjaman murah → ekspansi bisnis
+
+Suku Bunga Tinggi (2022–2023):
+- Fed naikkan suku bunga 525 bps dalam 18 bulan — tercepat dalam 40 tahun
+- Dana keluar dari emerging market → rupiah melemah
+- IHSG tertekan
+- Obligasi AS yield naik → kompetisi dengan saham meningkat
+
+**Quantitative Easing (QE) dan Tightening (QT):**
+QE: Fed beli obligasi → injeksi likuiditas → aset global naik
+QT: Fed jual/tidak reinvestasi obligasi → likuiditas mengering → aset tertekan
+
+**Bank Indonesia (BI):**
+BI harus balance: domestic growth vs external stability.
+Jika BI tidak ikuti Fed naik → rupiah tertekan, inflasi impor naik.
+Jika BI naik terlalu agresif → ekonomi domestik melambat.
+
+**Cara Monitor:**
+- FOMC calendar dan statement: federalreserve.gov
+- BI Rate decision: bank indonesia rate
+- CME FedWatch Tool: probabilitas naik/turun suku bunga Fed di pertemuan berikutnya` },
+
+      { id:"m10l5", title:"Konflik Timur Tengah dan Harga Minyak", dur:"10 mnt",
+        content:`Timur Tengah adalah pusat geopolitik minyak dunia, dan minyak adalah komoditas yang paling mempengaruhi ekonomi global.
+
+**Timur Tengah dalam Pasar Minyak:**
+OPEC (Organization of Petroleum Exporting Countries) + OPEC+:
+- Saudi Arabia: swing producer — bisa naikkan/turunkan produksi besar
+- Rusia: OPEC+ member
+- Iran, Iraq, UAE, Kuwait: penghasil signifikan
+
+Strait of Hormuz: 20% minyak dunia melewati selat sempit ini — jika terganggu, harga minyak melonjak.
+
+**Dampak Harga Minyak ke Indonesia:**
+
+Positif (minyak naik):
+- Pendapatan ekspor migas naik
+- Saham energi domestik naik
+- Pendapatan BUMN energi naik
+
+Negatif (minyak naik):
+- Subsidi BBM membengkak → beban fiskal naik
+- Inflasi naik (transportasi lebih mahal)
+- Industri padat energi rugi
+- Trade deficit melebar jika impor minyak lebih besar dari ekspor
+
+Indonesia Net Importer Minyak: Indonesia memproduksi minyak tapi KONSUMSI lebih besar dari produksi → net importer. Minyak naik → secara umum negatif untuk ekonomi Indonesia.
+
+**Konflik yang Sering Ganggu Minyak:**
+Israel-Palestine/Hamas, Iran vs Saudi (proxy wars), Yaman (Houthi menyerang tanker di Laut Merah).
+Setiap eskalasi → spike harga minyak jangka pendek.
+
+**Cara Berinvestasi:**
+Minyak naik → ADRO (batu bara substitusi), PGAS (distribusi gas domestik)
+Minyak turun → airline (GIAA, CMPP), consumer, manufaktur padat energi
+
+Pertimbangkan saham sektor yang diuntungkan dari high/low commodity prices.` },
+
+      { id:"m10l6", title:"ASEAN, Indonesia, dan Ketahanan Ekonomi Regional", dur:"10 mnt",
+        content:`Indonesia sebagai ekonomi terbesar ASEAN memiliki posisi strategis dalam peta geopolitik kawasan.
+
+**Posisi Indonesia dalam Geopolitik:**
+Kebijakan Luar Negeri: "bebas aktif" — tidak berpihak pada blok mana pun, memaksimalkan manfaat dari semua pihak.
+G20 Member: Indonesia dalam forum ekonomi negara-negara besar dunia.
+ASEAN Chairmanship: Indonesia sering memimpin ASEAN.
+
+**Kawasan ASEAN sebagai Pemenang Trade War:**
+
+"China+1" Strategy:
+Banyak perusahaan multinasional memindahkan sebagian produksi dari China ke ASEAN.
+Vietnam: manufaktur elektronik (Samsung, Intel)
+Indonesia: nikel dan baterai EV, tekstil, manufaktur
+Thailand: otomotif
+Malaysia: semikonduktor packaging
+
+**Pasar ASEAN yang Terintegrasi (AEC):**
+ASEAN Economic Community memungkinkan arus barang, jasa, dan modal yang lebih bebas.
+Potensi pasar 680 juta jiwa, GDP gabungan ~$3,6 triliun.
+
+**Risiko Geopolitik Regional:**
+Laut China Selatan: klaim China tumpang tindih dengan Indonesia, Vietnam, Filipina, Malaysia.
+Dampak jika eskalasi: gangguan jalur pelayaran, ketegangan investasi.
+
+**Demographic Dividend Indonesia:**
+Populasi muda (median usia ~29 tahun) → potensi pertumbuhan konsumsi jangka panjang.
+Dibandingkan: Japan (median 48), China (38), Indonesia baru masuk golden era consumer.
+
+**Peluang Investasi dari Perspektif Geopolitik:**
+Hilirisasi: Indonesia paksa pengolahan nikel lokal → tambah value chain → INCO, ANTM, MDKA
+Manufacturing hub: FDI masuk untuk pindah dari China → sektor logistik, properti industri
+Consumer growth: kelas menengah Indonesia tumbuh → MAPI, ACES, SIDO, ICBP` },
+
+      { id:"m10l7", title:"Perubahan Iklim dan ESG Investing", dur:"10 mnt",
+        content:`Perubahan iklim bukan hanya isu lingkungan — ini adalah risiko dan peluang investasi yang semakin penting.
+
+**Perubahan Iklim sebagai Risiko Investasi:**
+
+Physical Risks:
+- Aset fisik (pabrik, properti) di area rawan banjir, kekeringan, badai → nilai turun
+- Gangguan operasional → kerugian bisnis
+- Pertanian terdampak → inflasi pangan
+- Indonesia: Jakarta tenggelam, Kalimantan/Sumatera rawan kebakaran hutan
+
+Transition Risks:
+- Regulasi karbon (carbon tax, cap-and-trade) → biaya operasional industri fossil fuel naik
+- Teknologi disruption: energi terbarukan makin murah → fossil fuel obsolete
+- Perubahan preferensi konsumen dan investor (ESG)
+- Stranded assets: aset batubara yang mungkin tidak bisa dimonetisasi sepenuhnya
+
+**ESG Investing:**
+ESG = Environmental, Social, Governance.
+Investor semakin memasukkan faktor ESG dalam keputusan investasi.
+
+Environmental: emisi karbon, manajemen air, pengelolaan limbah
+Social: hubungan tenaga kerja, keselamatan, komunitas lokal, supply chain
+Governance: transparansi, independensi dewan, anti-korupsi
+
+**ESG di BEI:**
+IDX ESG Leaders Index: saham dengan skor ESG terbaik.
+BUMN semakin dituntut laporan keberlanjutan.
+Investor asing besar (BlackRock, Norges Bank) mulai mempertimbangkan ESG.
+
+**Peluang Investasi dari Transisi Energi:**
+- Energi surya/angin: masih terbatas listed di IDX, tapi tumbuh pesat
+- Nikel dan kobalt untuk baterai EV: INCO, ANTM, MDKA
+- Kendaraan listrik ekosistem: ASII (distributor EV), GIAA (sustainability)
+- "Green" infrastruktur dan real estate` },
+
+      { id:"m10l8", title:"Sanksi Internasional dan Dampak ke Pasar", dur:"9 mnt",
+        content:`Sanksi internasional adalah alat geopolitik yang semakin sering digunakan, dengan implikasi signifikan untuk pasar dan bisnis.
+
+**Jenis Sanksi:**
+- Trade sanctions: pembatasan ekspor/impor produk tertentu
+- Financial sanctions: pemblokiran akses ke sistem keuangan (SWIFT), pembekuan aset
+- Targeted sanctions: terhadap individu atau entitas tertentu
+- Comprehensive sanctions: embargo total (Cuba, Iran, Korea Utara)
+
+**Mekanisme SWIFT:**
+Society for Worldwide Interbank Financial Telecommunication — sistem messaging untuk transfer uang internasional.
+Dikeluarkan dari SWIFT = sulit bertransaksi dengan dunia luar.
+Rusia dikeluarkan sebagian dari SWIFT (2022) — efek signifikan tapi tidak total.
+
+**Dampak Sanksi ke Pasar:**
+
+Negara yang Disanksi:
+Mata uang melemah drastis (Ruble Rusia, Rial Iran).
+Inflasi melonjak karena impor terganggu.
+Saham dan obligasi tidak bisa diakses investor asing (lock in).
+
+Negara Lain (Secondary Sanctions Risk):
+Perusahaan yang bertransaksi dengan entitas yang disanksi bisa terkena secondary sanctions.
+Perlu compliance khusus → biaya meningkat.
+
+**Dampak ke Indonesia:**
+Indonesia posisi "neutral" → tidak ikut sanksi Rusia → bisa tetap import minyak Rusia yang lebih murah (price cap).
+Tapi risiko: jika ada secondary sanctions → perusahaan Indonesia yang bertransaksi dengan Rusia bisa kena dampak.
+
+**Pelajaran untuk Investor:**
+Perhatikan exposure portfolio ke negara/perusahaan yang berpotensi terkena sanksi.
+Perusahaan dengan diversifikasi geografis dan customer base → lebih tahan terhadap risiko geopolitik spesifik.` },
+
+      { id:"m10l9", title:"Dedolarisasi dan Masa Depan Sistem Moneter", dur:"10 mnt",
+        content:`Dominasi dolar AS dalam sistem keuangan global sedang ditantang — ini adalah salah satu tren geopolitik jangka panjang paling penting.
+
+**Dominasi Dolar AS (Petrodollar System):**
+Sejak 1971 (Nixon Shock), dolar tidak lagi didukung emas tapi oleh kepercayaan dan kekuatan AS.
+~59% cadangan devisa global dalam USD.
+~80% perdagangan minyak dalam USD (petrodollar).
+Mayoritas transaksi komoditas global dalam USD.
+
+**Tren Dedolarisasi:**
+China: Yuan internationalization — perdagangan minyak China dalam yuan, bilateral deals.
+Saudi Arabia: mulai terima yuan untuk ekspor minyak ke China.
+Brazil-China: perjanjian langsung menggunakan mata uang masing-masing.
+BRICS: diskusi mata uang bersama (masih sangat awal).
+Emas: bank sentral banyak negara beli emas besar-besaran (China, India, Rusia, Poland).
+
+**Dampak jika Dedolarisasi Mempercepat:**
+Dolar melemah → komoditas global (dalam USD) naik harganya → inflasi di AS
+US Treasury kurang diminati → suku bunga AS naik → biaya utang AS naik
+Aset dolar AS kehilangan premium → rebalancing portfolio global
+Emerging market dengan cadangan non-USD → lebih tahan terhadap tekanan dolar
+
+**Dampak ke Indonesia:**
+Indonesia saat ini cadangan dalam USD → jika dolar melemah signifikan → nilai cadangan turun
+Rupiah dan perdagangan Indonesia dengan China meningkat dalam yuan
+Potensi benefit: jika Indonesia bisa perdagangkan nikel/CPO dalam IDR/yuan → kurangi eksposur forex
+
+**Kenyataan Saat Ini:**
+Dedolarisasi berjalan sangat lambat. Dolar masih dominan dan tidak ada alternatif yang benar-benar siap.
+Tapi tren jangka panjang ini perlu dipantau investor jangka panjang.` },
+
+      { id:"m10l10", title:"Membangun Portofolio yang Tahan Guncangan Geopolitik", dur:"10 mnt",
+        content:`Geopolitik tidak bisa diprediksi secara pasti, tapi portofolio bisa dirancang untuk lebih tahan terhadap berbagai skenario geopolitik.
+
+**Prinsip Portfolio Tahan Geopolitik:**
+
+1. Diversifikasi Sektoral yang Mencakup Skenario Berbeda
+Skenario A (perang/ketegangan → harga komoditas naik): ADRO, ANTM, INCO, PTBA
+Skenario B (risk-off global → modal keluar EM): aset safe haven lokal, obligasi pemerintah
+Skenario C (dedolarisasi → emas naik): ANTM (emas), reksa dana emas
+Skenario D (pertumbuhan normal): blue chip consumer, perbankan
+
+2. Eksposur ke Aset Safe Haven
+Emas fisik atau ANTM (proxy emas)
+Obligasi pemerintah jangka menengah
+USD cash (hedging terhadap rupiah melemah)
+
+3. Fokus pada Bisnis Domestik yang Tidak Terlalu Terekspos Global
+Consumer staples (UNVR, ICBP, SIDO) — demand tidak banyak berubah karena geopolitik
+Perbankan (BBCA, BBRI) — mayoritas revenue domestik
+Tidak terlalu bergantung pada rantai pasokan global yang rentan terganggu
+
+4. Waspada terhadap Saham dengan Eksposur Geopolitik Tinggi
+Exporter yang sangat bergantung pada satu pasar (misal: 80% ekspor ke China)
+Importer bahan baku dari negara yang rentan sanksi
+Perusahaan yang beroperasi di kawasan konflik
+
+5. Monitor Leading Indicators Geopolitik
+Harga minyak dan emas: indikator geopolitical risk
+VIX: volatilitas pasar AS
+Credit Default Swap (CDS) spread: biaya "asuransi" terhadap default suatu negara
+Foreign flow ke obligasi RI: jika asing jual besar-besaran → waspadai` },
+    ]
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // MODUL 11 — PERDAGANGAN INTERNASIONAL
+  // ══════════════════════════════════════════════════════════════════════════════
+  {
+    id:"m11", num:11, level:"Menengah", icon:"🚢",
+    title:"Perdagangan Internasional",
+    desc:"Memahami dinamika perdagangan global dan dampaknya terhadap saham Indonesia.",
+    color:"#0284c7",
+    lessons:[
+      { id:"m11l1", title:"Dasar-Dasar Perdagangan Internasional", dur:"9 mnt",
+        content:`Perdagangan internasional adalah pertukaran barang, jasa, dan kapital antar negara — fondasi ekonomi modern.
+
+**Mengapa Negara Berdagang:**
+
+Comparative Advantage (Ricardo):
+Negara spesialisasi memproduksi barang yang paling efisien relatif terhadap produksi barang lain.
+Indonesia: komparatif advantage di kelapa sawit, batubara, nikel, karet — meskipun mungkin tidak punya absolute advantage di semua produk ini.
+
+Economies of Scale:
+Produksi massal → biaya per unit turun → bisa ekspor dengan harga kompetitif.
+
+Resource Endowment:
+Negara berbeda dalam kepemilikan sumber daya alam, tenaga kerja, teknologi.
+
+**Manfaat Perdagangan Bebas:**
+- Akses ke produk yang tidak diproduksi domestik (dengan kualitas atau biaya yang kompetitif)
+- Harga lebih rendah untuk konsumen
+- Transfer teknologi dan pengetahuan
+- Pertumbuhan ekonomi melalui ekspor
+
+**Kritik terhadap Perdagangan Bebas:**
+- Deindustrialisasi negara yang kalah bersaing
+- Ketimpangan distribusi manfaat
+- Ketergantungan supply chain
+- Race to the bottom: kompetisi menurunkan standar tenaga kerja dan lingkungan
+
+**Neraca Perdagangan Indonesia:**
+Ekspor utama: batubara, CPO (kelapa sawit), nikel, karet, kayu, alas kaki, tekstil
+Impor utama: mesin, elektronik, bahan bakar minyak, besi baja, bahan kimia
+
+Surplus neraca dagang → positif untuk rupiah
+Defisit neraca dagang → tekanan pada rupiah → BI mungkin naikkan suku bunga` },
+
+      { id:"m11l2", title:"Komoditas Utama Indonesia dan Harga Global", dur:"11 mnt",
+        content:`Indonesia adalah salah satu negara paling kaya komoditas di dunia, dan harga komoditas global sangat mempengaruhi ekonomi serta pasar saham Indonesia.
+
+**Batubara:**
+Indonesia produsen dan eksportir batubara thermal terbesar dunia (bersaing dengan Australia).
+Pembeli utama: China, India, Jepang, Korea, Bangladesh.
+Saham BEI: ADRO, ITMG, PTBA, BUMI, HRUM, KKGI.
+Faktor penentu harga: kebutuhan listrik China/India, kebijakan energi Eropa, musim dingin/panas.
+
+Dampak harga batubara tinggi (2022 pasca-Rusia-Ukraina):
+ADRO profit melonjak 3–4x → saham naik >200%.
+
+**Minyak Kelapa Sawit (CPO):**
+Indonesia produsen CPO terbesar di dunia (55% pangsa global, bersama Malaysia).
+Penggunaan: minyak goreng, biodiesel, sabun, kosmetik.
+Saham BEI: AALI, SIMP, LSIP, BWPT.
+Faktor harga: harga minyak kedelai (substitusi), kebijakan biodiesel, permintaan China/India, ESG (deforestasi).
+
+**Nikel:**
+Indonesia cadangan nikel terbesar dunia (26%+ global reserves).
+Krusial untuk baterai EV (lithium-ion battery butuh nikel).
+Saham BEI: INCO, ANTM, MDKA, HRUM (diversifikasi ke nikel).
+Faktor harga: pertumbuhan EV global, kebijakan ekspor Indonesia (larangan ekspor ore 2014, 2020).
+
+**Emas:**
+ANTM (Antam) produsen emas Indonesia.
+Harga emas dipengaruhi: suku bunga riil, risiko geopolitik, inflasi, permintaan bank sentral global.
+
+**Karet:**
+Indonesia produsen karet alam terbesar ke-2 (setelah Thailand).
+Pasar: ban kendaraan, sarung tangan medis.
+Volatil: bersaing dengan karet sintetis (harga minyak relatif).` },
+
+      { id:"m11l3", title:"Nilai Tukar Rupiah dan Investasi", dur:"10 mnt",
+        content:`Nilai tukar rupiah terhadap dolar dan mata uang utama lainnya memiliki pengaruh signifikan terhadap berbagai sektor saham BEI.
+
+**Faktor Penentu Nilai Rupiah:**
+
+1. Neraca Perdagangan
+Surplus (ekspor > impor) → permintaan rupiah dari eksportir → rupiah menguat
+Defisit → tekanan rupiah
+
+2. Aliran Modal Asing
+Net foreign buy obligasi/saham → rupiah menguat
+Net foreign sell → rupiah melemah
+
+3. Suku Bunga Relatif
+Spread BI Rate vs Fed Rate: jika selisih kecil → modal mengalir ke AS (dolar kuat)
+Jika selisih besar → modal masuk ke Indonesia (rupiah kuat)
+
+4. Sentimen Risiko Global
+Risk-off → modal keluar emerging market → rupiah melemah
+Risk-on → rupiah menguat
+
+5. Cadangan Devisa BI
+Cadangan tinggi → BI bisa intervensi pasar untuk stabilkan rupiah
+
+**Dampak Pergerakan Rupiah ke Saham:**
+
+Rupiah MELEMAH:
+Positif: eksportir komoditas (ADRO, INCO, ANTM — revenue USD, biaya IDR)
+Negatif: importir bahan baku (emiten industri yang impor bahan), perusahaan berutang USD tanpa hedging
+Mixed: airlines (revenue IDR, biaya USD — avtur, leasing)
+
+Rupiah MENGUAT:
+Positif: importir (emiten yang butuh impor bahan baku), perusahaan utang USD
+Negatif: eksportir komoditas
+
+**Cara Monitor:**
+USD/IDR rate: investing.com, Bloomberg
+Cadangan devisa BI: publikasi bulanan BI
+Capital flow: data KSEI, laporan asing dari BEI` },
+
+      { id:"m11l4", title:"Perdagangan AS-ASEAN dan Peluang FDI", dur:"10 mnt",
+        content:`Kawasan ASEAN menjadi semakin penting dalam strategi perdagangan global, dengan Indonesia sebagai penerima manfaat utama.
+
+**Reshoring dan Friendshoring:**
+Pasca-COVID dan perang dagang AS-China, banyak perusahaan mengevaluasi ulang supply chain yang terlalu tergantung pada satu negara.
+Reshoring: pindah produksi kembali ke negara asal
+Friendshoring: diversifikasi ke negara "mitra" yang dianggap aman secara geopolitik
+
+ASEAN sebagai Beneficiary:
+Vietnam: manufaktur elektronik (Samsung, Apple suppliers)
+Thailand: otomotif
+Malaysia: semikonduktor
+Indonesia: baterai EV (nikel), tekstil, manufaktur umum
+
+**FDI ke Indonesia:**
+FDI (Foreign Direct Investment) masuk ke Indonesia tumbuh positif, terutama:
+- Hilirisasi nikel: investor China masuk besar-besaran untuk smelter nikel → MDKA, INCO area
+- Kawasan industri: PT KIS, KIJA, BEST — properti industri benefitir dari FDI manufaktur
+- EV ecosystem: Hyundai pabrik di Bekasi
+
+**Hambatan FDI ke Indonesia:**
+- Birokrasi (though improving dengan OSS — Online Single Submission)
+- Infrastruktur masih berkembang (jalan, pelabuhan, logistik)
+- Korupsi (though improving)
+- Ketidakpastian regulasi (perubahan aturan tiba-tiba)
+
+**RCEP (Regional Comprehensive Economic Partnership):**
+Perjanjian perdagangan bebas terbesar dunia yang ditandatangani 2020 (efektif 2022).
+Anggota: ASEAN + China + Japan + Korea + Australia + NZ
+Dampak: pasar bebas tarif yang sangat besar → eksportir Indonesia lebih kompetitif` },
+
+      { id:"m11l5", title:"Hilirisasi dan Industrialisasi Indonesia", dur:"11 mnt",
+        content:`Hilirisasi adalah kebijakan strategis Indonesia untuk meningkatkan nilai tambah sumber daya alam sebelum diekspor.
+
+**Mengapa Hilirisasi?**
+Indonesia selama puluhan tahun menjual bahan mentah (raw material) ke luar negeri, kemudian mengimport kembali dalam bentuk produk jadi — kehilangan nilai tambah yang sangat besar.
+
+Contoh Nikel:
+Ekspor ore nikel (mentah): harga $20–30 per ton
+Ferronickel: harga $200+ per ton
+NPI (Nickel Pig Iron): $100–150 per ton
+Bahan baterai EV (nickel sulfate): jauh lebih mahal
+→ Hilirisasi = transform raw material menjadi produk bernilai tinggi
+
+**Larangan Ekspor Ore:**
+2014: Larangan ekspor bauksit dan nikel ore → dicabut 2017, diterapkan lagi 2020 (nikel), 2023 (bauksit, tembaga)
+Tujuan: paksa pembangunan smelter di dalam negeri
+
+**Dampak Hilirisasi ke Saham:**
+Positif:
+INCO, ANTM, MDKA: dengan hilirisasi → margin lebih tinggi, value chain panjang
+Kawasan Industri (KIJA, BEST, SSIA): permintaan lahan industri smelter meningkat
+Logistik dan infrastruktur: demand layanan logistik naik seiring industrialisasi
+
+Negatif Jangka Pendek:
+Trader batubara dan nikel mentah: kehilangan margin karena larangan ekspor
+Pembeli internasional mungkin protes (INCO kena WTO dispute)
+
+**Peta Jalan Hilirisasi Indonesia:**
+Nikel → baterai EV → kendaraan listrik
+Bauksit → aluminium → komponen manufaktur
+Tembaga → kabel listrik, elektronik
+Sawit → biodiesel, oleokimia
+Coal → methanol, DME (sebagai substitusi LPG)
+
+**Indonesia dalam Ekosistem EV Global:**
+Posisi unik: cadangan nikel terbesar + potensi produksi baterai lokal → magnet investasi dari Korea, China, Eropa, AS` },
+
+      { id:"m11l6", title:"Dampak Tarif dan Proteksionisme", dur:"9 mnt",
+        content:`Kebangkitan proteksionisme global — setelah era neoliberalisme yang panjang — memiliki implikasi penting untuk investor.
+
+**Apa Itu Proteksionisme:**
+Kebijakan ekonomi yang membatasi impor atau mendorong produksi domestik untuk melindungi industri lokal dari persaingan asing.
+Instrumen: tarif (bea masuk), kuota, subsidi
